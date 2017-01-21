@@ -14,15 +14,21 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.domain
+package br.com.alex.moov.domain.repository
 
-import com.raizlabs.android.dbflow.annotation.Database
+import android.content.SharedPreferences
+import br.com.alex.moov.api.tmdb.model.ImageConfigurations
+import com.google.gson.Gson
+import dagger.Module
+import dagger.Provides
+import javax.inject.Singleton
 
-@Database(name = AppDatabase.NAME, version = AppDatabase.VERSION)
-class AppDatabase {
-
-  companion object {
-    const val NAME = "MooV";
-    const val VERSION = 1;
+@Module
+class RepositoryModule {
+  @Provides
+  @Singleton
+  fun provideImageConfigurationsRepository(preferences: SharedPreferences,
+      gson: Gson): Repository<ImageConfigurations> {
+    return PreferenceImageConfigurationsRepository(preferences, gson)
   }
 }

@@ -14,7 +14,7 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.data.tmdb
+package br.com.alex.moov.api.tmdb
 
 import okhttp3.Interceptor
 import okhttp3.Response

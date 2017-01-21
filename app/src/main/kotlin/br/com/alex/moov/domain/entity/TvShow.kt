@@ -16,7 +16,7 @@
 
 package br.com.alex.moov.domain.entity
 
-import br.com.alex.moov.domain.AppDatabase
+import br.com.alex.moov.domain.repository.AppDatabase
 import com.raizlabs.android.dbflow.annotation.Column
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table

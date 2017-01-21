@@ -14,22 +14,8 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.androidapp
+package br.com.alex.moov.api.tmdb.model
 
-import br.com.alex.moov.androidapp.home.HomeActivity
-import br.com.alex.moov.api.ApiModule
-import br.com.alex.moov.domain.DomainModule
-import dagger.Component
-import javax.inject.Singleton
-
-
-@Singleton
-@Component(modules = arrayOf(
-    ApplicationModule::class,
-    ApiModule::class,
-    DomainModule::class
-))
-interface ApplicationComponent {
-
-  fun inject(homeActivity: HomeActivity)
-}
+data class ImageConfigurations(val base_url: String, val secure_base_url: String,
+    val backdrop_sizes: List<String>, val logo_sizes: List<String>, val poster_sizes: List<String>,
+    val profile_sizes: List<String>, val still_sizes: List<String>)

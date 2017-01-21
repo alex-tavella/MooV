@@ -18,6 +18,7 @@ package br.com.alex.moov.androidapp
 
 import android.app.Application
 import android.content.Context
+import android.preference.PreferenceManager
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -34,6 +35,12 @@ class ApplicationModule(application: Application) {
   internal fun provideAppContext(): Context {
     return appContext
   }
+
+  @Provides
+  @Singleton
+  internal fun provideSharedPreferences(
+      @ApplicationContextQualifier context: Context) = PreferenceManager.getDefaultSharedPreferences(
+      context)
 
   @Provides
   @Singleton

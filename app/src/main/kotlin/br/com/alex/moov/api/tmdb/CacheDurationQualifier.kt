@@ -14,12 +14,9 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.data.mapper
+package br.com.alex.moov.api.tmdb
 
-import br.com.alex.moov.data.tmdb.model.TMDBTvShow
-import br.com.alex.moov.domain.entity.TvShow
+import javax.inject.Qualifier
 
-class TvShowMapper : Mapper<TMDBTvShow, TvShow> {
-  override fun map(source: TMDBTvShow) = TvShow(source.id, source.poster_path, source.popularity,
-      source.backdrop_path, source.vote_average, source.overview, source.name, source.vote_count)
-}
+@Qualifier
+annotation class CacheDurationQualifier

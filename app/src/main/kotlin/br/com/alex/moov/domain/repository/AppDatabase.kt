@@ -14,7 +14,15 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.data.tmdb.model
+package br.com.alex.moov.domain.repository
 
-class DiscoverResponse<T>(val page: Int, val results: List<T>, val total_results: Int,
-    val total_pages: Int)
+import com.raizlabs.android.dbflow.annotation.Database
+
+@Database(name = AppDatabase.NAME, version = AppDatabase.VERSION)
+class AppDatabase {
+
+  companion object {
+    const val NAME = "MooV"
+    const val VERSION = 1
+  }
+}

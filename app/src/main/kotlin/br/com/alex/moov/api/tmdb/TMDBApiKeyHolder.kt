@@ -14,6 +14,15 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.data.tmdb.model
+package br.com.alex.moov.api.tmdb
 
-data class ConfigurationsResponse(val images: ImageConfigurations, val change_keys: List<String>)
+class TMDBApiKeyHolder {
+
+  companion object {
+    init {
+      System.loadLibrary("native-lib")
+    }
+  }
+
+  external fun getApiKey(): String
+}

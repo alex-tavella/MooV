@@ -14,22 +14,7 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.androidapp
+package br.com.alex.moov.api.tmdb.model
 
-import br.com.alex.moov.androidapp.home.HomeActivity
-import br.com.alex.moov.api.ApiModule
-import br.com.alex.moov.domain.DomainModule
-import dagger.Component
-import javax.inject.Singleton
-
-
-@Singleton
-@Component(modules = arrayOf(
-    ApplicationModule::class,
-    ApiModule::class,
-    DomainModule::class
-))
-interface ApplicationComponent {
-
-  fun inject(homeActivity: HomeActivity)
-}
+class DiscoverResponse<T>(val page: Int, val results: List<T>, val total_results: Int,
+    val total_pages: Int)

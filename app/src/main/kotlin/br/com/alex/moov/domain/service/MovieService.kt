@@ -14,9 +14,21 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.data.tmdb
+package br.com.alex.moov.domain.service
 
-import javax.inject.Qualifier
+import br.com.alex.moov.api.tmdb.TMDBDApi
+import br.com.alex.moov.domain.entity.Movie
+import br.com.alex.moov.domain.mapper.MovieMapper
+import rx.Single
 
-@Qualifier
-annotation class CacheDurationQualifier
+class MovieService(val imageConfigurationsService: ImageConfigurationsService,
+    val tmdbdApi: TMDBDApi, val movieMapper: MovieMapper) {
+  fun discoverMovies(): Single<List<Movie>> {
+    return imageConfigurationsService.retrieveImageConfigurations()
+        .zipWith(tmdbdApi.discoverMovies().map { it.results }, { imageConfigs, tmdbMovies ->
+          tmdbMovies.map {
+            movieMapper.map(it, imageConfigs)
+          }
+        })
+  }
+}

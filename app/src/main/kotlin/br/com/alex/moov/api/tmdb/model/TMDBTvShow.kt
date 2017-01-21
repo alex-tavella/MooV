@@ -14,22 +14,9 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.androidapp
+package br.com.alex.moov.api.tmdb.model
 
-import br.com.alex.moov.androidapp.home.HomeActivity
-import br.com.alex.moov.api.ApiModule
-import br.com.alex.moov.domain.DomainModule
-import dagger.Component
-import javax.inject.Singleton
-
-
-@Singleton
-@Component(modules = arrayOf(
-    ApplicationModule::class,
-    ApiModule::class,
-    DomainModule::class
-))
-interface ApplicationComponent {
-
-  fun inject(homeActivity: HomeActivity)
-}
+data class TMDBTvShow(val id: Int, val poster_path: String, val popularity: Float,
+    val backdrop_path: String, val vote_average: Float, val overview: String,
+    val first_air_date: String, val name: String, val original_name: String, val vote_count: Int,
+    val original_language: String, val origin_country: List<String>, val genre_ids: List<Int>)

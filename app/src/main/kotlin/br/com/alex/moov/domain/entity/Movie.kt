@@ -16,7 +16,7 @@
 
 package br.com.alex.moov.domain.entity
 
-import br.com.alex.moov.domain.AppDatabase
+import br.com.alex.moov.domain.repository.AppDatabase
 import com.raizlabs.android.dbflow.annotation.Column
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
 import com.raizlabs.android.dbflow.annotation.Table
@@ -26,11 +26,11 @@ import com.raizlabs.android.dbflow.structure.Model
 @Table(database = AppDatabase::class)
 data class Movie(
     @PrimaryKey var id: Int = 0,
-    @Column var posterPath: String = "",
+    @Column var posterUrl: String = "",
     @Column var overview: String = "",
     @Column var releaseDate: String = "",
     @Column var title: String = "",
-    @Column var backdropPath: String = "",
+    @Column var backdropUrl: String = "",
     @Column var popularity: Float = 0f,
     @Column var voteAverage: Float = 0f) : Model {
 

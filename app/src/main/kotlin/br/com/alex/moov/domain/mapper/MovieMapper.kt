@@ -14,13 +14,22 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.data.mapper
+package br.com.alex.moov.domain.mapper
 
-import br.com.alex.moov.data.tmdb.model.TMDBMovie
+import br.com.alex.moov.api.tmdb.model.ImageConfigurations
+import br.com.alex.moov.api.tmdb.model.TMDBMovie
 import br.com.alex.moov.domain.entity.Movie
+import javax.inject.Inject
 
-class MovieMapper : Mapper<TMDBMovie, Movie> {
-  override fun map(source: TMDBMovie) = Movie(source.id, source.poster_path, source.overview,
-      source.release_date, source.original_title, source.backdrop_path,
-      source.popularity, source.vote_average)
+class MovieMapper {
+
+  @Inject constructor()
+
+  fun map(source: TMDBMovie, imageConfigs: ImageConfigurations) =
+      Movie(source.id,
+          imageConfigs.base_url + imageConfigs.poster_sizes.first() + source.poster_path,
+          source.overview,
+          source.release_date, source.original_title,
+          imageConfigs.base_url + imageConfigs.backdrop_sizes.first() + source.backdrop_path,
+          source.popularity, source.vote_average)
 }

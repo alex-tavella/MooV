@@ -14,15 +14,21 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.data.tmdb
+package br.com.alex.moov.domain.service
 
-class TMDBApiKeyHolder {
+import br.com.alex.moov.api.tmdb.TMDBDApi
+import br.com.alex.moov.domain.entity.TvShow
+import br.com.alex.moov.domain.mapper.TvShowMapper
+import rx.Single
 
-  companion object {
-    init {
-      System.loadLibrary("native-lib")
-    }
+class TvShowService(val imageConfigurationsService: ImageConfigurationsService,
+    val tmdbdApi: TMDBDApi, val tvShowMapper: TvShowMapper) {
+  fun discoverTvShows(): Single<List<TvShow>> {
+    return imageConfigurationsService.retrieveImageConfigurations()
+        .zipWith(tmdbdApi.discoverTvShows().map { it.results }, { imageConfigs, tmdbTvShows ->
+          tmdbTvShows.map {
+            tvShowMapper.map(it, imageConfigs)
+          }
+        })
   }
-
-  external fun getApiKey(): String
 }

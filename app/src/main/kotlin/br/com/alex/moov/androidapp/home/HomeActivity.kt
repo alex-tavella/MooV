@@ -25,8 +25,9 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import br.com.alex.moov.R
 import br.com.alex.moov.androidapp.MooVApplication
-import br.com.alex.moov.data.tmdb.TMDBDService
 import br.com.alex.moov.databinding.ActivityHomeBinding
+import br.com.alex.moov.domain.service.MovieService
+import br.com.alex.moov.domain.service.TvShowService
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
 import rx.Subscription
@@ -42,7 +43,9 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         R.layout.activity_home)
   }
 
-  @Inject lateinit var discoverService: TMDBDService
+  @Inject lateinit var moviesService: MovieService
+
+  @Inject lateinit var tvShowsService: TvShowService
 
   var subscription: Subscription? = null
 
@@ -82,24 +85,18 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.nav_camera -> {
-        subscription = discoverService.discoverMovies()
-            .map { it.results }
+        subscription = moviesService.discoverMovies()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ Timber.d(it.toString()) }, { Timber.w(it.toString()) })
       }
       R.id.nav_gallery -> {
-        subscription = discoverService.discoverTv()
-            .map { it.results }
+        subscription = tvShowsService.discoverTvShows()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ Timber.d(it.toString()) }, { Timber.w(it.toString()) })
       }
       R.id.nav_slideshow -> {
-        subscription = discoverService.getConfiguration()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ Timber.d(it.toString()) }, { Timber.w(it.toString()) })
       }
       R.id.nav_manage -> {
       }

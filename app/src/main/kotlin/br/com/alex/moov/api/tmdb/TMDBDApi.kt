@@ -14,8 +14,23 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.data.mapper
+package br.com.alex.moov.api.tmdb
 
-interface Mapper<S, T> {
-  fun map(source: S): T
+import br.com.alex.moov.api.tmdb.model.ConfigurationsResponse
+import br.com.alex.moov.api.tmdb.model.DiscoverResponse
+import br.com.alex.moov.api.tmdb.model.TMDBMovie
+import br.com.alex.moov.api.tmdb.model.TMDBTvShow
+import retrofit2.http.GET
+import rx.Single
+
+interface TMDBDApi {
+
+  @GET("/3/discover/movie")
+  fun discoverMovies(): Single<DiscoverResponse<TMDBMovie>>
+
+  @GET("/3/discover/tv")
+  fun discoverTvShows(): Single<DiscoverResponse<TMDBTvShow>>
+
+  @GET("/3/configuration")
+  fun getConfiguration(): Single<ConfigurationsResponse>
 }

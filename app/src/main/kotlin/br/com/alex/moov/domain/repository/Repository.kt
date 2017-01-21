@@ -14,22 +14,12 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.androidapp
+package br.com.alex.moov.domain.repository
 
-import br.com.alex.moov.androidapp.home.HomeActivity
-import br.com.alex.moov.api.ApiModule
-import br.com.alex.moov.domain.DomainModule
-import dagger.Component
-import javax.inject.Singleton
+import br.com.alex.moov.api.tmdb.model.ImageConfigurations
+import rx.Single
 
-
-@Singleton
-@Component(modules = arrayOf(
-    ApplicationModule::class,
-    ApiModule::class,
-    DomainModule::class
-))
-interface ApplicationComponent {
-
-  fun inject(homeActivity: HomeActivity)
+interface Repository<T> {
+  fun load(): Single<T>
+  fun save(imageConfigurations: ImageConfigurations): Single<Boolean>
 }

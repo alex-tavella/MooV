@@ -14,15 +14,16 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.data
+package br.com.alex.moov.api
 
 import br.com.alex.moov.BuildConfig
 import br.com.alex.moov.androidapp.CacheDirQualifier
-import br.com.alex.moov.data.tmdb.ApiKeyQualifier
-import br.com.alex.moov.data.tmdb.CacheDurationQualifier
-import br.com.alex.moov.data.tmdb.TMDBApiKeyHolder
-import br.com.alex.moov.data.tmdb.TMDBDService
-import br.com.alex.moov.data.tmdb.TMDBRequestInterceptor
+import br.com.alex.moov.api.tmdb.ApiKeyQualifier
+import br.com.alex.moov.api.tmdb.CacheDurationQualifier
+import br.com.alex.moov.api.tmdb.TMDBApiKeyHolder
+import br.com.alex.moov.api.tmdb.TMDBDApi
+import br.com.alex.moov.api.tmdb.TMDBRequestInterceptor
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -36,7 +37,7 @@ import java.io.File
 import javax.inject.Singleton
 
 @Module
-class DataModule {
+class ApiModule {
 
   companion object {
     val API_BASE_URL = "https://api.themoviedb.org"
@@ -50,6 +51,9 @@ class DataModule {
 
   @Provides @Singleton @CacheDurationQualifier
   fun provideCacheDuration() = 86400
+
+  @Provides
+  fun providesNewGson() = Gson()
 
   @Provides @Singleton
   fun provideRequestInterceptor(@ApiKeyQualifier apiKey: String,
@@ -76,6 +80,6 @@ class DataModule {
   }
 
   @Provides @Singleton
-  fun providesTMDBDiscoverService(retrofit: Retrofit): TMDBDService = retrofit.create(
-      TMDBDService::class.java)
+  fun providesTMDBDiscoverService(retrofit: Retrofit): TMDBDApi = retrofit.create(
+      TMDBDApi::class.java)
 }

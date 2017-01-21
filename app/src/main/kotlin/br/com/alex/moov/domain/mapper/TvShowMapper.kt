@@ -14,9 +14,20 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.data.tmdb
+package br.com.alex.moov.domain.mapper
 
-import javax.inject.Qualifier
+import br.com.alex.moov.api.tmdb.model.ImageConfigurations
+import br.com.alex.moov.api.tmdb.model.TMDBTvShow
+import br.com.alex.moov.domain.entity.TvShow
+import javax.inject.Inject
 
-@Qualifier
-annotation class ApiKeyQualifier
+class TvShowMapper {
+
+  @Inject constructor()
+
+  fun map(source: TMDBTvShow, imageConfigs: ImageConfigurations) = TvShow(source.id,
+      imageConfigs.base_url + imageConfigs.poster_sizes.first() + source.poster_path,
+      source.popularity,
+      imageConfigs.base_url + imageConfigs.backdrop_sizes.first() + source.backdrop_path,
+      source.vote_average, source.overview, source.name, source.vote_count)
+}

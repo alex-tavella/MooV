@@ -14,9 +14,11 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.data.tmdb.model
+package br.com.alex.moov.domain
 
-data class TMDBTvShow(val id: Int, val poster_path: String, val popularity: Float,
-    val backdrop_path: String, val vote_average: Float, val overview: String,
-    val first_air_date: String, val name: String, val original_name: String, val vote_count: Int,
-    val original_language: String, val origin_country: List<String>, val genre_ids: List<Int>)
+import br.com.alex.moov.domain.repository.RepositoryModule
+import br.com.alex.moov.domain.service.ServiceModule
+import dagger.Module
+
+@Module(includes = arrayOf(RepositoryModule::class, ServiceModule::class))
+class DomainModule

@@ -14,23 +14,9 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.data.tmdb
+package br.com.alex.moov.api.tmdb.model
 
-import br.com.alex.moov.data.tmdb.model.ConfigurationsResponse
-import br.com.alex.moov.data.tmdb.model.DiscoverResponse
-import br.com.alex.moov.data.tmdb.model.TMDBMovie
-import br.com.alex.moov.data.tmdb.model.TMDBTvShow
-import retrofit2.http.GET
-import rx.Single
-
-interface TMDBDService {
-
-  @GET("/3/discover/movie")
-  fun discoverMovies(): Single<DiscoverResponse<TMDBMovie>>
-
-  @GET("/3/discover/tv")
-  fun discoverTv(): Single<DiscoverResponse<TMDBTvShow>>
-
-  @GET("/3/configuration")
-  fun getConfiguration(): Single<ConfigurationsResponse>
-}
+data class TMDBMovie(val id: Int, val poster_path: String, val adult: Boolean, val overview: String,
+    val release_date: String, val genre_ids: List<String>, val original_title: String,
+    val original_language: String, val title: String, val backdrop_path: String,
+    val popularity: Float, val vote_count: Int, val video: Boolean, val vote_average: Float)

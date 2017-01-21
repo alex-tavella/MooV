@@ -14,8 +14,6 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.data.tmdb.model
+package br.com.alex.moov.api.tmdb.model
 
-data class ImageConfigurations(val base_url: String, val secure_base_url: String,
-    val backdrop_sizes: List<String>, val logo_sizes: List<String>, val poster_sizes: List<String>,
-    val profile_sizes: List<String>, val still_sizes: List<String>)
+data class ConfigurationsResponse(val images: ImageConfigurations, val change_keys: List<String>)
