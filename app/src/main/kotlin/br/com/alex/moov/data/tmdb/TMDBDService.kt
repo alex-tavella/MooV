@@ -14,31 +14,23 @@
  *     limitations under the License.
  */
 
-buildscript {
-  ext.kotlin_version = '1.0.6'
-  ext.android_plugin_version = "2.3.0-beta2"
+package br.com.alex.moov.data.tmdb
 
-  repositories {
-    jcenter()
-    maven { url 'https://maven.fabric.io/public' }
-  }
+import br.com.alex.moov.data.tmdb.model.ConfigurationsResponse
+import br.com.alex.moov.data.tmdb.model.DiscoverResponse
+import br.com.alex.moov.data.tmdb.model.TMDBMovie
+import br.com.alex.moov.data.tmdb.model.TMDBTvShow
+import retrofit2.http.GET
+import rx.Single
 
-  dependencies {
-    classpath "com.android.tools.build:gradle:$android_plugin_version"
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    classpath 'io.fabric.tools:gradle:1.22.1'
-  }
-}
+interface TMDBDService {
 
-allprojects {
-  repositories {
-    jcenter()
-    maven { url 'https://maven.fabric.io/public' }
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
-  }
-}
+  @GET("/3/discover/movie")
+  fun discoverMovies(): Single<DiscoverResponse<TMDBMovie>>
 
-task clean(type: Delete) {
-  delete rootProject.buildDir
+  @GET("/3/discover/tv")
+  fun discoverTv(): Single<DiscoverResponse<TMDBTvShow>>
+
+  @GET("/3/configuration")
+  fun getConfiguration(): Single<ConfigurationsResponse>
 }

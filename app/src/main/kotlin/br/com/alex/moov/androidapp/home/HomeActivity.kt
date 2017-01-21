@@ -1,3 +1,19 @@
+/*
+ *     Copyright 2017 Alex Almeida Tavella
+ *
+ *     Licensed under the Apache License, Version 2.0 (the "License");
+ *     you may not use this file except in compliance with the License.
+ *     You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *     Unless required by applicable law or agreed to in writing, software
+ *     distributed under the License is distributed on an "AS IS" BASIS,
+ *     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *     See the License for the specific language governing permissions and
+ *     limitations under the License.
+ */
+
 package br.com.alex.moov.androidapp.home
 
 import android.databinding.DataBindingUtil
@@ -8,11 +24,14 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import br.com.alex.moov.R
-import br.com.alex.moov.TMDBApiKeyHolder
 import br.com.alex.moov.androidapp.MooVApplication
+import br.com.alex.moov.data.tmdb.TMDBDService
 import br.com.alex.moov.databinding.ActivityHomeBinding
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
+import rx.Subscription
+import rx.android.schedulers.AndroidSchedulers
+import rx.schedulers.Schedulers
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -23,7 +42,9 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
         R.layout.activity_home)
   }
 
-  @Inject lateinit var apiKeyHolder: TMDBApiKeyHolder
+  @Inject lateinit var discoverService: TMDBDService
+
+  var subscription: Subscription? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
@@ -53,13 +74,32 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
     }
   }
 
+  override fun onDestroy() {
+    super.onDestroy()
+    subscription?.unsubscribe()
+  }
+
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
       R.id.nav_camera -> {
+        subscription = discoverService.discoverMovies()
+            .map { it.results }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ Timber.d(it.toString()) }, { Timber.w(it.toString()) })
       }
       R.id.nav_gallery -> {
+        subscription = discoverService.discoverTv()
+            .map { it.results }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ Timber.d(it.toString()) }, { Timber.w(it.toString()) })
       }
       R.id.nav_slideshow -> {
+        subscription = discoverService.getConfiguration()
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ Timber.d(it.toString()) }, { Timber.w(it.toString()) })
       }
       R.id.nav_manage -> {
       }
@@ -74,9 +114,6 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
     Answers.getInstance().logCustom(CustomEvent("Navigation item selected")
         .putCustomAttribute("Context", "Home drawer")
         .putCustomAttribute("item", item.toString()))
-
-    Timber.d("Api read access token is - ${apiKeyHolder.getApiApiReadAccessToken()}")
-    Timber.d("Api key is - ${apiKeyHolder.getApiKey()}")
 
     mBinding.drawerLayout.closeDrawer(GravityCompat.START)
     return true

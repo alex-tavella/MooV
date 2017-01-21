@@ -14,31 +14,30 @@
  *     limitations under the License.
  */
 
-buildscript {
-  ext.kotlin_version = '1.0.6'
-  ext.android_plugin_version = "2.3.0-beta2"
+package br.com.alex.moov.androidapp
 
-  repositories {
-    jcenter()
-    maven { url 'https://maven.fabric.io/public' }
+import android.app.Application
+import android.content.Context
+import dagger.Module
+import dagger.Provides
+import javax.inject.Singleton
+
+
+@Module
+class ApplicationModule(application: Application) {
+
+  private val appContext: Context = application
+
+  @Provides
+  @Singleton
+  @ApplicationContextQualifier
+  internal fun provideAppContext(): Context {
+    return appContext
   }
 
-  dependencies {
-    classpath "com.android.tools.build:gradle:$android_plugin_version"
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    classpath 'io.fabric.tools:gradle:1.22.1'
-  }
-}
-
-allprojects {
-  repositories {
-    jcenter()
-    maven { url 'https://maven.fabric.io/public' }
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
-  }
-}
-
-task clean(type: Delete) {
-  delete rootProject.buildDir
+  @Provides
+  @Singleton
+  @CacheDirQualifier
+  internal fun provideCacheDirectory(
+      @ApplicationContextQualifier context: Context) = context.cacheDir
 }

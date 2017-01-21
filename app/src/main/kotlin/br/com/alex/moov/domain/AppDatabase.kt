@@ -14,31 +14,15 @@
  *     limitations under the License.
  */
 
-buildscript {
-  ext.kotlin_version = '1.0.6'
-  ext.android_plugin_version = "2.3.0-beta2"
+package br.com.alex.moov.domain
 
-  repositories {
-    jcenter()
-    maven { url 'https://maven.fabric.io/public' }
+import com.raizlabs.android.dbflow.annotation.Database
+
+@Database(name = AppDatabase.NAME, version = AppDatabase.VERSION)
+class AppDatabase {
+
+  companion object {
+    const val NAME = "MooV";
+    const val VERSION = 1;
   }
-
-  dependencies {
-    classpath "com.android.tools.build:gradle:$android_plugin_version"
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    classpath 'io.fabric.tools:gradle:1.22.1'
-  }
-}
-
-allprojects {
-  repositories {
-    jcenter()
-    maven { url 'https://maven.fabric.io/public' }
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
-  }
-}
-
-task clean(type: Delete) {
-  delete rootProject.buildDir
 }

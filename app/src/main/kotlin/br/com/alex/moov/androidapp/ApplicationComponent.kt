@@ -14,31 +14,20 @@
  *     limitations under the License.
  */
 
-buildscript {
-  ext.kotlin_version = '1.0.6'
-  ext.android_plugin_version = "2.3.0-beta2"
+package br.com.alex.moov.androidapp
 
-  repositories {
-    jcenter()
-    maven { url 'https://maven.fabric.io/public' }
-  }
+import br.com.alex.moov.androidapp.home.HomeActivity
+import br.com.alex.moov.data.DataModule
+import dagger.Component
+import javax.inject.Singleton
 
-  dependencies {
-    classpath "com.android.tools.build:gradle:$android_plugin_version"
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    classpath 'io.fabric.tools:gradle:1.22.1'
-  }
-}
 
-allprojects {
-  repositories {
-    jcenter()
-    maven { url 'https://maven.fabric.io/public' }
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
-  }
-}
+@Singleton
+@Component(modules = arrayOf(
+    ApplicationModule::class,
+    DataModule::class
+))
+interface ApplicationComponent {
 
-task clean(type: Delete) {
-  delete rootProject.buildDir
+  fun inject(homeActivity: HomeActivity)
 }

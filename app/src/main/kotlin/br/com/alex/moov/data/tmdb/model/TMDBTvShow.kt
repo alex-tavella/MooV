@@ -14,31 +14,9 @@
  *     limitations under the License.
  */
 
-buildscript {
-  ext.kotlin_version = '1.0.6'
-  ext.android_plugin_version = "2.3.0-beta2"
+package br.com.alex.moov.data.tmdb.model
 
-  repositories {
-    jcenter()
-    maven { url 'https://maven.fabric.io/public' }
-  }
-
-  dependencies {
-    classpath "com.android.tools.build:gradle:$android_plugin_version"
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    classpath 'io.fabric.tools:gradle:1.22.1'
-  }
-}
-
-allprojects {
-  repositories {
-    jcenter()
-    maven { url 'https://maven.fabric.io/public' }
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
-  }
-}
-
-task clean(type: Delete) {
-  delete rootProject.buildDir
-}
+data class TMDBTvShow(val id: Int, val poster_path: String, val popularity: Float,
+    val backdrop_path: String, val vote_average: Float, val overview: String,
+    val first_air_date: String, val name: String, val original_name: String, val vote_count: Int,
+    val original_language: String, val origin_country: List<String>, val genre_ids: List<Int>)

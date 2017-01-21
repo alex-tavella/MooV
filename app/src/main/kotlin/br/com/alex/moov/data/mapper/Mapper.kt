@@ -14,31 +14,8 @@
  *     limitations under the License.
  */
 
-buildscript {
-  ext.kotlin_version = '1.0.6'
-  ext.android_plugin_version = "2.3.0-beta2"
+package br.com.alex.moov.data.mapper
 
-  repositories {
-    jcenter()
-    maven { url 'https://maven.fabric.io/public' }
-  }
-
-  dependencies {
-    classpath "com.android.tools.build:gradle:$android_plugin_version"
-    classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-    classpath 'io.fabric.tools:gradle:1.22.1'
-  }
-}
-
-allprojects {
-  repositories {
-    jcenter()
-    maven { url 'https://maven.fabric.io/public' }
-    mavenCentral()
-    maven { url 'https://jitpack.io' }
-  }
-}
-
-task clean(type: Delete) {
-  delete rootProject.buildDir
+interface Mapper<S, T> {
+  fun map(source: S): T
 }
