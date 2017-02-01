@@ -16,6 +16,8 @@
 
 package br.com.alex.moov.domain.entity
 
+import android.os.Parcel
+import android.os.Parcelable
 import br.com.alex.moov.domain.repository.AppDatabase
 import com.raizlabs.android.dbflow.annotation.Column
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
@@ -24,16 +26,15 @@ import com.raizlabs.android.dbflow.kotlinextensions.modelAdapter
 import com.raizlabs.android.dbflow.structure.Model
 
 @Table(database = AppDatabase::class)
-data class TvShow (
+data class TvShow(
     @PrimaryKey var id: Int = 0,
-    @Column var posterPath: String = "",
+    @Column var posterUrl: String = "",
     @Column var popularity: Float = 0f,
-    @Column var backdropPath: String = "",
+    @Column var backdropUrl: String = "",
     @Column var voteAverage: Float = 0f,
     @Column var overview: String = "",
     @Column var name: String = "",
-    @Column var voteCount: Int = 0) : Model {
-
+    @Column var voteCount: Int = 0) : Model, Parcelable {
   override fun insert() = modelAdapter<TvShow>().insert(this)
 
   override fun save() = modelAdapter<TvShow>().save(this)
@@ -46,4 +47,28 @@ data class TvShow (
 
   override fun load() = modelAdapter<TvShow>().load(this)
 
+  companion object {
+    @JvmField val CREATOR: Parcelable.Creator<TvShow> = object : Parcelable.Creator<TvShow> {
+      override fun createFromParcel(source: Parcel): TvShow = TvShow(source)
+      override fun newArray(size: Int): Array<TvShow?> = arrayOfNulls(size)
+    }
+  }
+
+  constructor(
+      source: Parcel) : this(source.readInt(), source.readString(), source.readFloat(),
+      source.readString(), source.readFloat(), source.readString(), source.readString(),
+      source.readInt())
+
+  override fun describeContents() = 0
+
+  override fun writeToParcel(dest: Parcel?, flags: Int) {
+    dest?.writeInt(id)
+    dest?.writeString(posterUrl)
+    dest?.writeFloat(popularity)
+    dest?.writeString(backdropUrl)
+    dest?.writeFloat(voteAverage)
+    dest?.writeString(overview)
+    dest?.writeString(name)
+    dest?.writeInt(voteCount)
+  }
 }

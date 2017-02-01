@@ -19,6 +19,9 @@ package br.com.alex.moov.androidapp
 import android.app.Application
 import android.content.Context
 import android.preference.PreferenceManager
+import br.com.alex.moov.androidapp.email.IntentEmailSender
+import br.com.alex.moov.androidapp.logger.AnswersEventLogger
+import br.com.alex.moov.api.CacheDirQualifier
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -47,4 +50,12 @@ class ApplicationModule(application: Application) {
   @CacheDirQualifier
   internal fun provideCacheDirectory(
       @ApplicationContextQualifier context: Context) = context.cacheDir
+
+  @Provides
+  @Singleton
+  fun provideEmailSender(@ApplicationContextQualifier context: Context) = IntentEmailSender(context)
+
+  @Provides
+  @Singleton
+  fun provideEventLogger() = AnswersEventLogger()
 }

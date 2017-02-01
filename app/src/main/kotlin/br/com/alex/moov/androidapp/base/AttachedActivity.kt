@@ -14,11 +14,13 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.androidapp
+package br.com.alex.moov.androidapp.base
 
-import javax.inject.Qualifier
-import kotlin.annotation.AnnotationRetention.RUNTIME
+import android.app.Activity
+import android.support.v4.app.DialogFragment
 
-@Qualifier
-@Retention(RUNTIME)
-annotation class CacheDirQualifier
+
+interface AttachedActivity {
+  fun startActivity(activityClass: Class<out Activity>)
+  fun showDialog(dialogFragment: DialogFragment, tag: String)
+}

@@ -14,21 +14,26 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.domain.service
+package br.com.alex.moov.androidapp.list.tvshow
 
-import br.com.alex.moov.api.tmdb.TMDBDApi
+import android.databinding.Bindable
+import android.view.View
+import android.widget.Toast
+import br.com.alex.moov.androidapp.base.viewmodel.list.ItemViewModel
 import br.com.alex.moov.domain.entity.TvShow
-import br.com.alex.moov.domain.mapper.TvShowMapper
-import rx.Single
 
-class TvShowService(val imageConfigurationsService: ImageConfigurationsService,
-    val tmdbdApi: TMDBDApi, val tvShowMapper: TvShowMapper) {
-  fun discoverTvShows(): Single<List<TvShow>> {
-    return imageConfigurationsService.retrieveImageConfigurations()
-        .zipWith(tmdbdApi.discoverTvShows().map { it.results }, { imageConfigs, tmdbTvShows ->
-          tmdbTvShows.map {
-            tvShowMapper.map(it, imageConfigs)
-          }
-        })
+class TvShowItemViewModel : ItemViewModel<TvShow>() {
+
+  private var tvShow: TvShow? = null
+
+  override fun setItem(item: TvShow) {
+    tvShow = item
+    notifyChange()
+  }
+
+  @Bindable fun getImageUrl() = tvShow?.posterUrl
+
+  fun onClick(view: View) {
+    Toast.makeText(view.context, "${tvShow?.name}", Toast.LENGTH_SHORT).show()
   }
 }

@@ -16,7 +16,8 @@
 
 package br.com.alex.moov.androidapp
 
-import br.com.alex.moov.androidapp.home.HomeActivity
+import br.com.alex.moov.androidapp.home.HomeComponent
+import br.com.alex.moov.androidapp.home.HomeModule
 import br.com.alex.moov.api.ApiModule
 import br.com.alex.moov.domain.DomainModule
 import dagger.Component
@@ -30,6 +31,5 @@ import javax.inject.Singleton
     DomainModule::class
 ))
 interface ApplicationComponent {
-
-  fun inject(homeActivity: HomeActivity)
+  fun plus(homeModule: HomeModule): HomeComponent
 }

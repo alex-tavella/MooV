@@ -14,21 +14,22 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.domain.service
+package br.com.alex.moov.androidapp.home
 
-import br.com.alex.moov.api.tmdb.TMDBDApi
-import br.com.alex.moov.domain.entity.Movie
-import br.com.alex.moov.domain.mapper.MovieMapper
-import rx.Single
+import android.support.v4.app.FragmentManager
+import br.com.alex.moov.androidapp.base.di.ActivityModule
+import br.com.alex.moov.androidapp.base.di.ActivityScope
+import dagger.Module
+import dagger.Provides
 
-class MovieService(val imageConfigurationsService: ImageConfigurationsService,
-    val tmdbdApi: TMDBDApi, val movieMapper: MovieMapper) {
-  fun discoverMovies(): Single<List<Movie>> {
-    return imageConfigurationsService.retrieveImageConfigurations()
-        .zipWith(tmdbdApi.discoverMovies().map { it.results }, { imageConfigs, tmdbMovies ->
-          tmdbMovies.map {
-            movieMapper.map(it, imageConfigs)
-          }
-        })
-  }
+@Module
+class HomeModule(private val homeActivity: HomeActivity) : ActivityModule(homeActivity) {
+
+  @Provides
+  @ActivityScope
+  fun providesFragmentManager(): FragmentManager = homeActivity.supportFragmentManager
+
+  @Provides
+  @ActivityScope
+  fun providesScreenSwitcher(fragmentManager: FragmentManager) = HomeScreenSwitcher(fragmentManager)
 }

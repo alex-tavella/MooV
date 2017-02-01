@@ -14,7 +14,7 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.domain.service
+package br.com.alex.moov.domain.interactor
 
 import br.com.alex.moov.api.tmdb.TMDBDApi
 import br.com.alex.moov.api.tmdb.model.ImageConfigurations
@@ -26,23 +26,27 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class ServiceModule {
+class InteractorsModule {
   @Provides
   @Singleton
-  fun provideImageConfigurationsService(
+  fun provideImageConfigurationsInteractor(
       imageConfigurationsRepository: Repository<ImageConfigurations>,
-      tmdbdApi: TMDBDApi) = ImageConfigurationsService(imageConfigurationsRepository,
+      tmdbdApi: TMDBDApi) = GetImageConfigurationsInteractor(imageConfigurationsRepository,
       tmdbdApi)
 
   @Provides
   @Singleton
-  fun provideMovieService(imageConfigurationsService: ImageConfigurationsService,
-      tmdbdApi: TMDBDApi, movieMapper: MovieMapper) = MovieService(imageConfigurationsService,
+  fun provideDiscoverMoviesInteractor(
+      getImageConfigurationsInteractor: GetImageConfigurationsInteractor,
+      tmdbdApi: TMDBDApi, movieMapper: MovieMapper) = DiscoverMoviesInteractor(
+      getImageConfigurationsInteractor,
       tmdbdApi, movieMapper)
 
   @Provides
   @Singleton
-  fun provideTvShowService(imageConfigurationsService: ImageConfigurationsService,
-      tmdbdApi: TMDBDApi, tvShowMapper: TvShowMapper) = TvShowService(imageConfigurationsService,
+  fun provideDiscoverTvShowsInteractor(
+      getImageConfigurationsInteractor: GetImageConfigurationsInteractor,
+      tmdbdApi: TMDBDApi, tvShowMapper: TvShowMapper) = DiscoverTvShowsInteractor(
+      getImageConfigurationsInteractor,
       tmdbdApi, tvShowMapper)
 }

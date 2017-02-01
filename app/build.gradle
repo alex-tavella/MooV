@@ -96,6 +96,9 @@ dependencies {
   compile 'io.reactivex:rxandroid:1.2.0'
   compile 'io.reactivex:rxjava:1.1.5'
 
+  // Image
+  compile 'com.facebook.fresco:fresco:1.0.1'
+
   // DbFlow
   def dbflow_version = "4.0.0-beta5"
   kapt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"

@@ -21,41 +21,57 @@ import android.os.Bundle
 import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import br.com.alex.moov.R
-import br.com.alex.moov.androidapp.MooVApplication
+import br.com.alex.moov.androidapp.ApplicationComponent
+import br.com.alex.moov.androidapp.about.AboutFragment
+import br.com.alex.moov.androidapp.base.BaseActivity
+import br.com.alex.moov.androidapp.base.di.HasComponent
+import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
+import br.com.alex.moov.androidapp.base.viewmodel.ViewModel.State
+import br.com.alex.moov.androidapp.email.EmailSender
+import br.com.alex.moov.androidapp.list.movie.MovieListFragment
+import br.com.alex.moov.androidapp.list.tvshow.TvShowListFragment
+import br.com.alex.moov.androidapp.logger.EventLogger
 import br.com.alex.moov.databinding.ActivityHomeBinding
-import br.com.alex.moov.domain.service.MovieService
-import br.com.alex.moov.domain.service.TvShowService
-import com.crashlytics.android.answers.Answers
-import com.crashlytics.android.answers.CustomEvent
-import rx.Subscription
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
-import timber.log.Timber
 import javax.inject.Inject
 
-class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
+class HomeActivity : BaseActivity(), OnNavigationItemSelectedListener, HasComponent<HomeComponent> {
+
+  companion object {
+    val TAG_MOVIES = "Movies"
+    val TAG_TV_SHOWS = "TvShows"
+    val TAG_ABOUT = "About"
+  }
+
+  lateinit var homeComponent: HomeComponent
+
+  @Inject lateinit var screenSwitcher: HomeScreenSwitcher
+
+  @Inject lateinit var emailSender: EmailSender
+
+  @Inject lateinit var eventLogger: EventLogger
+
+  override fun getComponent() = homeComponent
 
   val mBinding: ActivityHomeBinding by lazy {
     DataBindingUtil.setContentView<ActivityHomeBinding>(this,
         R.layout.activity_home)
   }
 
-  @Inject lateinit var moviesService: MovieService
+  override fun injectDependencies(applicationComponent: ApplicationComponent) {
+    homeComponent = applicationComponent.plus(HomeModule(this))
+    homeComponent.inject(this)
+  }
 
-  @Inject lateinit var tvShowsService: TvShowService
-
-  var subscription: Subscription? = null
+  override fun createViewModel(savedViewModelState: State?): ViewModel? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-
-    (applicationContext as MooVApplication).getAppComponent().inject(this)
+    setContentView(R.layout.activity_home)
 
     val drawerLayout = mBinding.drawerLayout
-    val toolbar = mBinding.appBar.toolbar
+    val toolbar = mBinding.toolbar
 
     setSupportActionBar(toolbar)
 
@@ -66,6 +82,11 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
     toggle.syncState()
 
     mBinding.navView.setNavigationItemSelectedListener(this)
+
+    if (savedInstanceState == null) {
+      screenSwitcher.switchScreen(MovieListFragment::class.java, TAG_MOVIES)
+      mBinding.navView.setCheckedItem(R.id.nav_movies)
+    }
   }
 
   override fun onBackPressed() {
@@ -77,40 +98,25 @@ class HomeActivity : AppCompatActivity(), OnNavigationItemSelectedListener {
     }
   }
 
-  override fun onDestroy() {
-    super.onDestroy()
-    subscription?.unsubscribe()
-  }
-
   override fun onNavigationItemSelected(item: MenuItem): Boolean {
     when (item.itemId) {
-      R.id.nav_camera -> {
-        subscription = moviesService.discoverMovies()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ Timber.d(it.toString()) }, { Timber.w(it.toString()) })
+      R.id.nav_movies -> {
+        screenSwitcher.switchScreen(MovieListFragment::class.java, TAG_MOVIES)
       }
-      R.id.nav_gallery -> {
-        subscription = tvShowsService.discoverTvShows()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ Timber.d(it.toString()) }, { Timber.w(it.toString()) })
+      R.id.nav_tv_shows -> {
+        screenSwitcher.switchScreen(TvShowListFragment::class.java, TAG_TV_SHOWS)
       }
-      R.id.nav_slideshow -> {
+      R.id.nav_about -> {
+        screenSwitcher.switchScreen(AboutFragment::class.java, TAG_ABOUT)
       }
-      R.id.nav_manage -> {
-      }
-      R.id.nav_share -> {
-      }
-      R.id.nav_send -> {
+      R.id.nav_feedback -> {
+        emailSender.sendFeedbackEmail()
       }
       else -> {
       }
     }
 
-    Answers.getInstance().logCustom(CustomEvent("Navigation item selected")
-        .putCustomAttribute("Context", "Home drawer")
-        .putCustomAttribute("item", item.toString()))
+    eventLogger.logHomeNavigationDrawerEvent(item)
 
     mBinding.drawerLayout.closeDrawer(GravityCompat.START)
     return true

@@ -22,6 +22,7 @@ import br.com.alex.moov.BuildConfig
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.core.CrashlyticsCore
+import com.facebook.drawee.backends.pipeline.Fresco
 import com.squareup.leakcanary.LeakCanary
 import io.fabric.sdk.android.Fabric
 import timber.log.Timber
@@ -64,6 +65,8 @@ class MooVApplication : Application() {
     LeakCanary.install(this)
 
     Fabric.with(this, Crashlytics(), CrashlyticsCore(), Answers())
+
+    Fresco.initialize(this);
   }
 
   fun getAppComponent(): ApplicationComponent {

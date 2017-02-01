@@ -16,9 +16,9 @@
 
 package br.com.alex.moov.domain
 
+import br.com.alex.moov.domain.interactor.InteractorsModule
 import br.com.alex.moov.domain.repository.RepositoryModule
-import br.com.alex.moov.domain.service.ServiceModule
 import dagger.Module
 
-@Module(includes = arrayOf(RepositoryModule::class, ServiceModule::class))
+@Module(includes = arrayOf(RepositoryModule::class, InteractorsModule::class))
 class DomainModule

@@ -14,25 +14,21 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.domain.service
+package br.com.alex.moov.domain.interactor
 
 import br.com.alex.moov.api.tmdb.TMDBDApi
-import br.com.alex.moov.api.tmdb.model.ImageConfigurations
-import br.com.alex.moov.domain.repository.Repository
+import br.com.alex.moov.domain.entity.TvShow
+import br.com.alex.moov.domain.mapper.TvShowMapper
 import rx.Single
-import timber.log.Timber
 
-class ImageConfigurationsService(val imageConfigurationsRepository: Repository<ImageConfigurations>,
-    val tmdbdApi: TMDBDApi) {
-
-  fun retrieveImageConfigurations(): Single<ImageConfigurations> {
-    return imageConfigurationsRepository.load()
-        .onErrorResumeNext {
-          tmdbdApi.getConfiguration()
-              .map { it.images }
-              .doOnSuccess { imageConfigurationsRepository.save(it) }
-        }
-        .doOnSuccess { Timber.d("$it") }
-        .doOnError { Timber.e("$it") }
+class DiscoverTvShowsInteractor(val getImageConfigurationsInteractor: GetImageConfigurationsInteractor,
+    val tmdbdApi: TMDBDApi, val tvShowMapper: TvShowMapper) {
+  fun execute(): Single<List<TvShow>> {
+    return getImageConfigurationsInteractor.execute()
+        .zipWith(tmdbdApi.discoverTvShows().map { it.results }, { imageConfigs, tmdbTvShows ->
+          tmdbTvShows.map {
+            tvShowMapper.map(it, imageConfigs)
+          }
+        })
   }
 }

@@ -16,6 +16,8 @@
 
 package br.com.alex.moov.domain.entity
 
+import android.os.Parcel
+import android.os.Parcelable
 import br.com.alex.moov.domain.repository.AppDatabase
 import com.raizlabs.android.dbflow.annotation.Column
 import com.raizlabs.android.dbflow.annotation.PrimaryKey
@@ -32,8 +34,7 @@ data class Movie(
     @Column var title: String = "",
     @Column var backdropUrl: String = "",
     @Column var popularity: Float = 0f,
-    @Column var voteAverage: Float = 0f) : Model {
-
+    @Column var voteAverage: Float = 0f) : Model, Parcelable {
   override fun insert() = modelAdapter<Movie>().insert(this)
 
   override fun save() = modelAdapter<Movie>().save(this)
@@ -46,4 +47,28 @@ data class Movie(
 
   override fun load() = modelAdapter<Movie>().load(this)
 
+  companion object {
+    @JvmField val CREATOR: Parcelable.Creator<Movie> = object : Parcelable.Creator<Movie> {
+      override fun createFromParcel(source: Parcel): Movie = Movie(source)
+      override fun newArray(size: Int): Array<Movie?> = arrayOfNulls(size)
+    }
+  }
+
+  constructor(
+      source: Parcel) : this(source.readInt(), source.readString(), source.readString(),
+      source.readString(), source.readString(), source.readString(), source.readFloat(),
+      source.readFloat())
+
+  override fun describeContents() = 0
+
+  override fun writeToParcel(dest: Parcel?, flags: Int) {
+    dest?.writeInt(id)
+    dest?.writeString(posterUrl)
+    dest?.writeString(overview)
+    dest?.writeString(releaseDate)
+    dest?.writeString(title)
+    dest?.writeString(backdropUrl)
+    dest?.writeFloat(popularity)
+    dest?.writeFloat(voteAverage)
+  }
 }
