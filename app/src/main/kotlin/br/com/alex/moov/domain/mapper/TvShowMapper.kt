@@ -21,13 +21,19 @@ import br.com.alex.moov.api.tmdb.model.TMDBTvShow
 import br.com.alex.moov.domain.entity.TvShow
 import javax.inject.Inject
 
-class TvShowMapper {
-
-  @Inject constructor()
+class TvShowMapper @Inject constructor() {
 
   fun map(source: TMDBTvShow, imageConfigs: ImageConfigurations) = TvShow(source.id,
-      imageConfigs.base_url + imageConfigs.poster_sizes.first() + source.poster_path,
+      imageConfigs.base_url + getPosterQuality(imageConfigs) + source.poster_path,
       source.popularity,
-      imageConfigs.base_url + imageConfigs.backdrop_sizes.first() + source.backdrop_path,
+      imageConfigs.base_url + getBackdropQuality(imageConfigs) + source.backdrop_path,
       source.vote_average, source.overview, source.name, source.vote_count)
+
+  private fun getPosterQuality(
+      imageConfigs: ImageConfigurations) = imageConfigs.poster_sizes.get(
+      imageConfigs.poster_sizes.size / 2)
+
+  private fun getBackdropQuality(
+      imageConfigs: ImageConfigurations) = imageConfigs.backdrop_sizes.get(
+      imageConfigs.backdrop_sizes.size / 2)
 }

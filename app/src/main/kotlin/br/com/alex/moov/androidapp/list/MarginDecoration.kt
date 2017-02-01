@@ -14,17 +14,24 @@
  *     limitations under the License.
  */
 
-package br.com.alex.moov.androidapp.base.viewmodel.list
+package br.com.alex.moov.androidapp.list
 
+import android.content.Context
+import android.graphics.Rect
 import android.support.v7.widget.RecyclerView
-import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
+import android.view.View
+import br.com.alex.moov.R
 
 
-abstract class RecyclerViewViewModel(savedInstanceState: State?) : ViewModel(savedInstanceState) {
+class MarginDecoration(context: Context) : RecyclerView.ItemDecoration() {
+  private val margin: Int
 
-  protected abstract fun getRecyclerViewViewModelAdapter(): RecyclerViewViewModelAdapter<*, *>
+  init {
+    margin = context.getResources().getDimensionPixelSize(R.dimen.grid_item_margin)
+  }
 
-  fun setupRecyclerView(recyclerView: RecyclerView) {
-    recyclerView.adapter = getRecyclerViewViewModelAdapter()
+  override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView,
+      state: RecyclerView.State) {
+    outRect.set(margin, margin, margin, margin)
   }
 }

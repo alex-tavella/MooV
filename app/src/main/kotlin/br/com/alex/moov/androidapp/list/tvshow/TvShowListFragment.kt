@@ -27,6 +27,7 @@ import br.com.alex.moov.androidapp.base.di.HasComponent
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel.State
 import br.com.alex.moov.androidapp.home.HomeComponent
+import br.com.alex.moov.androidapp.list.MarginDecoration
 import br.com.alex.moov.androidapp.logger.EventLogger
 import br.com.alex.moov.databinding.FragmentTvShowsBinding
 import br.com.alex.moov.domain.interactor.DiscoverTvShowsInteractor
@@ -64,6 +65,8 @@ class TvShowListFragment : BaseFragment(), HasComponent<TvShowsComponent> {
         discoverTvShowsInteractor)
     val binding = FragmentTvShowsBinding.bind(root)
     binding.setViewModel(tvShowsViewModel)
+    binding.recyclerView.setHasFixedSize(true)
+    binding.recyclerView.addItemDecoration(MarginDecoration(context))
     return tvShowsViewModel!!
   }
 
