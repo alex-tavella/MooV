@@ -19,8 +19,10 @@ package br.com.alex.moov.androidapp
 import android.app.Application
 import android.content.Context
 import android.preference.PreferenceManager
+import br.com.alex.moov.androidapp.email.EmailSender
 import br.com.alex.moov.androidapp.email.IntentEmailSender
 import br.com.alex.moov.androidapp.logger.AnswersEventLogger
+import br.com.alex.moov.androidapp.logger.EventLogger
 import br.com.alex.moov.api.CacheDirQualifier
 import dagger.Module
 import dagger.Provides
@@ -53,9 +55,10 @@ class ApplicationModule(application: Application) {
 
   @Provides
   @Singleton
-  fun provideEmailSender(@ApplicationContextQualifier context: Context) = IntentEmailSender(context)
+  fun provideEmailSender(
+      @ApplicationContextQualifier context: Context): EmailSender = IntentEmailSender(context)
 
   @Provides
   @Singleton
-  fun provideEventLogger() = AnswersEventLogger()
+  fun provideEventLogger(): EventLogger = AnswersEventLogger()
 }
