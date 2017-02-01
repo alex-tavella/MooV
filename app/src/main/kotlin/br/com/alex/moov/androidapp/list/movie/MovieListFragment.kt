@@ -27,6 +27,7 @@ import br.com.alex.moov.androidapp.base.di.HasComponent
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel.State
 import br.com.alex.moov.androidapp.home.HomeComponent
+import br.com.alex.moov.androidapp.list.MarginDecoration
 import br.com.alex.moov.androidapp.logger.EventLogger
 import br.com.alex.moov.databinding.FragmentMoviesBinding
 import br.com.alex.moov.domain.interactor.DiscoverMoviesInteractor
@@ -64,6 +65,8 @@ class MovieListFragment : BaseFragment(), HasComponent<MoviesComponent> {
     val binding = FragmentMoviesBinding.bind(root)
     moviesViewModel = MoviesViewModel(context, movieAdapter, discoverMoviesInteractor, savedViewModelState)
     binding.setViewModel(moviesViewModel)
+    binding.recyclerView.setHasFixedSize(true)
+    binding.recyclerView.addItemDecoration(MarginDecoration(context))
     return moviesViewModel!!
   }
 

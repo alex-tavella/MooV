@@ -19,7 +19,7 @@ package br.com.alex.moov.androidapp.list.tvshow
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
-import android.support.v7.widget.GridLayoutManager
+import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
 import br.com.alex.moov.androidapp.base.viewmodel.list.RecyclerViewViewModel
 import br.com.alex.moov.domain.entity.TvShow
 import br.com.alex.moov.domain.interactor.DiscoverTvShowsInteractor
@@ -29,13 +29,12 @@ import rx.schedulers.Schedulers
 import timber.log.Timber
 
 class TvShowsViewModel(val context: Context, val adapter: TvShowAdapter,
-    savedState: State?, val discoverTvShowsInteractor: DiscoverTvShowsInteractor) : RecyclerViewViewModel(savedState) {
+    savedState: State?,
+    val discoverTvShowsInteractor: DiscoverTvShowsInteractor) : RecyclerViewViewModel(savedState) {
 
   override fun getRecyclerViewViewModelAdapter() = adapter
 
-  override fun createLayoutManager() = GridLayoutManager(context, 2)
-
-  override fun getInstanceState(): RecyclerViewViewModel.RecyclerViewViewModelState
+  override fun getInstanceState(): ViewModel.State
       = TvShowsViewModelState(this)
 
   private var subscription: Subscription? = null
@@ -56,7 +55,7 @@ class TvShowsViewModel(val context: Context, val adapter: TvShowAdapter,
     subscription?.unsubscribe()
   }
 
-  private class TvShowsViewModelState : RecyclerViewViewModel.RecyclerViewViewModelState {
+  private class TvShowsViewModelState : ViewModel.State {
 
     private val tvShows: MutableList<TvShow>
 

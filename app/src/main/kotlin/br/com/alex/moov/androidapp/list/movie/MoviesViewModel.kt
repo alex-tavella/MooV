@@ -19,7 +19,7 @@ package br.com.alex.moov.androidapp.list.movie
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
-import android.support.v7.widget.GridLayoutManager
+import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
 import br.com.alex.moov.androidapp.base.viewmodel.list.RecyclerViewViewModel
 import br.com.alex.moov.domain.entity.Movie
 import br.com.alex.moov.domain.interactor.DiscoverMoviesInteractor
@@ -29,13 +29,12 @@ import rx.schedulers.Schedulers
 import timber.log.Timber
 
 class MoviesViewModel(val context: Context, val adapter: MovieAdapter,
-    val discoverMoviesInteractor: DiscoverMoviesInteractor, savedState: State?) : RecyclerViewViewModel(savedState) {
+    val discoverMoviesInteractor: DiscoverMoviesInteractor,
+    savedState: State?) : RecyclerViewViewModel(savedState) {
 
   override fun getRecyclerViewViewModelAdapter() = adapter
 
-  override fun createLayoutManager() = GridLayoutManager(context, 2)
-
-  override fun getInstanceState(): RecyclerViewViewModel.RecyclerViewViewModelState
+  override fun getInstanceState(): ViewModel.State
       = MoviesViewModelState(this)
 
   private var subscription: Subscription? = null
@@ -56,7 +55,7 @@ class MoviesViewModel(val context: Context, val adapter: MovieAdapter,
     subscription?.unsubscribe()
   }
 
-  private class MoviesViewModelState : RecyclerViewViewModel.RecyclerViewViewModelState {
+  private class MoviesViewModelState : ViewModel.State {
 
     private val movies: MutableList<Movie>
 
