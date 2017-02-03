@@ -41,6 +41,10 @@ class LegalDialogFragment : DialogFragment() {
     val builder = AlertDialog.Builder(context)
 
     val licenseTextView = TextView(activity)
+    val horizontalMargin = resources.getDimension(R.dimen.activity_horizontal_margin).toInt()
+    val verticalMargin = resources.getDimension(R.dimen.activity_vertical_margin).toInt()
+    licenseTextView.setPaddingRelative(horizontalMargin, verticalMargin, horizontalMargin,
+        verticalMargin)
     licenseTextView.movementMethod = LinkMovementMethod.getInstance()
 
     if (android.os.Build.VERSION.SDK_INT >= 24) {

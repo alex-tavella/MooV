@@ -1,13 +1,15 @@
-#MooV
+# MooV
+[![Build Status](https://travis-ci.org/alex-tavella/MooV.svg?branch=master)](https://travis-ci.org/alex-tavella/MooV)
 
 This project's purpose is to demonstrate the usage of current cutting-edge technology such as **Dagger**, **Kotlin**, **RxJava2** when developing an Android mobile app. It also has some techniques and best practices I have found through my years of Android development.
 
-#Libraries/Tools
+# Libraries/Tools
 
  * Kotlin - https://kotlinlang.org/
  * Dagger2 - https://google.github.io/dagger/
  * Retrofit - https://square.github.io/retrofit/
  * OkHttp - http://square.github.io/okhttp/
+ * Fresco - https://github.com/facebook/fresco
  * Timber - http://github.com/JakeWharton/timber
  * RxJava - https://github.com/ReactiveX/RxJava
  * RxAndroid - https://github.com/ReactiveX/RxAndroid
@@ -16,7 +18,7 @@ This project's purpose is to demonstrate the usage of current cutting-edge techn
  * Answers - https://answers.io/
  
 
-#License
+# License
 
     Copyright 2017 Alex Almeida Tavella
 
