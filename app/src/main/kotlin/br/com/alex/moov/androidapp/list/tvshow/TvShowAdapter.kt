@@ -40,12 +40,6 @@ class TvShowAdapter(context: Context) : RecyclerViewViewModelAdapter<TvShow, TvS
     return TvShowViewHolder(view, binding, viewModel)
   }
 
-  fun setItems(newItems: List<TvShow>) {
-    items.clear()
-    items.addAll(newItems)
-    notifyDataSetChanged()
-  }
-
   internal class TvShowViewHolder(itemView: View, val binding: GridItemTvShowBinding,
       viewModel: TvShowItemViewModel) : RecyclerViewViewModelAdapter.ItemViewHolder<TvShow, TvShowItemViewModel>(
       itemView, binding, viewModel)

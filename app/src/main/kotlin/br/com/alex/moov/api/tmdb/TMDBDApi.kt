@@ -21,15 +21,18 @@ import br.com.alex.moov.api.tmdb.model.DiscoverResponse
 import br.com.alex.moov.api.tmdb.model.TMDBMovie
 import br.com.alex.moov.api.tmdb.model.TMDBTvShow
 import retrofit2.http.GET
+import retrofit2.http.Query
 import rx.Single
 
 interface TMDBDApi {
 
   @GET("/3/discover/movie")
-  fun discoverMovies(): Single<DiscoverResponse<TMDBMovie>>
+  fun discoverMovies(@Query("page") page: Int, @Query("sort_by") sortBy: String,
+      @Query("vote_count.gte") voteCount: Int): Single<DiscoverResponse<TMDBMovie>>
 
   @GET("/3/discover/tv")
-  fun discoverTvShows(): Single<DiscoverResponse<TMDBTvShow>>
+  fun discoverTvShows(@Query("page") page: Int, @Query("sort_by") sortBy: String,
+      @Query("vote_count.gte") voteCount: Int): Single<DiscoverResponse<TMDBTvShow>>
 
   @GET("/3/configuration")
   fun getConfiguration(): Single<ConfigurationsResponse>

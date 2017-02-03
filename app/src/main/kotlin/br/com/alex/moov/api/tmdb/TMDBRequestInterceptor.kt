@@ -33,7 +33,7 @@ class TMDBRequestInterceptor(val apiKey: String, val cacheDuration: Int) : Inter
 
     val url = request.url().newBuilder()
         .addQueryParameter(QUERY_PARAM_API_KEY, apiKey)
-        .addQueryParameter(QUERY_PARAM_LANGUAGE, Locale.getDefault().language)
+        .addQueryParameter(QUERY_PARAM_LANGUAGE, Locale.getDefault().getLanguageString())
         .build()
 
     val newRequest = request.newBuilder()
@@ -43,4 +43,16 @@ class TMDBRequestInterceptor(val apiKey: String, val cacheDuration: Int) : Inter
 
     return chain.proceed(newRequest)
   }
+}
+
+fun Locale.getLanguageString(): String {
+
+  val sb = StringBuilder()
+  sb.append(language)
+
+  if (!country.isNullOrBlank() && country.length == 2) {
+    sb.append("-").append(country)
+  }
+
+  return sb.toString()
 }

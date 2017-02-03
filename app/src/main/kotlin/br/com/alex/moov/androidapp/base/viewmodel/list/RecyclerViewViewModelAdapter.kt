@@ -36,6 +36,16 @@ abstract class RecyclerViewViewModelAdapter<ITEM_T, VIEW_MODEL_T : ItemViewModel
     return items.count()
   }
 
+  fun clear() {
+    items.clear()
+    notifyDataSetChanged()
+  }
+
+  fun addAll(newItems: List<ITEM_T>) {
+    items.addAll(newItems)
+    notifyDataSetChanged()
+  }
+
   open class ItemViewHolder<T, out VT : ItemViewModel<T>>(itemView: View,
       private val binding: ViewDataBinding, protected val viewModel: VT) : RecyclerView.ViewHolder(
       itemView) {

@@ -21,14 +21,17 @@ import br.com.alex.moov.domain.entity.TvShow
 import br.com.alex.moov.domain.mapper.TvShowMapper
 import rx.Single
 
-class DiscoverTvShowsInteractor(val getImageConfigurationsInteractor: GetImageConfigurationsInteractor,
+class DiscoverTvShowsInteractor(
+    val getImageConfigurationsInteractor: GetImageConfigurationsInteractor,
     val tmdbdApi: TMDBDApi, val tvShowMapper: TvShowMapper) {
-  fun execute(): Single<List<TvShow>> {
+  fun execute(page: Int, sortBy: String = "vote_average.desc",
+      voteCount: Int = 100): Single<List<TvShow>> {
     return getImageConfigurationsInteractor.execute()
-        .zipWith(tmdbdApi.discoverTvShows().map { it.results }, { imageConfigs, tmdbTvShows ->
-          tmdbTvShows.map {
-            tvShowMapper.map(it, imageConfigs)
-          }
-        })
+        .zipWith(tmdbdApi.discoverTvShows(page, sortBy, voteCount).map { it.results },
+            { imageConfigs, tmdbTvShows ->
+              tmdbTvShows.map {
+                tvShowMapper.map(it, imageConfigs)
+              }
+            })
   }
 }
