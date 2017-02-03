@@ -17,6 +17,9 @@
 package br.com.alex.moov.androidapp.list.tvshow
 
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.RecyclerView.OnScrollListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +31,7 @@ import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel.State
 import br.com.alex.moov.androidapp.home.HomeComponent
 import br.com.alex.moov.androidapp.list.MarginDecoration
+import br.com.alex.moov.androidapp.list.OnLoadMoreListener
 import br.com.alex.moov.androidapp.logger.EventLogger
 import br.com.alex.moov.databinding.FragmentTvShowsBinding
 import br.com.alex.moov.domain.interactor.DiscoverTvShowsInteractor
@@ -67,6 +71,19 @@ class TvShowListFragment : BaseFragment(), HasComponent<TvShowsComponent> {
     binding.setViewModel(tvShowsViewModel)
     binding.recyclerView.setHasFixedSize(true)
     binding.recyclerView.addItemDecoration(MarginDecoration(context))
+    binding.recyclerView.addOnScrollListener(object: OnScrollListener() {
+      override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+        super.onScrolled(recyclerView, dx, dy)
+        val layoutManager = binding.recyclerView.layoutManager as GridLayoutManager
+        val totalItemCount = layoutManager.itemCount
+        val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
+        if (totalItemCount <= (lastVisibleItem + 3)) {
+          if (tvShowsViewModel is OnLoadMoreListener) {
+            (tvShowsViewModel as OnLoadMoreListener).onLoadMore()
+          }
+        }
+      }
+    })
     return tvShowsViewModel!!
   }
 

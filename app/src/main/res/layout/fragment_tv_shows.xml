@@ -21,19 +21,33 @@
     >
 
   <data>
+    <import type="android.view.View"/>
     <variable
         name="viewModel"
         type="br.com.alex.moov.androidapp.list.tvshow.TvShowsViewModel"
         />
   </data>
 
-  <br.com.alex.moov.androidapp.list.AutofitRecyclerView
-      android:id="@+id/recyclerView"
+  <FrameLayout
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:clipToPadding="false"
-      android:columnWidth="160dp"
-      bind:recyclerViewViewModel="@{viewModel}"
-      tools:listitem="@layout/grid_item_tv_show"
-      />
+      android:layout_height="match_parent"
+      >
+    <br.com.alex.moov.androidapp.list.AutofitRecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:columnWidth="160dp"
+        android:overScrollMode="ifContentScrolls"
+        bind:recyclerViewViewModel="@{viewModel}"
+        tools:listitem="@layout/grid_item_tv_show"
+        />
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"
+        />
+  </FrameLayout>
 </layout>

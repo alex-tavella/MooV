@@ -26,10 +26,15 @@ class AnswersEventLogger : EventLogger {
 
   override fun logContentView(contentName: String, contentType: ContentType,
       contentId: String?) {
+    val contentViewEvent = ContentViewEvent()
+
+    if (contentId != null) {
+      contentViewEvent.putContentId(contentId)
+    }
+
     Answers.getInstance().logContentView(
-        ContentViewEvent()
+        contentViewEvent
             .putContentType(contentType.name)
-            .putContentId(contentId)
             .putContentName(contentName))
   }
 

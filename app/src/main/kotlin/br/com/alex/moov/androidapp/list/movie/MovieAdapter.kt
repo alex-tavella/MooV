@@ -41,12 +41,6 @@ class MovieAdapter(context: Context) : RecyclerViewViewModelAdapter<Movie, Movie
     return MovieViewHolder(view, binding, viewModel)
   }
 
-  fun setItems(newItems: List<Movie>) {
-    items.clear()
-    items.addAll(newItems)
-    notifyDataSetChanged()
-  }
-
   internal class MovieViewHolder(itemView: View, val binding: GridItemMovieBinding,
       viewModel: MovieItemViewModel) : RecyclerViewViewModelAdapter.ItemViewHolder<Movie, MovieItemViewModel>(
       itemView, binding, viewModel)

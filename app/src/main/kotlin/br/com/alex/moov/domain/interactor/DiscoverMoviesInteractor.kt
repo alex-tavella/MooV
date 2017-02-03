@@ -21,14 +21,17 @@ import br.com.alex.moov.domain.entity.Movie
 import br.com.alex.moov.domain.mapper.MovieMapper
 import rx.Single
 
-class DiscoverMoviesInteractor(val getImageConfigurationsInteractor: GetImageConfigurationsInteractor,
+class DiscoverMoviesInteractor(
+    val getImageConfigurationsInteractor: GetImageConfigurationsInteractor,
     val tmdbdApi: TMDBDApi, val movieMapper: MovieMapper) {
-  fun execute(): Single<List<Movie>> {
+  fun execute(page: Int, sortBy: String = "vote_average.desc",
+      voteCount: Int = 100): Single<List<Movie>> {
     return getImageConfigurationsInteractor.execute()
-        .zipWith(tmdbdApi.discoverMovies().map { it.results }, { imageConfigs, tmdbMovies ->
-          tmdbMovies.map {
-            movieMapper.map(it, imageConfigs)
-          }
-        })
+        .zipWith(tmdbdApi.discoverMovies(page, sortBy, voteCount).map { it.results },
+            { imageConfigs, tmdbMovies ->
+              tmdbMovies.map {
+                movieMapper.map(it, imageConfigs)
+              }
+            })
   }
 }
