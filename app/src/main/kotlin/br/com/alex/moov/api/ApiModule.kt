@@ -17,7 +17,6 @@
 package br.com.alex.moov.api
 
 import br.com.alex.moov.BuildConfig
-import br.com.alex.moov.api.CacheDirQualifier
 import br.com.alex.moov.api.tmdb.ApiKeyQualifier
 import br.com.alex.moov.api.tmdb.CacheDurationQualifier
 import br.com.alex.moov.api.tmdb.TMDBApiKeyHolder

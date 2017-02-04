@@ -18,6 +18,7 @@ package br.com.alex.moov.androidapp.list.tvshow
 
 import android.content.Context
 import br.com.alex.moov.androidapp.ApplicationContextQualifier
+import br.com.alex.moov.domain.interactor.DiscoverTvShowsInteractor
 import dagger.Module
 import dagger.Provides
 
@@ -26,4 +27,9 @@ class TvShowsModule {
   @Provides
   fun providesNewAdapter(@ApplicationContextQualifier appContext: Context) = TvShowAdapter(
       appContext)
+
+  @Provides
+  fun providesNewViewModel(@ApplicationContextQualifier appContext: Context, adapter: TvShowAdapter,
+      discoverTvShowsInteractor: DiscoverTvShowsInteractor): TvShowsViewModel = TvShowsViewModel(
+      appContext, adapter, discoverTvShowsInteractor)
 }

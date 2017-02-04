@@ -20,7 +20,7 @@ import android.support.v7.widget.RecyclerView
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
 
 
-abstract class RecyclerViewViewModel(savedInstanceState: State?) : ViewModel(savedInstanceState) {
+abstract class RecyclerViewViewModel : ViewModel() {
 
   protected abstract fun getRecyclerViewViewModelAdapter(): RecyclerViewViewModelAdapter<*, *>
 

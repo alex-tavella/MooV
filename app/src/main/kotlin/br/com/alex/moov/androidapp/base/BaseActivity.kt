@@ -33,7 +33,7 @@ abstract class BaseActivity : AppCompatActivity() {
 
   private var viewModel: ViewModel? = null
 
-  protected abstract fun createViewModel(savedViewModelState: State?): ViewModel?
+  protected abstract fun createViewModel(): ViewModel?
 
   protected abstract fun injectDependencies(applicationComponent: ApplicationComponent)
 
@@ -42,9 +42,8 @@ abstract class BaseActivity : AppCompatActivity() {
 
     injectDependencies((applicationContext as MooVApplication).getAppComponent())
 
-    val savedViewModelState = savedInstanceState?.getParcelable<State>(
-        EXTRA_VIEW_MODEL_STATE)
-    viewModel = createViewModel(savedViewModelState)
+    viewModel = createViewModel()
+    viewModel?.onRestoreState(savedInstanceState?.getParcelable<State>(EXTRA_VIEW_MODEL_STATE))
   }
 
   override fun onStart() {

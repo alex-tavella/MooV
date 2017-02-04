@@ -19,7 +19,7 @@ package br.com.alex.moov.androidapp.base.viewmodel.list
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
 
 
-abstract class ItemViewModel<ITEM_T>() : ViewModel(null) {
+abstract class ItemViewModel<in ITEM_T> : ViewModel() {
 
   abstract fun setItem(item: ITEM_T)
 }

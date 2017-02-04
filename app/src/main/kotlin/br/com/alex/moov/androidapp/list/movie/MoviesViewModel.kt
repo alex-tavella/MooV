@@ -33,8 +33,9 @@ import rx.subscriptions.CompositeSubscription
 import timber.log.Timber
 
 class MoviesViewModel(val context: Context, val adapter: MovieAdapter,
-    val discoverMoviesInteractor: DiscoverMoviesInteractor,
-    savedState: State?) : RecyclerViewViewModel(savedState), OnLoadMoreListener {
+    val discoverMoviesInteractor: DiscoverMoviesInteractor) : RecyclerViewViewModel(), OnLoadMoreListener {
+
+  private val compositeSubscription: CompositeSubscription = CompositeSubscription()
 
   private var page: Int = 1
 
@@ -44,22 +45,40 @@ class MoviesViewModel(val context: Context, val adapter: MovieAdapter,
       notifyPropertyChanged(BR.loading)
     }
 
-  private val compositeSubscription: CompositeSubscription = CompositeSubscription()
+  private var restoredFromSavedState = false
 
   override fun getRecyclerViewViewModelAdapter() = adapter
 
   override fun getInstanceState(): ViewModel.State
       = MoviesViewModelState(this)
 
+  override fun onRestoreState(savedInstanceState: State?) {
+    super.onRestoreState(savedInstanceState)
+
+    if (savedInstanceState is MoviesViewModelState) {
+      adapter.clear()
+      adapter.addAll(savedInstanceState.movies)
+      page = savedInstanceState.currentPage
+      notifyChange()
+      Timber.i("Restored view model!")
+      restoredFromSavedState = true
+    }
+  }
+
   override fun onStart() {
     super.onStart()
-    compositeSubscription.add(discoverMoviesInteractor.execute(page)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe({
-          Timber.i(it.map { it.title }.toString())
-          adapter.addAll(it)
-        }, { Timber.w(it.toString()) }))
+
+    if (!restoredFromSavedState) {
+      compositeSubscription.add(discoverMoviesInteractor.execute(page)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe({
+            Timber.i(it.map { it.title }.toString())
+            adapter.addAll(it)
+          }, { Timber.w(it.toString()) }))
+    } else {
+      restoredFromSavedState = false
+    }
   }
 
   override fun onStop() {
@@ -90,26 +109,6 @@ class MoviesViewModel(val context: Context, val adapter: MovieAdapter,
 
   private class MoviesViewModelState : ViewModel.State {
 
-    private val movies: MutableList<Movie>
-
-    private val currentPage: Int
-
-    constructor(viewModel: MoviesViewModel) : super(viewModel) {
-      movies = viewModel.adapter.items
-      currentPage = viewModel.page
-    }
-
-    constructor(`in`: Parcel) : super(`in`) {
-      movies = `in`.createTypedArrayList(Movie.CREATOR)
-      currentPage = `in`.readInt()
-    }
-
-    override fun writeToParcel(dest: Parcel?, flags: Int) {
-      super.writeToParcel(dest, flags)
-      dest!!.writeTypedList(movies)
-      dest.writeInt(currentPage)
-    }
-
     companion object {
 
       var CREATOR: Parcelable.Creator<MoviesViewModelState> = object : Parcelable.Creator<MoviesViewModelState> {
@@ -121,6 +120,25 @@ class MoviesViewModel(val context: Context, val adapter: MovieAdapter,
           return arrayOfNulls(size)
         }
       }
+    }
+
+    val movies: MutableList<Movie>
+
+    val currentPage: Int
+
+    constructor(viewModel: MoviesViewModel) {
+      movies = viewModel.adapter.items
+      currentPage = viewModel.page
+    }
+
+    constructor(`in`: Parcel) {
+      movies = `in`.createTypedArrayList(Movie.CREATOR)
+      currentPage = `in`.readInt()
+    }
+
+    override fun writeToParcel(dest: Parcel?, flags: Int) {
+      dest!!.writeTypedList(movies)
+      dest.writeInt(currentPage)
     }
   }
 }
