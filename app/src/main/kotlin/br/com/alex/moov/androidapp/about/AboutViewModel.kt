@@ -18,21 +18,19 @@ package br.com.alex.moov.androidapp.about
 
 import android.content.Context
 import android.databinding.Bindable
-import android.view.View
 import br.com.alex.moov.BuildConfig
 import br.com.alex.moov.R
 import br.com.alex.moov.androidapp.base.AttachedActivity
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
 
-class AboutViewModel(val context: Context, val attachedActivity: AttachedActivity) : ViewModel(
-    null) {
+class AboutViewModel(val context: Context, val attachedActivity: AttachedActivity) : ViewModel() {
 
   @Bindable fun getVersionName(): String = context.getString(R.string.app_version_name,
       BuildConfig.VERSION_NAME)
 
   @Bindable fun getAppName(): String = context.getString(R.string.app_name)
 
-  fun onLicenseButtonClick(view: View) {
+  fun onLicenseButtonClick() {
     attachedActivity.showDialog(LegalDialogFragment(), "license_dialog")
   }
 }

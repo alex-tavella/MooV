@@ -17,36 +17,23 @@
 package br.com.alex.moov.androidapp.base.viewmodel
 
 import android.databinding.BaseObservable
-import android.os.Parcel
 import android.os.Parcelable
 
 
-abstract class ViewModel(savedInstanceState: State?) : BaseObservable() {
+abstract class ViewModel : BaseObservable() {
 
-  open fun onStart() {
+  open fun onRestoreState(savedInstanceState: State?) {
   }
 
-  open fun getInstanceState(): State {
-    return State(this);
+  open fun onStart() {
   }
 
   open fun onStop() {
   }
 
-  open class State : Parcelable {
-    companion object {
-      @JvmField val CREATOR: Parcelable.Creator<State> = object : Parcelable.Creator<State> {
-        override fun createFromParcel(source: Parcel): State = State(source)
-        override fun newArray(size: Int): Array<State?> = arrayOfNulls(size)
-      }
-    }
+  open fun getInstanceState(): State? = null
 
-    constructor(viewModel: ViewModel)
-
-    constructor(source: Parcel)
-
+  abstract class State : Parcelable {
     override fun describeContents() = 0
-
-    override fun writeToParcel(dest: Parcel?, flags: Int) {}
   }
 }

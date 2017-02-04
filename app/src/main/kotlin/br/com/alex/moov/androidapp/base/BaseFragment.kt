@@ -33,20 +33,17 @@ abstract class BaseFragment : Fragment() {
 
   private var viewModel: ViewModel? = null
 
-  protected abstract fun createAndBindViewModel(root: View, savedViewModelState: State?): ViewModel
+  protected abstract fun createAndBindViewModel(root: View): ViewModel
 
   protected abstract fun injectDependencies(applicationComponent: ApplicationComponent)
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
-    super.onActivityCreated(savedInstanceState);
+    super.onActivityCreated(savedInstanceState)
 
     injectDependencies((activity.applicationContext as MooVApplication).getAppComponent())
 
-    var savedViewModelState: State? = null
-    if (savedInstanceState != null) {
-      savedViewModelState = savedInstanceState.getParcelable(EXTRA_VIEW_MODEL_STATE)
-    }
-    viewModel = createAndBindViewModel(view!!, savedViewModelState)
+    viewModel = createAndBindViewModel(view!!)
+    viewModel?.onRestoreState(savedInstanceState?.getParcelable<State>(EXTRA_VIEW_MODEL_STATE))
   }
 
   override fun onStart() {

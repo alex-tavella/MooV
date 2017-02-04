@@ -28,5 +28,6 @@
   <string name="btn_licenses">Licenses</string>
   <string name="app_version_name">Version %1$s</string>
   <string name="action_send_email">Send email</string>
-  <string name="cd_nav_header_icon">Application Icon</string>
+  <string name="cd_nav_header_icon">MooV application\'s Icon</string>
+  <string name="cd_app_icon">MooV application\'s icon</string>
 </resources>

@@ -25,7 +25,6 @@ import br.com.alex.moov.androidapp.ApplicationComponent
 import br.com.alex.moov.androidapp.base.BaseFragment
 import br.com.alex.moov.androidapp.base.di.HasComponent
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
-import br.com.alex.moov.androidapp.base.viewmodel.ViewModel.State
 import br.com.alex.moov.androidapp.home.HomeComponent
 import br.com.alex.moov.androidapp.logger.EventLogger
 import br.com.alex.moov.databinding.FragmentAboutBinding
@@ -37,6 +36,9 @@ class AboutFragment : BaseFragment() {
   @Inject lateinit var aboutViewModel: AboutViewModel
 
   @Inject lateinit var eventLogger: EventLogger
+
+  override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
+      savedInstanceState: Bundle?) = inflater?.inflate(R.layout.fragment_about, container, false)
 
   override fun injectDependencies(applicationComponent: ApplicationComponent) {
     val activity = activity
@@ -52,14 +54,11 @@ class AboutFragment : BaseFragment() {
     }
   }
 
-  override fun createAndBindViewModel(root: View, savedViewModelState: State?): ViewModel {
+  override fun createAndBindViewModel(root: View): ViewModel {
     val binding = FragmentAboutBinding.bind(view)
     binding.viewModel = aboutViewModel
     return aboutViewModel
   }
-
-  override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
-      savedInstanceState: Bundle?) = inflater?.inflate(R.layout.fragment_about, container, false)
 
   override fun onActivityCreated(savedInstanceState: Bundle?) {
     super.onActivityCreated(savedInstanceState)

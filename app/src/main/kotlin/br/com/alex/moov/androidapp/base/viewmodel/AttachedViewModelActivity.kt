@@ -21,7 +21,6 @@ import android.content.Intent
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AppCompatActivity
 import br.com.alex.moov.androidapp.base.AttachedActivity
-import br.com.alex.moov.androidapp.base.BaseFragment
 import java.lang.ref.WeakReference
 
 

@@ -21,7 +21,7 @@ import android.content.Intent
 import android.net.Uri
 import br.com.alex.moov.R.string
 
-class IntentEmailSender(val context: Context): EmailSender {
+class IntentEmailSender(val context: Context) : EmailSender {
 
   companion object {
     val RECIPIENT = "alexkotr@gmail.com"

@@ -22,12 +22,12 @@ import br.com.alex.moov.androidapp.base.viewmodel.list.RecyclerViewViewModel
 import com.facebook.drawee.view.SimpleDraweeView
 
 
-@BindingAdapter("bind:recyclerViewViewModel")
+@BindingAdapter("recyclerViewViewModel")
 fun RecyclerView.setRecyclerViewViewModel(viewModel: RecyclerViewViewModel) {
   viewModel.setupRecyclerView(this)
 }
 
-@BindingAdapter("bind:imageUrl")
+@BindingAdapter("imageUrl")
 fun imageUrl(draweeView: SimpleDraweeView, imageUrl: String) {
   draweeView.setImageURI(imageUrl)
 }

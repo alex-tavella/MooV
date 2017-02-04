@@ -28,7 +28,6 @@ import br.com.alex.moov.androidapp.ApplicationComponent
 import br.com.alex.moov.androidapp.base.BaseFragment
 import br.com.alex.moov.androidapp.base.di.HasComponent
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
-import br.com.alex.moov.androidapp.base.viewmodel.ViewModel.State
 import br.com.alex.moov.androidapp.home.HomeComponent
 import br.com.alex.moov.androidapp.list.MarginDecoration
 import br.com.alex.moov.androidapp.list.OnLoadMoreListener
@@ -38,9 +37,10 @@ import br.com.alex.moov.domain.interactor.DiscoverTvShowsInteractor
 import javax.inject.Inject
 
 class TvShowListFragment : BaseFragment(), HasComponent<TvShowsComponent> {
-  private var tvShowsViewModel: TvShowsViewModel? = null
 
   private lateinit var tvShowsComponent: TvShowsComponent
+
+  @Inject lateinit var tvShowsViewModel: TvShowsViewModel
 
   @Inject lateinit var tvShowAdapter: TvShowAdapter
 
@@ -49,7 +49,7 @@ class TvShowListFragment : BaseFragment(), HasComponent<TvShowsComponent> {
   @Inject lateinit var eventLogger: EventLogger
 
   override fun injectDependencies(applicationComponent: ApplicationComponent) {
-    val activity = getActivity()
+    val activity = activity
     if (activity is HasComponent<*>) {
       val component = activity.getComponent()
       if (component is HomeComponent) {
@@ -64,14 +64,12 @@ class TvShowListFragment : BaseFragment(), HasComponent<TvShowsComponent> {
 
   override fun getComponent() = tvShowsComponent
 
-  override fun createAndBindViewModel(root: View, savedViewModelState: State?): ViewModel {
-    tvShowsViewModel = TvShowsViewModel(context, tvShowAdapter, savedViewModelState,
-        discoverTvShowsInteractor)
+  override fun createAndBindViewModel(root: View): ViewModel {
     val binding = FragmentTvShowsBinding.bind(root)
-    binding.setViewModel(tvShowsViewModel)
+    binding.viewModel = tvShowsViewModel
     binding.recyclerView.setHasFixedSize(true)
     binding.recyclerView.addItemDecoration(MarginDecoration(context))
-    binding.recyclerView.addOnScrollListener(object: OnScrollListener() {
+    binding.recyclerView.addOnScrollListener(object : OnScrollListener() {
       override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
         val layoutManager = binding.recyclerView.layoutManager as GridLayoutManager
@@ -84,7 +82,7 @@ class TvShowListFragment : BaseFragment(), HasComponent<TvShowsComponent> {
         }
       }
     })
-    return tvShowsViewModel!!
+    return tvShowsViewModel
   }
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,

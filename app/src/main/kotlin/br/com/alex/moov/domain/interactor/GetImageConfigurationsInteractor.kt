@@ -22,7 +22,8 @@ import br.com.alex.moov.domain.repository.Repository
 import rx.Single
 import timber.log.Timber
 
-class GetImageConfigurationsInteractor(val imageConfigurationsRepository: Repository<ImageConfigurations>,
+class GetImageConfigurationsInteractor(
+    val imageConfigurationsRepository: Repository<ImageConfigurations>,
     val tmdbdApi: TMDBDApi) {
 
   fun execute(): Single<ImageConfigurations> {

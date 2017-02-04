@@ -18,7 +18,6 @@ package br.com.alex.moov.androidapp.list.movie
 
 import android.os.Bundle
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.RecyclerView.OnScrollListener
 import android.view.LayoutInflater
@@ -29,7 +28,6 @@ import br.com.alex.moov.androidapp.ApplicationComponent
 import br.com.alex.moov.androidapp.base.BaseFragment
 import br.com.alex.moov.androidapp.base.di.HasComponent
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
-import br.com.alex.moov.androidapp.base.viewmodel.ViewModel.State
 import br.com.alex.moov.androidapp.home.HomeComponent
 import br.com.alex.moov.androidapp.list.MarginDecoration
 import br.com.alex.moov.androidapp.list.OnLoadMoreListener
@@ -40,18 +38,18 @@ import javax.inject.Inject
 
 class MovieListFragment : BaseFragment(), HasComponent<MoviesComponent> {
 
+  private lateinit var moviesComponent: MoviesComponent
+
   @Inject lateinit var movieAdapter: MovieAdapter
 
   @Inject lateinit var discoverMoviesInteractor: DiscoverMoviesInteractor
 
   @Inject lateinit var eventLogger: EventLogger
 
-  private var moviesViewModel: MoviesViewModel? = null
-
-  private lateinit var moviesComponent: MoviesComponent
+  @Inject lateinit var moviesViewModel: MoviesViewModel
 
   override fun injectDependencies(applicationComponent: ApplicationComponent) {
-    val activity = getActivity()
+    val activity = activity
     if (activity is HasComponent<*>) {
       val component = activity.getComponent()
       if (component is HomeComponent) {
@@ -66,13 +64,12 @@ class MovieListFragment : BaseFragment(), HasComponent<MoviesComponent> {
 
   override fun getComponent() = moviesComponent
 
-  override fun createAndBindViewModel(root: View, savedViewModelState: State?): ViewModel {
+  override fun createAndBindViewModel(root: View): ViewModel {
     val binding = FragmentMoviesBinding.bind(root)
-    moviesViewModel = MoviesViewModel(context, movieAdapter, discoverMoviesInteractor, savedViewModelState)
-    binding.setViewModel(moviesViewModel)
+    binding.viewModel = moviesViewModel
     binding.recyclerView.setHasFixedSize(true)
     binding.recyclerView.addItemDecoration(MarginDecoration(context))
-    binding.recyclerView.addOnScrollListener(object: OnScrollListener() {
+    binding.recyclerView.addOnScrollListener(object : OnScrollListener() {
       override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
         val layoutManager = binding.recyclerView.layoutManager as GridLayoutManager
@@ -85,7 +82,7 @@ class MovieListFragment : BaseFragment(), HasComponent<MoviesComponent> {
         }
       }
     })
-    return moviesViewModel!!
+    return moviesViewModel
   }
 
   override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,

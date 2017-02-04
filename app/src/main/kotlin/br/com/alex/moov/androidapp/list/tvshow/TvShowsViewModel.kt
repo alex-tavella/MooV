@@ -32,9 +32,9 @@ import rx.schedulers.Schedulers
 import rx.subscriptions.CompositeSubscription
 import timber.log.Timber
 
-class TvShowsViewModel(val context: Context, val adapter: TvShowAdapter, savedState: State?,
-    val discoverTvShowsInteractor: DiscoverTvShowsInteractor) : RecyclerViewViewModel(
-    savedState), OnLoadMoreListener {
+class TvShowsViewModel(val context: Context, val adapter: TvShowAdapter,
+    val discoverTvShowsInteractor: DiscoverTvShowsInteractor) : RecyclerViewViewModel(), OnLoadMoreListener {
+
   private val compositeSubscription: CompositeSubscription = CompositeSubscription()
 
   private var page: Int = 1
@@ -45,20 +45,39 @@ class TvShowsViewModel(val context: Context, val adapter: TvShowAdapter, savedSt
       notifyPropertyChanged(BR.loading)
     }
 
+  private var restoredFromSavedState = false
+
   override fun getRecyclerViewViewModelAdapter() = adapter
 
   override fun getInstanceState(): ViewModel.State
       = TvShowsViewModelState(this)
 
+  override fun onRestoreState(savedInstanceState: State?) {
+    super.onRestoreState(savedInstanceState)
+
+    if (savedInstanceState is TvShowsViewModelState) {
+      adapter.clear()
+      adapter.addAll(savedInstanceState.tvShows)
+      page = savedInstanceState.currentPage
+      notifyChange()
+      Timber.i("Restored view model!")
+      restoredFromSavedState = true
+    }
+  }
+
   override fun onStart() {
     super.onStart()
-    compositeSubscription.add(discoverTvShowsInteractor.execute(page)
-        .subscribeOn(Schedulers.io())
-        .observeOn(AndroidSchedulers.mainThread())
-        .subscribe({
-          Timber.i(it.map { it.name }.toString())
-          adapter.addAll(it)
-        }, { Timber.w(it.toString()) }))
+    if (!restoredFromSavedState) {
+      compositeSubscription.add(discoverTvShowsInteractor.execute(page)
+          .subscribeOn(Schedulers.io())
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribe({
+            Timber.i(it.map { it.name }.toString())
+            adapter.addAll(it)
+          }, { Timber.w(it.toString()) }))
+    } else {
+      restoredFromSavedState = false
+    }
   }
 
   override fun onStop() {
@@ -89,26 +108,6 @@ class TvShowsViewModel(val context: Context, val adapter: TvShowAdapter, savedSt
 
   private class TvShowsViewModelState : ViewModel.State {
 
-    private val tvShows: MutableList<TvShow>
-
-    private val currentPage: Int
-
-    constructor(viewModel: TvShowsViewModel) : super(viewModel) {
-      tvShows = viewModel.adapter.items
-      currentPage = viewModel.page
-    }
-
-    constructor(`in`: Parcel) : super(`in`) {
-      tvShows = `in`.createTypedArrayList(TvShow.CREATOR)
-      currentPage = `in`.readInt()
-    }
-
-    override fun writeToParcel(dest: Parcel?, flags: Int) {
-      super.writeToParcel(dest, flags)
-      dest!!.writeTypedList(tvShows)
-      dest.writeInt(currentPage)
-    }
-
     companion object {
 
       var CREATOR: Parcelable.Creator<TvShowsViewModelState> = object : Parcelable.Creator<TvShowsViewModelState> {
@@ -120,6 +119,25 @@ class TvShowsViewModel(val context: Context, val adapter: TvShowAdapter, savedSt
           return arrayOfNulls(size)
         }
       }
+    }
+
+    val tvShows: MutableList<TvShow>
+
+    val currentPage: Int
+
+    constructor(viewModel: TvShowsViewModel) {
+      tvShows = viewModel.adapter.items
+      currentPage = viewModel.page
+    }
+
+    constructor(`in`: Parcel) {
+      tvShows = `in`.createTypedArrayList(TvShow.CREATOR)
+      currentPage = `in`.readInt()
+    }
+
+    override fun writeToParcel(dest: Parcel?, flags: Int) {
+      dest!!.writeTypedList(tvShows)
+      dest.writeInt(currentPage)
     }
   }
 }

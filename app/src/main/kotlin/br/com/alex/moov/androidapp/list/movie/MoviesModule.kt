@@ -18,6 +18,7 @@ package br.com.alex.moov.androidapp.list.movie
 
 import android.content.Context
 import br.com.alex.moov.androidapp.ApplicationContextQualifier
+import br.com.alex.moov.domain.interactor.DiscoverMoviesInteractor
 import dagger.Module
 import dagger.Provides
 
@@ -28,4 +29,9 @@ class MoviesModule {
   fun providesNewAdapter(@ApplicationContextQualifier appContext: Context) = MovieAdapter(
       appContext)
 
+  @Provides
+  fun providesNewViewModel(
+      @ApplicationContextQualifier appContext: Context, movieAdapter: MovieAdapter,
+      discoverMoviesInteractor: DiscoverMoviesInteractor): MoviesViewModel = MoviesViewModel(
+      appContext, movieAdapter, discoverMoviesInteractor)
 }

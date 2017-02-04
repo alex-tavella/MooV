@@ -28,7 +28,6 @@ import br.com.alex.moov.androidapp.about.AboutFragment
 import br.com.alex.moov.androidapp.base.BaseActivity
 import br.com.alex.moov.androidapp.base.di.HasComponent
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
-import br.com.alex.moov.androidapp.base.viewmodel.ViewModel.State
 import br.com.alex.moov.androidapp.email.EmailSender
 import br.com.alex.moov.androidapp.list.movie.MovieListFragment
 import br.com.alex.moov.androidapp.list.tvshow.TvShowListFragment
@@ -64,7 +63,7 @@ class HomeActivity : BaseActivity(), OnNavigationItemSelectedListener, HasCompon
     homeComponent.inject(this)
   }
 
-  override fun createViewModel(savedViewModelState: State?): ViewModel? = null
+  override fun createViewModel(): ViewModel? = null
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
