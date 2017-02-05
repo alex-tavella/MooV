@@ -16,8 +16,8 @@
 
 package br.com.alex.moov.domain.interactor
 
-import br.com.alex.moov.api.tmdb.TMDBDApi
-import br.com.alex.moov.api.tmdb.model.ImageConfigurations
+import br.com.alex.moov.data.tmdb.TMDBDApi
+import br.com.alex.moov.data.tmdb.model.ImageConfigurations
 import br.com.alex.moov.domain.mapper.MovieMapper
 import br.com.alex.moov.domain.mapper.TvShowMapper
 import br.com.alex.moov.domain.repository.Repository

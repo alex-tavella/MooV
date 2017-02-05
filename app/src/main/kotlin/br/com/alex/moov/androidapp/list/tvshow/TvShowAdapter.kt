@@ -17,30 +17,24 @@
 package br.com.alex.moov.androidapp.list.tvshow
 
 import android.content.Context
-import android.view.LayoutInflater
+import android.databinding.ViewDataBinding
 import android.view.View
-import android.view.ViewGroup
 import br.com.alex.moov.R
 import br.com.alex.moov.androidapp.base.viewmodel.list.RecyclerViewViewModelAdapter
 import br.com.alex.moov.databinding.GridItemTvShowBinding
 import br.com.alex.moov.domain.entity.TvShow
 
-class TvShowAdapter(context: Context) : RecyclerViewViewModelAdapter<TvShow, TvShowItemViewModel>(
+open class TvShowAdapter(
+    context: Context) : RecyclerViewViewModelAdapter<TvShow, TvShowItemViewModel>(
     context) {
+  override fun getLayoutRes() = R.layout.grid_item_tv_show
 
-  override fun onCreateViewHolder(parent: ViewGroup?,
-      viewType: Int): ItemViewHolder<TvShow, TvShowItemViewModel> {
-    val view = LayoutInflater.from(parent?.context).inflate(R.layout.grid_item_tv_show, parent,
-        false)
+  override fun createItemViewModel() = TvShowItemViewModel()
 
+  override fun createBindingAndSetupViewModel(view: View,
+      itemViewModel: TvShowItemViewModel): ViewDataBinding {
     val binding = GridItemTvShowBinding.bind(view)
-    val viewModel = TvShowItemViewModel()
-    binding.viewModel = viewModel
-
-    return TvShowViewHolder(view, binding, viewModel)
+    binding.viewModel = itemViewModel
+    return binding
   }
-
-  internal class TvShowViewHolder(itemView: View, val binding: GridItemTvShowBinding,
-      viewModel: TvShowItemViewModel) : RecyclerViewViewModelAdapter.ItemViewHolder<TvShow, TvShowItemViewModel>(
-      itemView, binding, viewModel)
 }

@@ -17,12 +17,10 @@
 package br.com.alex.moov.androidapp.list.tvshow
 
 import android.databinding.Bindable
-import android.view.View
-import android.widget.Toast
 import br.com.alex.moov.androidapp.base.viewmodel.list.ItemViewModel
 import br.com.alex.moov.domain.entity.TvShow
 
-class TvShowItemViewModel : ItemViewModel<TvShow>() {
+open class TvShowItemViewModel : ItemViewModel<TvShow>() {
 
   private var tvShow: TvShow? = null
 
@@ -32,8 +30,4 @@ class TvShowItemViewModel : ItemViewModel<TvShow>() {
   }
 
   @Bindable fun getImageUrl() = tvShow?.posterUrl
-
-  fun onClick(view: View) {
-    Toast.makeText(view.context, "${tvShow?.name}", Toast.LENGTH_SHORT).show()
-  }
 }

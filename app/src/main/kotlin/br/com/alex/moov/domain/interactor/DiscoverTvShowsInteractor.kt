@@ -16,19 +16,20 @@
 
 package br.com.alex.moov.domain.interactor
 
-import br.com.alex.moov.api.tmdb.TMDBDApi
+import br.com.alex.moov.data.tmdb.TMDBDApi
 import br.com.alex.moov.domain.entity.TvShow
 import br.com.alex.moov.domain.mapper.TvShowMapper
-import rx.Single
+import io.reactivex.Single
+import io.reactivex.functions.BiFunction
 
-class DiscoverTvShowsInteractor(
+open class DiscoverTvShowsInteractor(
     val getImageConfigurationsInteractor: GetImageConfigurationsInteractor,
     val tmdbdApi: TMDBDApi, val tvShowMapper: TvShowMapper) {
-  fun execute(page: Int, sortBy: String = "vote_average.desc",
+  open fun execute(page: Int, sortBy: String = "vote_average.desc",
       voteCount: Int = 100): Single<List<TvShow>> {
     return getImageConfigurationsInteractor.execute()
         .zipWith(tmdbdApi.discoverTvShows(page, sortBy, voteCount).map { it.results },
-            { imageConfigs, tmdbTvShows ->
+            BiFunction { imageConfigs, tmdbTvShows ->
               tmdbTvShows.map {
                 tvShowMapper.map(it, imageConfigs)
               }

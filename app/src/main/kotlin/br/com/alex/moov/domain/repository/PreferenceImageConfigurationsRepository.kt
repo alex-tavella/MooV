@@ -17,9 +17,10 @@
 package br.com.alex.moov.domain.repository
 
 import android.content.SharedPreferences
-import br.com.alex.moov.api.tmdb.model.ImageConfigurations
+import br.com.alex.moov.data.tmdb.model.ImageConfigurations
 import com.google.gson.Gson
-import rx.Single
+import io.reactivex.Single
+import timber.log.Timber
 
 class PreferenceImageConfigurationsRepository(val preferences: SharedPreferences,
     val gson: Gson) : Repository<ImageConfigurations> {
@@ -29,14 +30,16 @@ class PreferenceImageConfigurationsRepository(val preferences: SharedPreferences
   }
 
   override fun load(): Single<ImageConfigurations> {
-    return Single.just(preferences.getString(PREFERENCE_KEY_IMAGE_CONFIGURATIONS, null))
-        .doOnSuccess { if (it == null) throw IllegalArgumentException() }
+    return Single.just(preferences.getString(PREFERENCE_KEY_IMAGE_CONFIGURATIONS, ""))
+        .doOnSuccess { if (it == "") throw IllegalArgumentException() }
         .map { gson.fromJson(it, ImageConfigurations::class.java) }
+        .doOnError { Timber.w(it.message) }
+        .doOnSuccess { Timber.d("Successfully loaded image configurations from local storage") }
   }
 
   override fun save(imageConfigurations: ImageConfigurations): Single<Boolean> {
-    return Single.just(imageConfigurations)
-        .map { gson.toJson(it) }
+    return Single.just(gson.toJson(imageConfigurations))
         .map { preferences.edit().putString(PREFERENCE_KEY_IMAGE_CONFIGURATIONS, it).commit() }
+        .doOnSuccess { Timber.d("Successfully saved image configurations") }
   }
 }

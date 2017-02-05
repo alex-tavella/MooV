@@ -16,8 +16,8 @@
 
 package br.com.alex.moov.domain.repository
 
-import br.com.alex.moov.api.tmdb.model.ImageConfigurations
-import rx.Single
+import br.com.alex.moov.data.tmdb.model.ImageConfigurations
+import io.reactivex.Single
 
 interface Repository<T> {
   fun load(): Single<T>

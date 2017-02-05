@@ -16,7 +16,6 @@
 
 package br.com.alex.moov.androidapp.list.tvshow
 
-import android.content.Context
 import android.databinding.Bindable
 import android.os.Parcel
 import android.os.Parcelable
@@ -26,16 +25,16 @@ import br.com.alex.moov.androidapp.base.viewmodel.list.RecyclerViewViewModel
 import br.com.alex.moov.androidapp.list.OnLoadMoreListener
 import br.com.alex.moov.domain.entity.TvShow
 import br.com.alex.moov.domain.interactor.DiscoverTvShowsInteractor
-import rx.Single
-import rx.android.schedulers.AndroidSchedulers
-import rx.schedulers.Schedulers
-import rx.subscriptions.CompositeSubscription
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 
-class TvShowsViewModel(val context: Context, val adapter: TvShowAdapter,
-    val discoverTvShowsInteractor: DiscoverTvShowsInteractor) : RecyclerViewViewModel(), OnLoadMoreListener {
+class TvShowsViewModel(val adapter: TvShowAdapter,
+    private val discoverTvShowsInteractor: DiscoverTvShowsInteractor) : RecyclerViewViewModel(), OnLoadMoreListener {
 
-  private val compositeSubscription: CompositeSubscription = CompositeSubscription()
+  private var disposable: Disposable? = null
 
   private var page: Int = 1
 
@@ -68,13 +67,13 @@ class TvShowsViewModel(val context: Context, val adapter: TvShowAdapter,
   override fun onStart() {
     super.onStart()
     if (!restoredFromSavedState) {
-      compositeSubscription.add(discoverTvShowsInteractor.execute(page)
+      disposable = discoverTvShowsInteractor.execute(page)
           .subscribeOn(Schedulers.io())
           .observeOn(AndroidSchedulers.mainThread())
           .subscribe({
             Timber.i(it.map { it.name }.toString())
             adapter.addAll(it)
-          }, { Timber.w(it.toString()) }))
+          }, { Timber.w(it.toString()) })
     } else {
       restoredFromSavedState = false
     }
@@ -82,12 +81,12 @@ class TvShowsViewModel(val context: Context, val adapter: TvShowAdapter,
 
   override fun onStop() {
     super.onStop()
-    compositeSubscription.clear()
+    disposable?.dispose()
   }
 
   override fun onLoadMore() {
     if (!isLoading) {
-      compositeSubscription.add(Single.just("Stub")
+      disposable = Single.just("Stub")
           .doOnSuccess { isLoading = true }
           .flatMap { discoverTvShowsInteractor.execute(page + 1) }
           .subscribeOn(Schedulers.io())
@@ -100,7 +99,7 @@ class TvShowsViewModel(val context: Context, val adapter: TvShowAdapter,
           }, {
             Timber.w(it.toString())
             isLoading = false
-          }))
+          })
     }
   }
 

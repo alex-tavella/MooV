@@ -16,8 +16,8 @@
 
 package br.com.alex.moov.domain.mapper
 
-import br.com.alex.moov.api.tmdb.model.ImageConfigurations
-import br.com.alex.moov.api.tmdb.model.TMDBTvShow
+import br.com.alex.moov.data.tmdb.model.ImageConfigurations
+import br.com.alex.moov.data.tmdb.model.TMDBTvShow
 import br.com.alex.moov.domain.entity.TvShow
 import javax.inject.Inject
 
