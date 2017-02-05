@@ -17,7 +17,7 @@
 package br.com.alex.moov.domain.repository
 
 import android.content.SharedPreferences
-import br.com.alex.moov.api.tmdb.model.ImageConfigurations
+import br.com.alex.moov.data.tmdb.model.ImageConfigurations
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides

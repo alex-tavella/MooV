@@ -16,10 +16,10 @@
 
 package br.com.alex.moov.domain.interactor
 
-import br.com.alex.moov.api.tmdb.TMDBDApi
-import br.com.alex.moov.api.tmdb.model.ImageConfigurations
+import br.com.alex.moov.data.tmdb.TMDBDApi
+import br.com.alex.moov.data.tmdb.model.ImageConfigurations
 import br.com.alex.moov.domain.repository.Repository
-import rx.Single
+import io.reactivex.Single
 import timber.log.Timber
 
 class GetImageConfigurationsInteractor(
@@ -31,9 +31,8 @@ class GetImageConfigurationsInteractor(
         .onErrorResumeNext {
           tmdbdApi.getConfiguration()
               .map { it.images }
-              .doOnSuccess { imageConfigurationsRepository.save(it) }
+              .flatMap { config -> imageConfigurationsRepository.save(config).map { config } }
         }
-        .doOnSuccess { Timber.d("$it") }
         .doOnError { Timber.e("$it") }
   }
 }

@@ -21,11 +21,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.alex.moov.R
-import br.com.alex.moov.androidapp.ApplicationComponent
 import br.com.alex.moov.androidapp.base.BaseFragment
+import br.com.alex.moov.androidapp.base.di.ApplicationComponent
 import br.com.alex.moov.androidapp.base.di.HasComponent
+import br.com.alex.moov.androidapp.base.di.about.AboutModule
+import br.com.alex.moov.androidapp.base.di.about.DaggerAboutComponent
+import br.com.alex.moov.androidapp.base.di.home.HomeComponent
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
-import br.com.alex.moov.androidapp.home.HomeComponent
 import br.com.alex.moov.androidapp.logger.EventLogger
 import br.com.alex.moov.databinding.FragmentAboutBinding
 import javax.inject.Inject

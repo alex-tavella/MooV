@@ -17,13 +17,11 @@
 package br.com.alex.moov.androidapp.list.movie
 
 import android.databinding.Bindable
-import android.view.View
-import android.widget.Toast
 import br.com.alex.moov.androidapp.base.viewmodel.list.ItemViewModel
 import br.com.alex.moov.domain.entity.Movie
 
 
-class MovieItemViewModel : ItemViewModel<Movie>() {
+open class MovieItemViewModel : ItemViewModel<Movie>() {
 
   private var movie: Movie? = null
 
@@ -33,8 +31,4 @@ class MovieItemViewModel : ItemViewModel<Movie>() {
   }
 
   @Bindable fun getImageUrl() = movie?.posterUrl
-
-  fun onClick(view: View) {
-    Toast.makeText(view.context, "${movie?.title}", Toast.LENGTH_SHORT).show()
-  }
 }

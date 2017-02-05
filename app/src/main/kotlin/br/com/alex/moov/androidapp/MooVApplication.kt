@@ -19,6 +19,9 @@ package br.com.alex.moov.androidapp
 import android.app.Application
 import android.os.StrictMode
 import br.com.alex.moov.BuildConfig
+import br.com.alex.moov.androidapp.base.di.ApplicationComponent
+import br.com.alex.moov.androidapp.base.di.ApplicationModule
+import br.com.alex.moov.androidapp.base.di.DaggerApplicationComponent
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.core.CrashlyticsCore
@@ -66,7 +69,7 @@ class MooVApplication : Application() {
 
     Fabric.with(this, Crashlytics(), CrashlyticsCore(), Answers())
 
-    Fresco.initialize(this);
+    Fresco.initialize(this)
   }
 
   fun getAppComponent(): ApplicationComponent {

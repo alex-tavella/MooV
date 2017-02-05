@@ -23,10 +23,12 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import br.com.alex.moov.R
-import br.com.alex.moov.androidapp.ApplicationComponent
 import br.com.alex.moov.androidapp.about.AboutFragment
 import br.com.alex.moov.androidapp.base.BaseActivity
+import br.com.alex.moov.androidapp.base.di.ApplicationComponent
 import br.com.alex.moov.androidapp.base.di.HasComponent
+import br.com.alex.moov.androidapp.base.di.home.HomeComponent
+import br.com.alex.moov.androidapp.base.di.home.HomeModule
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
 import br.com.alex.moov.androidapp.email.EmailSender
 import br.com.alex.moov.androidapp.list.movie.MovieListFragment

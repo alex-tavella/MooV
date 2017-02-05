@@ -18,8 +18,12 @@ package br.com.alex.moov.androidapp.base.viewmodel.list
 
 import android.content.Context
 import android.databinding.ViewDataBinding
+import android.support.annotation.LayoutRes
+import android.support.annotation.VisibleForTesting
 import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import br.com.alex.moov.androidapp.base.viewmodel.list.RecyclerViewViewModelAdapter.ItemViewHolder
 
 abstract class RecyclerViewViewModelAdapter<ITEM_T, VIEW_MODEL_T : ItemViewModel<ITEM_T>>(
@@ -27,6 +31,27 @@ abstract class RecyclerViewViewModelAdapter<ITEM_T, VIEW_MODEL_T : ItemViewModel
     RecyclerView.Adapter<ItemViewHolder<ITEM_T, VIEW_MODEL_T>>() {
 
   val items: MutableList<ITEM_T> = arrayListOf()
+
+  protected val inflater: LayoutInflater by lazy {
+    context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+  }
+
+  abstract protected @LayoutRes fun getLayoutRes(): Int
+
+  abstract protected fun createItemViewModel(): VIEW_MODEL_T
+
+  abstract protected fun createBindingAndSetupViewModel(view: View,
+      itemViewModel: VIEW_MODEL_T): ViewDataBinding
+
+  override fun onCreateViewHolder(parent: ViewGroup?,
+      viewType: Int): ItemViewHolder<ITEM_T, VIEW_MODEL_T> {
+    val view = inflater.inflate(getLayoutRes(), parent, false)
+
+    val viewModel = createItemViewModel()
+    val binding = createBindingAndSetupViewModel(view, viewModel)
+
+    return ItemViewHolder(view, binding, viewModel)
+  }
 
   override fun onBindViewHolder(holder: ItemViewHolder<ITEM_T, VIEW_MODEL_T>, position: Int) {
     holder.setItem(items.get(position))
@@ -38,11 +63,16 @@ abstract class RecyclerViewViewModelAdapter<ITEM_T, VIEW_MODEL_T : ItemViewModel
 
   fun clear() {
     items.clear()
-    notifyDataSetChanged()
+    notifyDataSetChange()
   }
 
   fun addAll(newItems: List<ITEM_T>) {
     items.addAll(newItems)
+    notifyDataSetChange()
+  }
+
+  @VisibleForTesting
+  open protected fun notifyDataSetChange() {
     notifyDataSetChanged()
   }
 

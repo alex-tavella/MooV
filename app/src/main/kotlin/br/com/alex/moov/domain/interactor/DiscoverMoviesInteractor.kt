@@ -16,19 +16,20 @@
 
 package br.com.alex.moov.domain.interactor
 
-import br.com.alex.moov.api.tmdb.TMDBDApi
+import br.com.alex.moov.data.tmdb.TMDBDApi
 import br.com.alex.moov.domain.entity.Movie
 import br.com.alex.moov.domain.mapper.MovieMapper
-import rx.Single
+import io.reactivex.Single
+import io.reactivex.functions.BiFunction
 
-class DiscoverMoviesInteractor(
+open class DiscoverMoviesInteractor(
     val getImageConfigurationsInteractor: GetImageConfigurationsInteractor,
     val tmdbdApi: TMDBDApi, val movieMapper: MovieMapper) {
-  fun execute(page: Int, sortBy: String = "vote_average.desc",
+  open fun execute(page: Int, sortBy: String = "vote_average.desc",
       voteCount: Int = 100): Single<List<Movie>> {
     return getImageConfigurationsInteractor.execute()
         .zipWith(tmdbdApi.discoverMovies(page, sortBy, voteCount).map { it.results },
-            { imageConfigs, tmdbMovies ->
+            BiFunction { imageConfigs, tmdbMovies ->
               tmdbMovies.map {
                 movieMapper.map(it, imageConfigs)
               }

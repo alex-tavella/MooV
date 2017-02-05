@@ -17,31 +17,25 @@
 package br.com.alex.moov.androidapp.list.movie
 
 import android.content.Context
-import android.view.LayoutInflater
+import android.databinding.ViewDataBinding
 import android.view.View
-import android.view.ViewGroup
 import br.com.alex.moov.R
 import br.com.alex.moov.androidapp.base.viewmodel.list.RecyclerViewViewModelAdapter
 import br.com.alex.moov.databinding.GridItemMovieBinding
 import br.com.alex.moov.domain.entity.Movie
 
 
-class MovieAdapter(context: Context) : RecyclerViewViewModelAdapter<Movie, MovieItemViewModel>(
+open class MovieAdapter(context: Context) : RecyclerViewViewModelAdapter<Movie, MovieItemViewModel>(
     context) {
 
-  override fun onCreateViewHolder(parent: ViewGroup?,
-      viewType: Int): ItemViewHolder<Movie, MovieItemViewModel> {
-    val view = LayoutInflater.from(parent?.context).inflate(R.layout.grid_item_movie, parent,
-        false)
+  override fun getLayoutRes() = R.layout.grid_item_movie
 
+  override fun createItemViewModel() = MovieItemViewModel()
+
+  override fun createBindingAndSetupViewModel(view: View,
+      itemViewModel: MovieItemViewModel): ViewDataBinding {
     val binding = GridItemMovieBinding.bind(view)
-    val viewModel = MovieItemViewModel()
-    binding.viewModel = viewModel
-
-    return MovieViewHolder(view, binding, viewModel)
+    binding.viewModel = itemViewModel
+    return binding
   }
-
-  internal class MovieViewHolder(itemView: View, val binding: GridItemMovieBinding,
-      viewModel: MovieItemViewModel) : RecyclerViewViewModelAdapter.ItemViewHolder<Movie, MovieItemViewModel>(
-      itemView, binding, viewModel)
 }

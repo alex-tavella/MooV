@@ -24,11 +24,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import br.com.alex.moov.R
-import br.com.alex.moov.androidapp.ApplicationComponent
 import br.com.alex.moov.androidapp.base.BaseFragment
+import br.com.alex.moov.androidapp.base.di.ApplicationComponent
 import br.com.alex.moov.androidapp.base.di.HasComponent
+import br.com.alex.moov.androidapp.base.di.home.HomeComponent
+import br.com.alex.moov.androidapp.base.di.movies.DaggerMoviesComponent
+import br.com.alex.moov.androidapp.base.di.movies.MoviesComponent
+import br.com.alex.moov.androidapp.base.di.movies.MoviesModule
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
-import br.com.alex.moov.androidapp.home.HomeComponent
 import br.com.alex.moov.androidapp.list.MarginDecoration
 import br.com.alex.moov.androidapp.list.OnLoadMoreListener
 import br.com.alex.moov.androidapp.logger.EventLogger

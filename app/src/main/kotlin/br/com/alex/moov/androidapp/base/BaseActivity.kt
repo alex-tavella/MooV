@@ -18,8 +18,8 @@ package br.com.alex.moov.androidapp.base
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import br.com.alex.moov.androidapp.ApplicationComponent
 import br.com.alex.moov.androidapp.MooVApplication
+import br.com.alex.moov.androidapp.base.di.ApplicationComponent
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel.State
 
