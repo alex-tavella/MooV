@@ -17,6 +17,7 @@
 package br.com.alex.moov.androidapp.base.di
 
 import android.content.Context
+import br.com.alex.moov.androidapp.base.AttachedActivity
 import dagger.Module
 import dagger.Provides
 import org.mockito.Mockito.mock
@@ -29,4 +30,8 @@ class TestApplicationModule {
   @Provides
   @Singleton
   fun provideAppContext(): Context = mock(Context::class.java)
+
+  @Provides
+  @Singleton
+  fun provideAttachedActivity(): AttachedActivity = mock(AttachedActivity::class.java)
 }

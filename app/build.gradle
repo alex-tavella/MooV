@@ -147,6 +147,9 @@ dependencies {
   androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
     exclude group: 'com.android.support', module: 'support-annotations'
   })
+
+  // Kotlin argument capture for non-null methods
+  testCompile "com.nhaarman:mockito-kotlin:1.1.0"
 }
 
 crashlytics {

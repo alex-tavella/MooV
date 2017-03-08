@@ -19,6 +19,7 @@ package br.com.alex.moov.androidapp
 import android.content.Context
 import android.support.annotation.CallSuper
 import br.com.alex.moov.BaseTest
+import br.com.alex.moov.androidapp.base.AttachedActivity
 import br.com.alex.moov.androidapp.base.di.DaggerTestApplicationComponent
 import org.junit.Before
 import org.mockito.Mockito
@@ -32,6 +33,9 @@ open class BaseApplicationTest : BaseTest() {
 
   @Inject
   protected lateinit var appContext: Context
+
+  @Inject
+  protected lateinit var attachedActivity: AttachedActivity
 
   @CallSuper
   @Before
