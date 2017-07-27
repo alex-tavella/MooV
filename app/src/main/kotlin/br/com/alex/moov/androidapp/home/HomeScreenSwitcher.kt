@@ -16,20 +16,22 @@
 
 package br.com.alex.moov.androidapp.home
 
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import br.com.alex.moov.R
+import android.content.Intent
+import android.support.v7.app.AppCompatActivity
+import br.com.alex.moov.androidapp.about.AboutActivity
+import br.com.alex.moov.androidapp.moviedetail.MovieDetailActivity
 
-class HomeScreenSwitcher(val supportFragmentManager: FragmentManager) {
 
-  fun switchScreen(fragmentClass: Class<out Fragment>, tag: String) {
-    var fragment = supportFragmentManager.findFragmentByTag(tag)
+class HomeScreenSwitcher(val activity: AppCompatActivity) {
 
-    if (fragment == null) {
-      fragment = fragmentClass.newInstance()
+  fun switchToAboutScreen() {
+    activity.startActivity(Intent(activity, AboutActivity::class.java))
+  }
+
+  fun switchToDetailScreen(movieId: Int?) {
+    movieId?.let {
+      activity.startActivity(Intent(activity, MovieDetailActivity::class.java)
+          .putExtra(MovieDetailActivity.EXTRA_MOVIE_ID, movieId))
     }
-
-    supportFragmentManager.beginTransaction().replace(R.id.frame_content,
-        fragment, tag).commit()
   }
 }

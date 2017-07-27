@@ -16,8 +16,12 @@
 
 package br.com.alex.moov.androidapp.base.di
 
+import br.com.alex.moov.androidapp.base.di.about.AboutComponent
+import br.com.alex.moov.androidapp.base.di.about.AboutModule
 import br.com.alex.moov.androidapp.base.di.home.HomeComponent
 import br.com.alex.moov.androidapp.base.di.home.HomeModule
+import br.com.alex.moov.androidapp.base.di.moviedetail.MovieDetailComponent
+import br.com.alex.moov.androidapp.base.di.moviedetail.MovieDetailModule
 import br.com.alex.moov.data.DataModule
 import br.com.alex.moov.domain.DomainModule
 import dagger.Component
@@ -32,4 +36,6 @@ import javax.inject.Singleton
 ))
 interface ApplicationComponent {
   fun plus(homeModule: HomeModule): HomeComponent
+  fun plus(aboutModule: AboutModule): AboutComponent
+  fun plus(movieDetailModule: MovieDetailModule): MovieDetailComponent
 }

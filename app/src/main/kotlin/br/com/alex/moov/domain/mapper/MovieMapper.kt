@@ -32,10 +32,10 @@ class MovieMapper @Inject constructor() {
           source.popularity, source.vote_average)
 
   private fun getPosterQuality(
-      imageConfigs: ImageConfigurations) = imageConfigs.poster_sizes.get(
-      imageConfigs.poster_sizes.size / 2)
+      imageConfigs: ImageConfigurations) = imageConfigs.poster_sizes[(
+      imageConfigs.poster_sizes.size / 2)]
 
   private fun getBackdropQuality(
-      imageConfigs: ImageConfigurations) = imageConfigs.backdrop_sizes.get(
-      imageConfigs.backdrop_sizes.size / 2)
+      imageConfigs: ImageConfigurations) = imageConfigs.backdrop_sizes[(
+      imageConfigs.backdrop_sizes.size / 2)]
 }

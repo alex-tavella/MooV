@@ -16,11 +16,15 @@
 
 package br.com.alex.moov.androidapp.base.di.home
 
-import android.support.v4.app.FragmentManager
+import android.content.Context
 import br.com.alex.moov.androidapp.base.di.ActivityModule
 import br.com.alex.moov.androidapp.base.di.ActivityScope
+import br.com.alex.moov.androidapp.base.di.ApplicationContextQualifier
 import br.com.alex.moov.androidapp.home.HomeActivity
 import br.com.alex.moov.androidapp.home.HomeScreenSwitcher
+import br.com.alex.moov.androidapp.home.list.MovieAdapter
+import br.com.alex.moov.androidapp.home.list.MoviesViewModel
+import br.com.alex.moov.domain.interactor.DiscoverMoviesInteractor
 import dagger.Module
 import dagger.Provides
 
@@ -29,9 +33,15 @@ class HomeModule(private val homeActivity: HomeActivity) : ActivityModule(homeAc
 
   @Provides
   @ActivityScope
-  fun providesFragmentManager(): FragmentManager = homeActivity.supportFragmentManager
+  fun providesScreenSwitcher() = HomeScreenSwitcher(homeActivity)
 
   @Provides
-  @ActivityScope
-  fun providesScreenSwitcher(fragmentManager: FragmentManager) = HomeScreenSwitcher(fragmentManager)
+  fun providesNewAdapter(@ApplicationContextQualifier appContext: Context,
+      screenSwitcher: HomeScreenSwitcher) = MovieAdapter(
+      appContext, screenSwitcher)
+
+  @Provides
+  fun providesNewViewModel(movieAdapter: MovieAdapter,
+      discoverMoviesInteractor: DiscoverMoviesInteractor): MoviesViewModel = MoviesViewModel(
+      movieAdapter, discoverMoviesInteractor)
 }

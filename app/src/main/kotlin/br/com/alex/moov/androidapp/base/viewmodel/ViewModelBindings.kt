@@ -28,6 +28,6 @@ fun RecyclerView.setRecyclerViewViewModel(viewModel: RecyclerViewViewModel) {
 }
 
 @BindingAdapter("imageUrl")
-fun imageUrl(draweeView: SimpleDraweeView, imageUrl: String) {
-  draweeView.setImageURI(imageUrl)
+fun imageUrl(imageView: SimpleDraweeView, imageUrl: String?) {
+  imageUrl?.let { imageView.setImageURI(imageUrl) }
 }

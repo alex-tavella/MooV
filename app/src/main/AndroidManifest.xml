@@ -14,7 +14,6 @@
   ~     See the License for the specific language governing permissions and
   ~     limitations under the License.
   -->
-
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.alex.moov">
 
@@ -23,23 +22,36 @@
   <application
       android:name=".androidapp.MooVApplication"
       android:allowBackup="true"
+      android:extractNativeLibs="false"
       android:fullBackupContent="true"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
-
     <meta-data
         android:name="io.fabric.ApiKey"
         android:value="64dabca0ee01cbc088ba1dcf7f39b8d3c773fcc6"/>
 
     <activity
         android:name=".androidapp.home.HomeActivity"
-        android:theme="@style/AppTheme.NoActionBar">
+        android:launchMode="singleTop">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
+
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
+    </activity>
+    <activity
+        android:name=".androidapp.about.AboutActivity"
+        android:parentActivityName=".androidapp.home.HomeActivity"/>
+    <activity
+        android:name=".androidapp.moviedetail.MovieDetailActivity"
+        android:label="@string/title_activity_movie_detail"
+        android:parentActivityName=".androidapp.home.HomeActivity"
+        android:theme="@style/AppTheme.NoActionBar">
+      <meta-data
+          android:name="android.support.PARENT_ACTIVITY"
+          android:value="br.com.alex.moov.androidapp.home.HomeActivity"/>
     </activity>
   </application>
 

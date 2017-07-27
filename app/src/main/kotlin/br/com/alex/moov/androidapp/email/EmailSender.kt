@@ -17,6 +17,5 @@
 package br.com.alex.moov.androidapp.email
 
 interface EmailSender {
-  fun sendEmail(recipient: String, subject: String)
   fun sendFeedbackEmail()
 }

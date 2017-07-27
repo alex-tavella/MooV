@@ -18,12 +18,12 @@ package br.com.alex.moov.androidapp.home
 
 import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.support.design.widget.NavigationView.OnNavigationItemSelectedListener
-import android.support.v4.view.GravityCompat
-import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.RecyclerView.OnScrollListener
+import android.view.Menu
 import android.view.MenuItem
 import br.com.alex.moov.R
-import br.com.alex.moov.androidapp.about.AboutFragment
 import br.com.alex.moov.androidapp.base.BaseActivity
 import br.com.alex.moov.androidapp.base.di.ApplicationComponent
 import br.com.alex.moov.androidapp.base.di.HasComponent
@@ -31,23 +31,26 @@ import br.com.alex.moov.androidapp.base.di.home.HomeComponent
 import br.com.alex.moov.androidapp.base.di.home.HomeModule
 import br.com.alex.moov.androidapp.base.viewmodel.ViewModel
 import br.com.alex.moov.androidapp.email.EmailSender
-import br.com.alex.moov.androidapp.list.movie.MovieListFragment
-import br.com.alex.moov.androidapp.list.tvshow.TvShowListFragment
+import br.com.alex.moov.androidapp.home.list.MarginDecoration
+import br.com.alex.moov.androidapp.home.list.MovieAdapter
+import br.com.alex.moov.androidapp.home.list.MoviesViewModel
+import br.com.alex.moov.androidapp.home.list.OnLoadMoreListener
 import br.com.alex.moov.androidapp.logger.EventLogger
 import br.com.alex.moov.databinding.ActivityHomeBinding
+import br.com.alex.moov.domain.interactor.DiscoverMoviesInteractor
 import javax.inject.Inject
 
-class HomeActivity : BaseActivity(), OnNavigationItemSelectedListener, HasComponent<HomeComponent> {
-
-  companion object {
-    val TAG_MOVIES = "Movies"
-    val TAG_TV_SHOWS = "TvShows"
-    val TAG_ABOUT = "About"
-  }
+class HomeActivity : BaseActivity(), HasComponent<HomeComponent> {
 
   lateinit var homeComponent: HomeComponent
 
   @Inject lateinit var screenSwitcher: HomeScreenSwitcher
+
+  @Inject lateinit var movieAdapter: MovieAdapter
+
+  @Inject lateinit var discoverMoviesInteractor: DiscoverMoviesInteractor
+
+  @Inject lateinit var moviesViewModel: MoviesViewModel
 
   @Inject lateinit var emailSender: EmailSender
 
@@ -65,61 +68,48 @@ class HomeActivity : BaseActivity(), OnNavigationItemSelectedListener, HasCompon
     homeComponent.inject(this)
   }
 
-  override fun createViewModel(): ViewModel? = null
+  override fun createViewModel(): ViewModel {
+    return moviesViewModel
+  }
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_home)
 
-    val drawerLayout = mBinding.drawerLayout
-    val toolbar = mBinding.toolbar
-
-    setSupportActionBar(toolbar)
-
-    val toggle = ActionBarDrawerToggle(
-        this, drawerLayout, toolbar, R.string.navigation_drawer_open,
-        R.string.navigation_drawer_close)
-    drawerLayout.addDrawerListener(toggle)
-    toggle.syncState()
-
-    mBinding.navView.setNavigationItemSelectedListener(this)
-
-    if (savedInstanceState == null) {
-      screenSwitcher.switchScreen(MovieListFragment::class.java, TAG_MOVIES)
-      mBinding.navView.setCheckedItem(R.id.nav_movies)
-    }
+    mBinding.viewModel = moviesViewModel
+    mBinding.recyclerView.setHasFixedSize(true)
+    mBinding.recyclerView.addItemDecoration(MarginDecoration(this))
+    mBinding.recyclerView.addOnScrollListener(object : OnScrollListener() {
+      override fun onScrolled(recyclerView: RecyclerView?, dx: Int, dy: Int) {
+        super.onScrolled(recyclerView, dx, dy)
+        val layoutManager = mBinding.recyclerView.layoutManager as GridLayoutManager
+        val totalItemCount = layoutManager.itemCount
+        val lastVisibleItem = layoutManager.findLastVisibleItemPosition()
+        if (totalItemCount <= (lastVisibleItem + 3)) {
+          if (moviesViewModel is OnLoadMoreListener) {
+            (moviesViewModel as OnLoadMoreListener).onLoadMore()
+          }
+        }
+      }
+    })
   }
 
-  override fun onBackPressed() {
-    val drawer = mBinding.drawerLayout
-    if (drawer.isDrawerOpen(GravityCompat.START)) {
-      drawer.closeDrawer(GravityCompat.START)
-    } else {
-      super.onBackPressed()
-    }
-  }
-
-  override fun onNavigationItemSelected(item: MenuItem): Boolean {
-    when (item.itemId) {
-      R.id.nav_movies -> {
-        screenSwitcher.switchScreen(MovieListFragment::class.java, TAG_MOVIES)
-      }
-      R.id.nav_tv_shows -> {
-        screenSwitcher.switchScreen(TvShowListFragment::class.java, TAG_TV_SHOWS)
-      }
-      R.id.nav_about -> {
-        screenSwitcher.switchScreen(AboutFragment::class.java, TAG_ABOUT)
-      }
-      R.id.nav_feedback -> {
-        emailSender.sendFeedbackEmail()
-      }
-      else -> {
-      }
-    }
-
-    eventLogger.logHomeNavigationDrawerEvent(item)
-
-    mBinding.drawerLayout.closeDrawer(GravityCompat.START)
+  override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    menuInflater.inflate(R.menu.activity_home_drawer, menu)
     return true
+  }
+
+  override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+    item?.let {
+      when (item.itemId) {
+        R.id.nav_about -> {
+          screenSwitcher.switchToAboutScreen()
+        }
+        R.id.nav_feedback -> {
+          emailSender.sendFeedbackEmail()
+        }
+      }
+    }
+    return super.onOptionsItemSelected(item)
   }
 }

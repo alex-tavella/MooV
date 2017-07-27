@@ -17,18 +17,18 @@
 package br.com.alex.moov.androidapp.base.di.about
 
 import android.content.Context
+import android.support.v7.app.AppCompatActivity
 import br.com.alex.moov.androidapp.about.AboutViewModel
 import br.com.alex.moov.androidapp.base.AttachedActivity
+import br.com.alex.moov.androidapp.base.di.ActivityModule
 import br.com.alex.moov.androidapp.base.di.ApplicationContextQualifier
-import br.com.alex.moov.androidapp.base.di.FragmentScope
 import dagger.Module
 import dagger.Provides
 
 @Module
-class AboutModule {
+class AboutModule(val activity: AppCompatActivity) : ActivityModule(activity) {
 
   @Provides
-  @FragmentScope
   fun providesAboutViewModel(@ApplicationContextQualifier context: Context,
       attachedActivity: AttachedActivity) = AboutViewModel(context, attachedActivity)
 }

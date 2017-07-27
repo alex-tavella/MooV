@@ -16,6 +16,6 @@
 
 package br.com.alex.moov.androidapp.base.di
 
-interface HasComponent<T> {
+interface HasComponent<out T> {
   fun getComponent(): T
 }

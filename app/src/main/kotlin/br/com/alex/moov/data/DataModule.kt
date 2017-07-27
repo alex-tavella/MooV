@@ -16,6 +16,7 @@
 
 package br.com.alex.moov.data
 
+import br.com.alex.moov.BuildConfig
 import br.com.alex.moov.data.tmdb.ApiKeyQualifier
 import br.com.alex.moov.data.tmdb.CacheDurationQualifier
 import br.com.alex.moov.data.tmdb.TMDBApiKeyHolder
@@ -27,6 +28,9 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
+import okhttp3.logging.HttpLoggingInterceptor.Level.BODY
+import okhttp3.logging.HttpLoggingInterceptor.Logger
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
@@ -56,11 +60,18 @@ class DataModule {
       @CacheDurationQualifier cacheDuration: Int) = TMDBRequestInterceptor(apiKey, cacheDuration)
 
   @Provides @Singleton
-  fun provideOkHttpClient(cache: Cache, interceptor: TMDBRequestInterceptor): OkHttpClient =
-      OkHttpClient().newBuilder()
-          .cache(cache)
-          .addInterceptor(interceptor)
-          .build()
+  fun provideOkHttpClient(cache: Cache, interceptor: TMDBRequestInterceptor): OkHttpClient {
+    val builder = OkHttpClient().newBuilder()
+
+    if (BuildConfig.DEBUG) {
+      builder.addInterceptor(HttpLoggingInterceptor(Logger.DEFAULT).setLevel(BODY))
+    }
+
+    return builder
+        .cache(cache)
+        .addInterceptor(interceptor)
+        .build()
+  }
 
   @Provides @Singleton
   fun provideRetrofit(client: OkHttpClient): Retrofit {

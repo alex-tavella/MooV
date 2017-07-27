@@ -16,15 +16,13 @@
 
 package br.com.alex.moov.androidapp.base.di.about
 
-import br.com.alex.moov.androidapp.about.AboutFragment
-import br.com.alex.moov.androidapp.base.di.FragmentScope
-import br.com.alex.moov.androidapp.base.di.home.HomeComponent
-import dagger.Component
+import br.com.alex.moov.androidapp.about.AboutActivity
+import br.com.alex.moov.androidapp.base.di.ActivityScope
+import dagger.Subcomponent
 
-@Component(
-    dependencies = arrayOf(HomeComponent::class),
+@Subcomponent(
     modules = arrayOf(AboutModule::class))
-@FragmentScope
+@ActivityScope
 interface AboutComponent {
-  fun inject(aboutFragment: AboutFragment)
+  fun inject(aboutFragment: AboutActivity)
 }

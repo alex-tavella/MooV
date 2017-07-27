@@ -16,5 +16,5 @@
 
 package br.com.alex.moov.data.tmdb.model
 
-class DiscoverResponse<T>(val page: Int, val results: List<T>, val total_results: Int,
+data class DiscoverResponse<out T>(val page: Int, val results: List<T>, val total_results: Int,
     val total_pages: Int)

@@ -24,7 +24,7 @@
   <data>
     <variable
         name="viewModel"
-        type="br.com.alex.moov.androidapp.list.movie.MovieItemViewModel"
+        type="br.com.alex.moov.androidapp.home.list.MovieItemViewModel"
         />
   </data>
 
