@@ -79,7 +79,7 @@ android {
 }
 
 dependencies {
-  compile fileTree(include: ['*.jar'], dir: 'libs')
+  implementation fileTree(include: ['*.jar'], dir: 'libs')
 
   // Android
   def support_version = '26.0.0-beta2'
