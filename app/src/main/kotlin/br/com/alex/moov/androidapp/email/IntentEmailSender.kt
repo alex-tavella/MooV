@@ -28,7 +28,7 @@ class IntentEmailSender(val context: Context) : EmailSender {
     val SUBJECT = "[MooV - Feedback]"
   }
 
-  override fun sendEmail(recipient: String, subject: String) {
+  private fun sendEmail(recipient: String, subject: String) {
     val intent = Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", recipient, null))
     intent.putExtra(Intent.EXTRA_SUBJECT, subject)
     context.startActivity(

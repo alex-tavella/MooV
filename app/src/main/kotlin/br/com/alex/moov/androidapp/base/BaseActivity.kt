@@ -38,9 +38,8 @@ abstract class BaseActivity : AppCompatActivity() {
   protected abstract fun injectDependencies(applicationComponent: ApplicationComponent)
 
   override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-
     injectDependencies((applicationContext as MooVApplication).getAppComponent())
+    super.onCreate(savedInstanceState)
 
     viewModel = createViewModel()
     viewModel?.onRestoreState(savedInstanceState?.getParcelable<State>(EXTRA_VIEW_MODEL_STATE))

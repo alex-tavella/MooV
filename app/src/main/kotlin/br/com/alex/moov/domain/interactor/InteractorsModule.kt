@@ -19,7 +19,6 @@ package br.com.alex.moov.domain.interactor
 import br.com.alex.moov.data.tmdb.TMDBDApi
 import br.com.alex.moov.data.tmdb.model.ImageConfigurations
 import br.com.alex.moov.domain.mapper.MovieMapper
-import br.com.alex.moov.domain.mapper.TvShowMapper
 import br.com.alex.moov.domain.repository.Repository
 import dagger.Module
 import dagger.Provides
@@ -44,9 +43,8 @@ class InteractorsModule {
 
   @Provides
   @Singleton
-  fun provideDiscoverTvShowsInteractor(
+  fun provideGetMovieInteractor(
       getImageConfigurationsInteractor: GetImageConfigurationsInteractor,
-      tmdbdApi: TMDBDApi, tvShowMapper: TvShowMapper) = DiscoverTvShowsInteractor(
-      getImageConfigurationsInteractor,
-      tmdbdApi, tvShowMapper)
+      tmdbdApi: TMDBDApi, movieMapper: MovieMapper) = GetMovieInteractor(tmdbdApi,
+      getImageConfigurationsInteractor, movieMapper)
 }

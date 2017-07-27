@@ -18,9 +18,12 @@ package br.com.alex.moov.androidapp.base.viewmodel
 
 import android.databinding.BaseObservable
 import android.os.Parcelable
+import io.reactivex.disposables.CompositeDisposable
 
 
 abstract class ViewModel : BaseObservable() {
+
+  protected var disposableContainer: CompositeDisposable = CompositeDisposable()
 
   open fun onRestoreState(savedInstanceState: State?) {
   }
@@ -29,6 +32,7 @@ abstract class ViewModel : BaseObservable() {
   }
 
   open fun onStop() {
+    disposableContainer.clear()
   }
 
   open fun getInstanceState(): State? = null

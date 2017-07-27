@@ -54,7 +54,7 @@ abstract class RecyclerViewViewModelAdapter<ITEM_T, VIEW_MODEL_T : ItemViewModel
   }
 
   override fun onBindViewHolder(holder: ItemViewHolder<ITEM_T, VIEW_MODEL_T>, position: Int) {
-    holder.setItem(items.get(position))
+    holder.setItem(items[(position)])
   }
 
   override fun getItemCount(): Int {
@@ -76,7 +76,7 @@ abstract class RecyclerViewViewModelAdapter<ITEM_T, VIEW_MODEL_T : ItemViewModel
     notifyDataSetChanged()
   }
 
-  open class ItemViewHolder<T, out VT : ItemViewModel<T>>(itemView: View,
+  open class ItemViewHolder<in T, out VT : ItemViewModel<T>>(itemView: View,
       private val binding: ViewDataBinding, protected val viewModel: VT) : RecyclerView.ViewHolder(
       itemView) {
 

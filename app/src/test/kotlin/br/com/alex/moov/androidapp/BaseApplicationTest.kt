@@ -28,8 +28,10 @@ import javax.inject.Inject
 
 open class BaseApplicationTest : BaseTest() {
 
-  protected val testApplicationComponent = DaggerTestApplicationComponent.builder()
-      .build()
+  protected val testApplicationComponent by lazy {
+    DaggerTestApplicationComponent.builder()
+        .build()!!
+  }
 
   @Inject
   protected lateinit var appContext: Context

@@ -29,7 +29,7 @@ import com.raizlabs.android.dbflow.structure.Model
 data class Movie(
     @PrimaryKey var id: Int = 0,
     @Column var posterUrl: String = "",
-    @Column var overview: String = "",
+    @Column var overview: String? = "",
     @Column var releaseDate: String = "",
     @Column var title: String = "",
     @Column var backdropUrl: String = "",

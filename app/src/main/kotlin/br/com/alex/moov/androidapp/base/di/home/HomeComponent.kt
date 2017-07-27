@@ -16,32 +16,12 @@
 
 package br.com.alex.moov.androidapp.base.di.home
 
-import android.content.Context
-import br.com.alex.moov.androidapp.base.AttachedActivity
 import br.com.alex.moov.androidapp.base.di.ActivityScope
-import br.com.alex.moov.androidapp.base.di.ApplicationContextQualifier
 import br.com.alex.moov.androidapp.home.HomeActivity
-import br.com.alex.moov.androidapp.logger.EventLogger
-import br.com.alex.moov.domain.interactor.DiscoverMoviesInteractor
-import br.com.alex.moov.domain.interactor.DiscoverTvShowsInteractor
 import dagger.Subcomponent
 
 @Subcomponent(modules = arrayOf(HomeModule::class))
 @ActivityScope
 interface HomeComponent {
-
-  @ApplicationContextQualifier
-  fun provideApplicationContext(): Context
-
-  fun provideActivityContext(): Context
-
-  fun provideAttachedActivity(): AttachedActivity
-
-  fun provideDiscoverMoviesInteractor(): DiscoverMoviesInteractor
-
-  fun provideDiscoverTvShowsInteractor(): DiscoverTvShowsInteractor
-
-  fun provideEventLogger(): EventLogger
-
   fun inject(homeActivity: HomeActivity)
 }

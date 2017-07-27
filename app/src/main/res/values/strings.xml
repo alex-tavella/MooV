@@ -17,17 +17,12 @@
 <resources>
   <string name="app_name">MooV</string>
 
-  <string name="navigation_drawer_open">Open navigation drawer</string>
-  <string name="navigation_drawer_close">Close navigation drawer</string>
-  <string name="menu_movies">Movies</string>
-  <string name="menu_tv_shows">Tv Shows</string>
   <string name="menu_about">About</string>
-  <string name="menu_legal">Legal</string>
-  <string name="menu_group_more">More</string>
   <string name="menu_feedback">Send feedback</string>
   <string name="btn_licenses">Licenses</string>
   <string name="app_version_name">Version %1$s</string>
   <string name="action_send_email">Send email</string>
-  <string name="cd_nav_header_icon">MooV application\'s Icon</string>
   <string name="cd_app_icon">MooV application\'s icon</string>
+  <string name="title_activity_movie_detail">Movie Detail</string>
+  <string name="cd_movie_poster">Movie Poster</string>
 </resources>
