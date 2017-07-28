@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!--
   ~     Copyright 2017 Alex Almeida Tavella
   ~
@@ -20,6 +21,6 @@
     android:viewportWidth="24.0"
     android:width="24dp">
   <path
-      android:fillColor="#FF000000"
+      android:fillColor="#000000"
       android:pathData="M2.01,21L23,12 2.01,3 2,10l15,2 -15,2z"/>
 </vector>
