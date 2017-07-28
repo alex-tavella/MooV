@@ -33,9 +33,9 @@ import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
 import br.com.alex.moov.R
 import br.com.alex.moov.androidapp.about.AboutActivity
-import junit.framework.Assert
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
+import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
