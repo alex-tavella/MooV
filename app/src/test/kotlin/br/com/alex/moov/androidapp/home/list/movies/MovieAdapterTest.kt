@@ -21,14 +21,13 @@ import android.view.View
 import android.view.ViewGroup
 import br.com.alex.moov.androidapp.BaseApplicationTest
 import br.com.alex.moov.androidapp.base.viewmodel.list.RecyclerViewViewModelAdapter.ItemViewHolder
+import br.com.alex.moov.androidapp.home.HomeScreenSwitcher
 import br.com.alex.moov.androidapp.home.list.MovieItemViewModel
 import br.com.alex.moov.databinding.GridItemMovieBinding
 import br.com.alex.moov.domain.entity.Movie
+import com.nhaarman.mockito_kotlin.any
+import com.nhaarman.mockito_kotlin.eq
 import org.junit.Test
-import org.mockito.Matchers.anyBoolean
-import org.mockito.Matchers.anyInt
-import org.mockito.Matchers.anyString
-import org.mockito.Matchers.eq
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.verify
@@ -47,6 +46,8 @@ class MovieAdapterTest : BaseApplicationTest() {
 
   @Mock lateinit private var movieItemViewModel: MovieItemViewModel
 
+  @Mock lateinit var screenSwitcher: HomeScreenSwitcher
+
   lateinit private var movie: Movie
 
   lateinit private var items: List<Movie>
@@ -57,15 +58,15 @@ class MovieAdapterTest : BaseApplicationTest() {
     super.setUp()
 
     `when`(viewGroup.context).thenReturn(appContext)
-    `when`(appContext.getSystemService(anyString())).thenReturn(layoutInflater)
-    `when`(layoutInflater.inflate(anyInt(), eq(viewGroup), anyBoolean())).thenReturn(view)
+    `when`(appContext.getSystemService(any())).thenReturn(layoutInflater)
+    `when`(layoutInflater.inflate(any<Int>(), eq(viewGroup), any<Boolean>())).thenReturn(view)
 
     movie = Movie(title = "Lord of The Rings")
 
     items = listOf(movie, Movie(title = "Shawshank Redemption"),
         Movie(title = "12 Angry Men"), Movie(title = "Django"))
 
-    adapter = SpiedMovieAdapter(appContext)
+    adapter = SpiedMovieAdapter(appContext, screenSwitcher)
   }
 
   @Test

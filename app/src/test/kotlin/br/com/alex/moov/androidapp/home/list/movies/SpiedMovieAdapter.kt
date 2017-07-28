@@ -19,13 +19,14 @@ package br.com.alex.moov.androidapp.home.list.movies
 import android.content.Context
 import android.databinding.ViewDataBinding
 import android.view.View
+import br.com.alex.moov.androidapp.home.HomeScreenSwitcher
 import br.com.alex.moov.androidapp.home.list.MovieAdapter
 import br.com.alex.moov.androidapp.home.list.MovieItemViewModel
 import br.com.alex.moov.databinding.GridItemMovieBinding
-import com.nhaarman.mockito_kotlin.mock
 import org.mockito.Mockito
 
-class SpiedMovieAdapter(context: Context) : MovieAdapter(context, mock()) {
+class SpiedMovieAdapter(context: Context, screenSwitcher: HomeScreenSwitcher) : MovieAdapter(
+    context, screenSwitcher) {
   var notified = false
 
   override fun notifyDataSetChange() {
@@ -34,6 +35,9 @@ class SpiedMovieAdapter(context: Context) : MovieAdapter(context, mock()) {
 
   override fun createBindingAndSetupViewModel(view: View,
       itemViewModel: MovieItemViewModel): ViewDataBinding {
+
+    view.setOnClickListener { screenSwitcher.switchToDetailScreen(itemViewModel.getMovieId()) }
+
     return Mockito.mock(GridItemMovieBinding::class.java)
   }
 }

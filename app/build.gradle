@@ -99,9 +99,9 @@ dependencies {
 
   // Kotlin
   implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-  kapt 'com.android.databinding:compiler:3.0.0-alpha7'
-  kaptTest 'com.android.databinding:compiler:3.0.0-alpha7'
-  kaptAndroidTest 'com.android.databinding:compiler:3.0.0-alpha7'
+  kapt 'com.android.databinding:compiler:3.0.0-alpha8'
+  kaptTest 'com.android.databinding:compiler:3.0.0-alpha8'
+  kaptAndroidTest 'com.android.databinding:compiler:3.0.0-alpha8'
 
   // Dependency Injection
   implementation 'com.google.dagger:dagger:2.11'
@@ -142,9 +142,12 @@ dependencies {
 
   // Logging
   implementation 'com.jakewharton.timber:timber:4.5.1'
+
+  // Testing
   testImplementation 'junit:junit:4.12'
   testImplementation 'org.mockito:mockito-core:2.7.22'
-  androidTestImplementation 'com.android.support.test.espresso:espresso-core:2.2.2'
+  androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.0'
+  androidTestImplementation 'com.android.support.test.espresso:espresso-intents:3.0.0'
   androidTestImplementation "com.android.support:support-annotations:$support_version"
   androidTestImplementation 'org.mockito:mockito-core:2.7.22'
 

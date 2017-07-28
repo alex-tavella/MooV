@@ -22,13 +22,13 @@ import br.com.alex.moov.androidapp.about.AboutActivity
 import br.com.alex.moov.androidapp.moviedetail.MovieDetailActivity
 
 
-class HomeScreenSwitcher(val activity: AppCompatActivity) {
+open class HomeScreenSwitcher(val activity: AppCompatActivity) {
 
   fun switchToAboutScreen() {
     activity.startActivity(Intent(activity, AboutActivity::class.java))
   }
 
-  fun switchToDetailScreen(movieId: Int?) {
+  open fun switchToDetailScreen(movieId: Int?) {
     movieId?.let {
       activity.startActivity(Intent(activity, MovieDetailActivity::class.java)
           .putExtra(MovieDetailActivity.EXTRA_MOVIE_ID, movieId))

@@ -21,6 +21,7 @@ import br.com.alex.moov.androidapp.base.viewmodel.ViewModelTest
 import br.com.alex.moov.androidapp.home.list.MoviesViewModel
 import br.com.alex.moov.domain.entity.Movie
 import br.com.alex.moov.domain.interactor.DiscoverMoviesInteractor
+import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.Single
 import org.junit.Before
 import org.junit.Test
@@ -40,7 +41,7 @@ class MoviesViewModelTest : ViewModelTest<MoviesViewModel>() {
   private lateinit var thirdPage: List<Movie>
 
   override fun createViewModel(): MoviesViewModel = MoviesViewModel(
-      SpiedMovieAdapter(appContext),
+      SpiedMovieAdapter(appContext, mock()),
       interactor)
 
   @Before override fun setUp() {

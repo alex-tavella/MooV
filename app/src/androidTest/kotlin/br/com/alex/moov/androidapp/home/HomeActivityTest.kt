@@ -16,19 +16,25 @@
 
 package br.com.alex.moov.androidapp.home
 
+import android.content.Intent
+import android.support.test.InstrumentationRegistry
 import android.support.test.espresso.Espresso.onView
+import android.support.test.espresso.Espresso.openActionBarOverflowOrOptionsMenu
 import android.support.test.espresso.action.ViewActions.click
-import android.support.test.espresso.matcher.ViewMatchers.isDisplayed
-import android.support.test.espresso.matcher.ViewMatchers.withContentDescription
-import android.support.test.espresso.matcher.ViewMatchers.withId
-import android.support.test.espresso.matcher.ViewMatchers.withParent
+import android.support.test.espresso.intent.Intents.intended
+import android.support.test.espresso.intent.matcher.ComponentNameMatchers.hasClassName
+import android.support.test.espresso.intent.matcher.IntentMatchers.hasAction
+import android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent
+import android.support.test.espresso.intent.matcher.IntentMatchers.hasExtra
+import android.support.test.espresso.intent.rule.IntentsTestRule
 import android.support.test.espresso.matcher.ViewMatchers.withText
 import android.support.test.filters.LargeTest
 import android.support.test.rule.ActivityTestRule
 import android.support.test.runner.AndroidJUnit4
-import android.view.View
 import br.com.alex.moov.R
+import br.com.alex.moov.androidapp.about.AboutActivity
 import junit.framework.Assert
+import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.allOf
 import org.junit.Rule
 import org.junit.Test
@@ -38,7 +44,7 @@ import org.junit.runner.RunWith
 @RunWith(AndroidJUnit4::class)
 class HomeActivityTest {
 
-  @get:Rule var mActivityTestRule: ActivityTestRule<HomeActivity> = ActivityTestRule(
+  @get:Rule var mActivityTestRule: ActivityTestRule<HomeActivity> = IntentsTestRule(
       HomeActivity::class.java, true, false)
 
   @Test
@@ -54,60 +60,27 @@ class HomeActivityTest {
     Assert.assertNotNull(activity.mBinding.viewModel)
   }
 
-  @Test fun testGoToMovies() {
-    mActivityTestRule.launchActivity(null)
-
-    val appCompatImageButton = onView(
-        allOf<View>(withContentDescription("Open navigation drawer"),
-            withParent(withId(R.id.toolbar)),
-            isDisplayed()))
-    appCompatImageButton.perform(click())
-
-    val appCompatCheckedTextView = onView(
-        allOf<View>(withId(R.id.design_menu_item_text), withText("Movies"), isDisplayed()))
-    appCompatCheckedTextView.perform(click())
-  }
-
-  @Test fun testGoToTvShows() {
-    mActivityTestRule.launchActivity(null)
-
-    val appCompatImageButton = onView(
-        allOf<View>(withContentDescription("Open navigation drawer"),
-            withParent(withId(R.id.toolbar)),
-            isDisplayed()))
-    appCompatImageButton.perform(click())
-
-    val appCompatCheckedTextView = onView(
-        allOf<View>(withId(R.id.design_menu_item_text), withText("Tv Shows"), isDisplayed()))
-    appCompatCheckedTextView.perform(click())
-  }
-
   @Test fun testGoToAbout() {
     mActivityTestRule.launchActivity(null)
 
-    val appCompatImageButton = onView(
-        allOf<View>(withContentDescription("Open navigation drawer"),
-            withParent(withId(R.id.toolbar)),
-            isDisplayed()))
-    appCompatImageButton.perform(click())
+    openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getContext())
+    onView(withText(R.string.menu_about))
+        .perform(click())
 
-    val appCompatCheckedTextView = onView(
-        allOf<View>(withId(R.id.design_menu_item_text), withText("About"), isDisplayed()))
-    appCompatCheckedTextView.perform(click())
+    intended(hasComponent(hasClassName(AboutActivity::class.java.name)))
   }
 
   @Test fun testSendFeedback() {
     mActivityTestRule.launchActivity(null)
 
-    val appCompatImageButton = onView(
-        allOf<View>(withContentDescription("Open navigation drawer"),
-            withParent(withId(R.id.toolbar)),
-            isDisplayed()))
-    appCompatImageButton.perform(click())
+    openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getContext())
+    onView(withText(R.string.menu_feedback))
+        .perform(click())
 
-    val appCompatCheckedTextView = onView(
-        allOf<View>(withId(R.id.design_menu_item_text), withText("Send feedback"), isDisplayed()))
-    appCompatCheckedTextView.perform(click())
+    intended(allOf(hasAction(Intent.ACTION_CHOOSER),
+        hasExtra(`is`(Intent.EXTRA_INTENT),
+            allOf(hasAction(Intent.ACTION_SENDTO),
+                hasExtra(Intent.EXTRA_SUBJECT, "[MooV - Feedback]")))))
   }
 
 }
