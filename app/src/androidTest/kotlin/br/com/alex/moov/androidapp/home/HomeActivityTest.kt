@@ -64,7 +64,7 @@ class HomeActivityTest {
     mActivityTestRule.launchActivity(null)
 
     openActionBarOverflowOrOptionsMenu(InstrumentationRegistry.getContext())
-    onView(withText(R.string.menu_about))
+    onView(withText("About"))
         .perform(click())
 
     intended(hasComponent(hasClassName(AboutActivity::class.java.name)))
