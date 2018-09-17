@@ -1,0 +1,42 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+
+android {
+  compileSdkVersion rootProject.compileSdk
+
+  defaultConfig {
+    minSdkVersion rootProject.minSdk
+    targetSdkVersion rootProject.targetSdk
+    versionCode rootProject.versionCode
+    versionName rootProject.versionName
+
+    testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled true
+    }
+  }
+}
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+  implementation project(':domain')
+
+  implementation 'com.google.firebase:firebase-core:16.0.3'
+
+  // Retrofit
+  implementation 'com.squareup.retrofit2:retrofit:2.4.0'
+  implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
+  implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+
+  implementation "org.koin:koin-android:$koinVersion"
+
+  testImplementation "junit:junit:$junitVersion"
+  androidTestImplementation "com.android.support.test:runner:$testRunnerVersion"
+  androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
+}
+
+apply plugin: 'com.google.gms.google-services'

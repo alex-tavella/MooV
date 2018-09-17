@@ -1,0 +1,5 @@
+.gradle/
+.idea/
+MooV.iml
+build/
+local.properties

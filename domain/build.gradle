@@ -1,0 +1,21 @@
+apply plugin: 'kotlin'
+
+dependencies {
+  implementation fileTree(dir: 'libs', include: ['*.jar'])
+  implementation "org.koin:koin-core:$koinVersion"
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+
+compileKotlin {
+  kotlinOptions {
+    jvmTarget = "1.6"
+  }
+}
+
+compileTestKotlin {
+  kotlinOptions {
+    jvmTarget = "1.6"
+  }
+}
