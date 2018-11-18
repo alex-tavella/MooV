@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".moviedetail.MovieDetailActivity"
+    >
+
+  <com.google.android.material.appbar.AppBarLayout
+      android:id="@+id/app_bar"
+      android:layout_width="match_parent"
+      android:layout_height="280dp"
+      android:fitsSystemWindows="true"
+      android:theme="@style/AppTheme.AppBarOverlay"
+      >
+
+    <com.google.android.material.appbar.CollapsingToolbarLayout
+        android:id="@+id/toolbar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        app:contentScrim="?attr/colorPrimary"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+        app:toolbarId="@+id/toolbar"
+        >
+
+      <ImageView
+          android:id="@+id/iv_movie_backdrop"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:fitsSystemWindows="true"
+          android:importantForAccessibility="no"
+          android:scaleType="centerCrop"
+          app:layout_collapseMode="parallax"
+          tools:srcCompat="@tools:sample/backgrounds/scenic"
+          />
+
+      <androidx.appcompat.widget.Toolbar
+          android:id="@+id/toolbar"
+          android:layout_width="match_parent"
+          android:layout_height="?attr/actionBarSize"
+          app:layout_collapseMode="pin"
+          app:popupTheme="@style/AppTheme.PopupOverlay"
+          tools:title="Lord of the Rings"
+          />
+    </com.google.android.material.appbar.CollapsingToolbarLayout>
+  </com.google.android.material.appbar.AppBarLayout>
+
+  <androidx.core.widget.NestedScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:paddingEnd="@dimen/activity_horizontal_margin"
+      android:paddingStart="@dimen/activity_horizontal_margin"
+      android:paddingTop="@dimen/activity_vertical_margin"
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      tools:showIn="@layout/activity_movie_detail"
+      >
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+      <androidx.cardview.widget.CardView
+          android:id="@+id/cv_movie_title_background"
+          android:layout_width="0dp"
+          android:layout_height="wrap_content"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          >
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+          <ImageView
+              android:id="@+id/iv_movie_poster"
+              android:layout_width="80dp"
+              android:layout_height="0dp"
+              android:importantForAccessibility="no"
+              android:scaleType="centerInside"
+              android:transitionName="poster"
+              app:layout_constraintDimensionRatio="W,3:2"
+              app:layout_constraintStart_toStartOf="parent"
+              app:layout_constraintTop_toTopOf="parent"
+              tools:srcCompat="@tools:sample/backgrounds/scenic"
+              />
+
+          <TextView
+              android:id="@+id/tv_movie_title"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="8dp"
+              android:layout_marginTop="8dp"
+              android:textSize="24sp"
+              app:layout_constraintEnd_toEndOf="parent"
+              app:layout_constraintHorizontal_bias="0.0"
+              app:layout_constraintStart_toEndOf="@id/iv_movie_poster"
+              app:layout_constraintTop_toTopOf="parent"
+              tools:text="Lord of the Rings: The Fellowship of the Ring"
+              />
+
+          <TextView
+              android:id="@+id/tv_movie_rating"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:background="@drawable/ic_rating"
+              android:elevation="4dp"
+              android:gravity="center"
+              android:textStyle="bold"
+              app:layout_constraintBottom_toBottomOf="parent"
+              app:layout_constraintEnd_toEndOf="parent"
+              tools:text="7.5"
+              />
+
+          <TextView
+              android:id="@+id/tv_release_date"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="8dp"
+              android:layout_marginTop="8dp"
+              app:layout_constraintEnd_toStartOf="@id/tv_movie_rating"
+              app:layout_constraintHorizontal_bias="0.0"
+              app:layout_constraintStart_toEndOf="@id/iv_movie_poster"
+              app:layout_constraintTop_toBottomOf="@id/tv_movie_title"
+              tools:text="2018-11-02"
+              />
+
+          <TextView
+              android:id="@+id/tv_movie_genres"
+              android:layout_width="0dp"
+              android:layout_height="wrap_content"
+              android:layout_marginStart="8dp"
+              app:layout_constraintEnd_toStartOf="@id/tv_movie_rating"
+              app:layout_constraintHorizontal_bias="0.0"
+              app:layout_constraintStart_toEndOf="@id/iv_movie_poster"
+              app:layout_constraintTop_toBottomOf="@id/tv_release_date"
+              tools:text="Fantasy, Action"
+              />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+      </androidx.cardview.widget.CardView>
+
+      <TextView
+          android:id="@+id/tv_movie_summary"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginTop="8dp"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toBottomOf="@id/cv_movie_title_background"
+          tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis nunc nulla, venenatis viverra laoreet vel, hendrerit at ipsum. Quisque ultrices sagittis porttitor. Praesent in massa dapibus, dignissim sem sit amet, semper nibh. Suspendisse finibus massa elit, vitae porttitor odio condimentum rhoncus. Fusce euismod at ante at porta. Ut laoreet ligula quis laoreet dictum. Proin tincidunt diam vitae dictum faucibus. Integer aliquet mi ut tortor mollis, vel hendrerit ex aliquet. In libero mauris, sodales eu vehicula sed, ultrices eget ante. Quisque dictum, metus nec vulputate fringilla, quam ex accumsan tellus, eu accumsan erat dui a mi. Fusce at urna et velit viverra interdum. Ut at vulputate massa. Donec tempus ex lectus, molestie interdum diam euismod et. Vivamus porta ex sit amet porttitor commodo. Phasellus ut sagittis odio."
+          />
+
+      <ProgressBar
+          android:id="@+id/progressBar"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:elevation="4dp"
+          android:visibility="gone"
+          app:layout_constraintBottom_toBottomOf="parent"
+          app:layout_constraintEnd_toEndOf="parent"
+          app:layout_constraintStart_toStartOf="parent"
+          app:layout_constraintTop_toTopOf="parent"
+          tools:visibility="visible"
+          style="?android:attr/progressBarStyle"
+          />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+  </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -5,7 +5,7 @@ import okhttp3.Response
 import java.util.Locale
 
 class TMDBRequestInterceptor(private val apiKey: String,
-    private val cacheDuration: Int) : Interceptor {
+    private val cacheDuration: Long) : Interceptor {
 
   companion object {
     const val QUERY_PARAM_API_KEY = "api_key"

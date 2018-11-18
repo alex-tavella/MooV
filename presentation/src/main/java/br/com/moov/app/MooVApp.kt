@@ -6,6 +6,7 @@ import br.com.moov.app.util.logd
 import br.com.moov.data.dataModule
 import br.com.moov.domain.domainModule
 import org.koin.standalone.StandAloneContext.startKoin
+import org.koin.standalone.StandAloneContext.stopKoin
 
 
 class MooVApp : Application() {
@@ -29,5 +30,6 @@ class MooVApp : Application() {
     logd { "onCreate" }
 
     startKoin(listOf(dataModule(this), domainModule(), presentationModule()))
+    stopKoin()
   }
 }

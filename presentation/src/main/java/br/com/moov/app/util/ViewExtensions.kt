@@ -1,21 +1,24 @@
 package br.com.moov.app.util
 
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.RecyclerView.OnScrollListener
-import kotlinx.coroutines.experimental.CoroutineScope
-import kotlinx.coroutines.experimental.channels.actor
-import kotlinx.coroutines.experimental.delay
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.OnScrollListener
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
-inline fun RecyclerView.onListEndReached(
+inline fun RecyclerView.onEndReached(
     coroutineScope: CoroutineScope,
     crossinline block: () -> Unit) {
 
   val channel by lazy {
-    coroutineScope.actor<Unit> {
-      for (event in channel) {
-        block()
-        delay(300)
+    Channel<Unit>(Channel.RENDEZVOUS).also { channel ->
+      coroutineScope.launch {
+        for (event in channel) {
+          block()
+          delay(500)
+        }
       }
     }
   }
@@ -26,7 +29,7 @@ inline fun RecyclerView.onListEndReached(
     addOnScrollListener(object : OnScrollListener() {
       override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
         super.onScrolled(recyclerView, dx, dy)
-        if (itemCount - findLastVisibleItemPosition() <= 3) {
+        if (itemCount - findLastVisibleItemPosition() <= 3 && dy > 20 && itemCount > 0) {
           channel.offer(Unit)
         }
       }

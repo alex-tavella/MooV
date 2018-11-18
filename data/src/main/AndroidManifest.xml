@@ -1,2 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.moov"/>
+    package="br.com.moov">
+
+  <uses-permission android:name="android.permission.INTERNET"/>
+</manifest>
