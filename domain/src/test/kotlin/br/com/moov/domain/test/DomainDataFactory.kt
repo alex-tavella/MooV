@@ -23,7 +23,6 @@ object DomainDataFactory {
           id = DataFactory.randomInt(),
           title = DataFactory.randomString(),
           genres = DataFactory.randomStringList(DataFactory.randomInt(5)),
-          isBookmarked = DataFactory.randomBoolean(),
           backdropUrl = DataFactory.randomPathString(),
           posterUrl = DataFactory.randomPathString(),
           voteAverage = DataFactory.randomScore(),
