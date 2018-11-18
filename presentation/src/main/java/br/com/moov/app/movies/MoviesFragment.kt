@@ -66,7 +66,7 @@ class MoviesFragment : BaseFragment() {
         ?.let {
           activity?.let { nnActivity ->
             DialogFactory.createErrorDialog(nnActivity,
-                "Error when loading movies: ${it.message}") { _, _ -> }
+                getString(R.string.error_message_movies_param, it.message)) { _, _ -> }
                 .show()
           }
         }

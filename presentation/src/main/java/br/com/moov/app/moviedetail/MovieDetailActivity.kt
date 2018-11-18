@@ -45,7 +45,7 @@ class MovieDetailActivity : BaseActivity() {
     intent.getIntExtra(EXTRA_MOVIE_ID, -1)
         .takeUnless { it == -1 }
         ?.let { viewModel.uiEvent(EnterScreen(it)) }
-        ?: presentError("Could not load movie details")
+        ?: presentError(getString(R.string.error_message_movie_detail_load))
 
     viewModel.observe(this, ::renderUiModel)
   }
@@ -108,7 +108,7 @@ class MovieDetailActivity : BaseActivity() {
     // Error
     movieDetailUiModel.error
         ?.let {
-          presentError("Error when loading movie: ${it.message}")
+          presentError(getString(R.string.error_message_movie_detail_param, it.message))
         }
     invalidateOptionsMenu()
   }
