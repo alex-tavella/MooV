@@ -34,3 +34,4 @@ community). Need to remove those delay calls on ViewModel's test.
 -- Test ui, for that need to figure out how to mock the ViewModels
 - Better logic for selecting image quality from image configurations
 - Better error handling
+- Better documentation

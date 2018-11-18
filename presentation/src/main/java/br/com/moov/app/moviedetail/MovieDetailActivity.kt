@@ -41,13 +41,16 @@ class MovieDetailActivity : BaseActivity() {
 
     setSupportActionBar(toolbar)
     setUpTopBar()
+  }
+
+  override fun onStart() {
+    super.onStart()
+    viewModel.observe(this, ::renderUiModel)
 
     intent.getIntExtra(EXTRA_MOVIE_ID, -1)
         .takeUnless { it == -1 }
         ?.let { viewModel.uiEvent(EnterScreen(it)) }
         ?: presentError(getString(R.string.error_message_movie_detail_load))
-
-    viewModel.observe(this, ::renderUiModel)
   }
 
   private fun setUpTopBar() {
