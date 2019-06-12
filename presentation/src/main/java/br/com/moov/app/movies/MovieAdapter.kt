@@ -1,6 +1,5 @@
 package br.com.moov.app.movies
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,12 +14,10 @@ import com.bumptech.glide.Glide
 typealias OnMovieClick = (View, Int?) -> Unit
 typealias OnMovieFavoriteChanged = (Boolean, Movie) -> Unit
 
-class MovieAdapter(context: Context,
+class MovieAdapter(
     private val movieClickDelegate: OnMovieClick,
     private val movieFavoriteDelegate: OnMovieFavoriteChanged)
   : RecyclerView.Adapter<MovieViewHolder>() {
-
-  private val inflater = LayoutInflater.from(context)
 
   private val movies = mutableListOf<Movie>()
 
@@ -52,6 +49,7 @@ class MovieAdapter(context: Context,
   }
 
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
+    val inflater = LayoutInflater.from(parent.context)
     return MovieViewHolder(inflater.inflate(R.layout.item_movie, parent, false),
         movieClickDelegate, movieFavoriteDelegate)
   }

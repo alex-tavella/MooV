@@ -6,7 +6,8 @@ import br.com.moov.domain.movie.MovieDetailInteractor
 import br.com.moov.domain.movie.MovieDetailInteractorImpl
 import br.com.moov.domain.movie.MoviesInteractor
 import br.com.moov.domain.movie.MoviesInteractorImpl
-import org.koin.dsl.module.module
+import org.koin.dsl.bind
+import org.koin.dsl.module
 
 fun domainModule() = module {
   single { MoviesInteractorImpl(get()) } bind MoviesInteractor::class

@@ -92,7 +92,7 @@ class MovieRepositoryImplTest {
       try {
         // When
         movieRepositoryImpl.getPopularMovies(page)
-        Fail.failBecauseExceptionWasNotThrown(IllegalStateException::class.java)
+        Fail.failBecauseExceptionWasNotThrown<Any>(IllegalStateException::class.java)
       } catch (e: Exception) {
         // Then
         assert(e is IllegalStateException)
@@ -126,7 +126,7 @@ class MovieRepositoryImplTest {
       try {
         // When
         movieRepositoryImpl.getPopularMovies(page)
-        Fail.failBecauseExceptionWasNotThrown(IllegalStateException::class.java)
+        Fail.failBecauseExceptionWasNotThrown<Any>(IllegalStateException::class.java)
       } catch (e: Exception) {
         // Then
         assert(e is IllegalStateException)
