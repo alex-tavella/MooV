@@ -53,7 +53,7 @@ class MovieDetailInteractorImplTest {
 
       // When
       val movieId = DataFactory.randomInt()
-      val result = kotlin.runCatching { interactor.getMovieDetail(movieId) }
+      val result = runCatching { interactor.getMovieDetail(movieId) }
 
       // Then
       assert(result.isFailure)

@@ -1,5 +1,7 @@
 package br.com.moov.app.movies
 
+import br.com.moov.app.movies.MoviesUiEvent.EnterScreenUiEvent
+import br.com.moov.app.movies.MoviesUiEvent.FinishedScrollingUiEvent
 import br.com.moov.domain.movie.MovieBookmarkInteractor
 import br.com.moov.domain.movie.MoviesInteractor
 import br.com.moov.domain.test.DomainDataFactory

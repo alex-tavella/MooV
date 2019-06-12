@@ -96,7 +96,7 @@ class TMDBMovieDataSourceTest {
       val voteCount = 100
       try {
         tmdbMovieDataSource.getMovies(page, sortBy, voteCount)
-        Fail.failBecauseExceptionWasNotThrown(IllegalStateException::class.java)
+        Fail.failBecauseExceptionWasNotThrown<Any>(IllegalStateException::class.java)
       } catch (e: Exception) {
         //Then
         assert(e is IllegalStateException)
@@ -139,7 +139,7 @@ class TMDBMovieDataSourceTest {
     runBlocking {
       // When
       val movieId = DataFactory.randomInt()
-      val result = kotlin.runCatching {
+      val result = runCatching {
         tmdbMovieDataSource.getMovieDetail(movieId)
       }
 
