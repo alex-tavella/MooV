@@ -5,8 +5,9 @@ import android.os.StrictMode
 import br.com.moov.app.util.logd
 import br.com.moov.data.dataModule
 import br.com.moov.domain.domainModule
-import org.koin.standalone.StandAloneContext.startKoin
-
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
+import org.koin.core.logger.Level
 
 class MooVApp : Application() {
 
@@ -28,6 +29,12 @@ class MooVApp : Application() {
     super.onCreate()
     logd { "onCreate" }
 
-    startKoin(listOf(dataModule(this), domainModule(), presentationModule()))
+    startKoin {
+      printLogger(if (BuildConfig.DEBUG) Level.DEBUG else Level.ERROR)
+
+      androidContext(this@MooVApp)
+
+      modules(listOf(dataModule(), domainModule(), presentationModule()))
+    }
   }
 }

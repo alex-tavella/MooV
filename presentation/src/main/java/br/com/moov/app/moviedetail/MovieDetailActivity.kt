@@ -13,6 +13,8 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityOptionsCompat
 import br.com.moov.app.R
 import br.com.moov.app.core.BaseActivity
+import br.com.moov.app.moviedetail.MovieDetailUiEvent.EnterScreen
+import br.com.moov.app.moviedetail.MovieDetailUiEvent.MovieFavoritedUiEvent
 import br.com.moov.app.util.DialogFactory
 import br.com.moov.app.util.logd
 import com.bumptech.glide.Glide
@@ -75,8 +77,8 @@ class MovieDetailActivity : BaseActivity() {
     return result
   }
 
-  override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-    when (item?.itemId) {
+  override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    when (item.itemId) {
       R.id.menu_toggle_favorite -> uiModel?.movie?.let {
         viewModel.uiEvent(MovieFavoritedUiEvent(it, !it.isBookmarked))
       }
@@ -135,7 +137,7 @@ class MovieDetailActivity : BaseActivity() {
       val options = ActivityOptionsCompat
           .makeSceneTransitionAnimation(activity, sharedView, SHARED_ELEMENT_NAME_POSTER)
       activity.startActivity(Intent(activity, MovieDetailActivity::class.java)
-          .putExtra(MovieDetailActivity.EXTRA_MOVIE_ID, movieId), options.toBundle())
+          .putExtra(EXTRA_MOVIE_ID, movieId), options.toBundle())
     }
   }
 }

@@ -18,17 +18,19 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import okhttp3.logging.HttpLoggingInterceptor.Logger
-import org.koin.dsl.module.module
+import org.koin.android.ext.koin.androidContext
+import org.koin.dsl.bind
+import org.koin.dsl.module
 import java.util.concurrent.TimeUnit
 
-fun dataModule(context: Context) = module {
-  factory { createCache(context) }
+fun dataModule() = module {
+  factory { createCache(androidContext()) }
   factory { TMDBApiKeyStore() }
   factory { createRequestInterceptor(get()) } bind Interceptor::class
   factory { createHttpClient(get(), get()) }
   single { TMDBDApi.create(get()) }
   single { TMDBMovieDataSource(get()) } bind MovieDataSource::class
-  single { MooVDatabase.create(context) }
+  single { MooVDatabase.create(androidContext()) }
   single { LocalDataSource(get()) } bind BookmarkDataSource::class
   factory { MovieMapper() }
   single { MovieRepositoryImpl(get(), get(), get()) } bind MovieRepository::class

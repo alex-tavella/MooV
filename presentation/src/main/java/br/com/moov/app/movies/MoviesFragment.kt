@@ -9,6 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import br.com.moov.app.R
 import br.com.moov.app.core.BaseFragment
 import br.com.moov.app.moviedetail.MovieDetailActivity
+import br.com.moov.app.movies.MoviesUiEvent.EnterScreenUiEvent
+import br.com.moov.app.movies.MoviesUiEvent.FinishedScrollingUiEvent
+import br.com.moov.app.movies.MoviesUiEvent.MovieFavoritedUiEvent
 import br.com.moov.app.util.DialogFactory
 import br.com.moov.app.util.logd
 import br.com.moov.app.util.onEndReached
@@ -25,11 +28,7 @@ class MoviesFragment : BaseFragment() {
 
   private val recyclerView by lazy { view?.findViewById<RecyclerView>(R.id.rv_movies) }
 
-  private val adapter by lazy {
-    context?.let {
-      MovieAdapter(it, this::onMovieClick, this::onMovieFavorite)
-    }
-  }
+  private val adapter by lazy { MovieAdapter(this::onMovieClick, this::onMovieFavorite) }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {
@@ -60,7 +59,7 @@ class MoviesFragment : BaseFragment() {
   private fun renderUiModel(uiModel: MoviesUiModel) {
     logd { "Rendering model $uiModel" }
     loadingProgressBar?.visibility = if (uiModel.loading) View.VISIBLE else View.GONE
-    adapter?.setItems(uiModel.movies)
+    adapter.setItems(uiModel.movies)
 
     uiModel.error
         ?.let {

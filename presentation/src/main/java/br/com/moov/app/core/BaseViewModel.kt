@@ -10,7 +10,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-abstract class BaseViewModel<O : UiModel> : ViewModel(), CoroutineScope {
+abstract class BaseViewModel<in I: UiEvent, O : UiModel> : ViewModel(), CoroutineScope {
 
   private val job: Job = Job()
 
@@ -19,7 +19,7 @@ abstract class BaseViewModel<O : UiModel> : ViewModel(), CoroutineScope {
       field = job + value
     }
 
-  private val uiEventChannel: SendChannel<UiEvent> = Channel<UiEvent>(capacity = Channel.UNLIMITED)
+  private val uiEventChannel: SendChannel<I> = Channel<I>(capacity = Channel.UNLIMITED)
       .also { channel ->
         launch(coroutineContext) {
           for (action in channel) {
@@ -42,9 +42,9 @@ abstract class BaseViewModel<O : UiModel> : ViewModel(), CoroutineScope {
     }
   }
 
-  protected abstract suspend fun processUiEvent(uiEvent: UiEvent)
+  protected abstract suspend fun processUiEvent(uiEvent: I)
 
-  fun uiEvent(uiEvent: UiEvent) {
+  fun uiEvent(uiEvent: I) {
     uiEventChannel.offer(uiEvent)
   }
 
