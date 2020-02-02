@@ -19,6 +19,11 @@ android {
       minifyEnabled false
     }
   }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_1_8
+    targetCompatibility JavaVersion.VERSION_1_8
+  }
 }
 
 dependencies {
@@ -27,9 +32,10 @@ dependencies {
   implementation project(':domain')
 
   // Retrofit
-  implementation 'com.squareup.retrofit2:retrofit:2.4.0'
-  implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-  implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
+  def retrofit_version = "2.6.0"
+  implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+  implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
+  implementation 'com.squareup.okhttp3:logging-interceptor:3.14.2'
 
   implementation 'org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.3.31'
   implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_core_version"
@@ -40,12 +46,12 @@ dependencies {
   implementation "androidx.room:room-runtime:$room_version"
   kapt "androidx.room:room-compiler:$room_version"
 
-  testImplementation "com.squareup.retrofit2:retrofit-mock:2.4.0"
+  testImplementation "com.squareup.retrofit2:retrofit-mock:$retrofit_version"
   testImplementation "junit:junit:$junit_version"
   testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:$mockito_kotlin_version"
   testImplementation "org.assertj:assertj-core:$assertj_version"
   testImplementation project(path: ':domain', configuration: 'testArtifacts')
 
-  androidTestImplementation 'androidx.test:runner:1.2.0'
-  androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+  androidTestImplementation "androidx.test:runner:$test_runner_version"
+  androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
 }

@@ -84,7 +84,7 @@ class MovieInteractorImplTest {
       try {
         // When
         interactor.getPopularMovies(page)
-        Fail.failBecauseExceptionWasNotThrown(IllegalStateException::class.java)
+        Fail.failBecauseExceptionWasNotThrown<Any>(IllegalStateException::class.java)
         // Then
       } catch (e: Exception) {
         assert(e is IllegalStateException)
