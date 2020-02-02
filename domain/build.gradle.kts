@@ -3,8 +3,8 @@ plugins {
 }
 
 tasks.register<Jar>("testJar") {
-  from(sourceSets.test)
-  classifier = "test"
+  from(sourceSets["test"].output)
+  archiveClassifier.set("test")
 }
 
 configurations {
