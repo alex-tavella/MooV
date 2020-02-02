@@ -9,35 +9,26 @@ before_install:
   - echo -e "\n84831b9409646a918e30573bab4c9c91346d8abd" > "$ANDROID_HOME/licenses/android-sdk-preview-license"
 
 install:
-  - wget --output-document=android-ndk.zip https://dl.google.com/android/repository/android-ndk-r13b-linux-x86_64.zip
-  - unzip -qo android-ndk.zip
-  - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
-  - sudo apt-get update --yes
-  - sudo apt-get install libstdc++6 --yes
-  - wget https://github.com/Commit451/android-cmake-installer/releases/download/1.1.0/install-cmake.sh
-  - chmod +x install-cmake.sh
-  - ./install-cmake.sh
+  skip
 
 android:
   components:
     - tools
     - platform-tools
     - ndk
-    - build-tools-26.0.1
-    - android-26
-    - android-16
-    - sys-img-armeabi-v7a-android-16
+    - build-tools-29.0.0
+    - android-29
+    - android-21
+    - sys-img-armeabi-v7a-android-21
     - extra-android-m2repository
 
 before_script:
    # Create and start emulator
-   - echo no | android create avd --force -n test -t android-16 --abi armeabi-v7a
+   - echo no | android create avd --force -n test -t android-21 --abi armeabi-v7a
    - emulator -avd test -no-skin -no-audio -no-window &
    - android-wait-for-emulator
 
 script:
-  # Create local.properties with ndk.dir set to previously downloaded ndk
-  - echo -e $(echo "ndk.dir=")$(pwd)$(echo "/android-ndk-r13b") >> "local.properties"
   - cat local.properties
   # Workaround for constraintlayout - https://code.google.com/p/android/issues/detail?id=212128
   - ./gradlew dependencies || true && ./gradlew build connectedCheck
