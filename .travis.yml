@@ -3,8 +3,7 @@ jdk: oraclejdk8
 
 # Needed for constraintlayout - https://code.google.com/p/android/issues/detail?id=212128
 before_install:
-  - yes | sdkmanager --licenses
-
+  skip
 install:
   skip
 
@@ -17,6 +16,7 @@ android:
     - extra-android-m2repository
 
 before_script:
+  skip
 
 script:
   # Workaround for constraintlayout - https://code.google.com/p/android/issues/detail?id=212128
