@@ -1,5 +1,4 @@
 # MooV
-[![Build Status](https://travis-ci.org/alex-tavella/MooV.svg?branch=master)](https://travis-ci.org/alex-tavella/MooV)
 
 App that lets users browse for most popular movies and favourite the ones they like.
 This project consumes the api from http://www.themoviedb.org.
