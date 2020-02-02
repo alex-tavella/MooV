@@ -1,37 +1,21 @@
 # MooV
+[![Build Status](https://travis-ci.org/alex-tavella/MooV.svg?branch=master)](https://travis-ci.org/alex-tavella/MooV)
 
 App that lets users browse for most popular movies and favourite the ones they like.
 This project consumes the api from http://www.themoviedb.org.
 
-## What was used
-- Kotlin for programming language
-- Clean architecture for code organization
-- Retrofit for remote calls
-- Room for local calls
-- Coroutines for asynchronous work
-- Koin for dependency injection
-- Android Architecture Component's ViewModel for configuration changes
+# License
 
-## Features
-- User can see top 50 most popular movies from TMDB
-- User can click on a movie to see its details on another screen
-- Movies are lazy loaded (20 each page)
-- User can keep using the app even while offline for 1 day (cache duration)
-- User can favorite any movie he wishes
-- Smooth transition with animation when user clicks on a movie
+    Copyright 2017 Alex Almeida Tavella
 
-## To be done
-- Proper offline
--- Need to cache every call on a local database instead of using http cache
-- Share feature
--- Not implemented at all
-- Filtering & sorting feature
--- Not implemented at all
-- Better testing
--- Didn't find how to test ViewModel's channels properly (also didn't find much help in the
-community). Need to remove those delay calls on ViewModel's test.
--- Achieve 90%+ coverity
--- Test ui, for that need to figure out how to mock the ViewModels
-- Better logic for selecting image quality from image configurations
-- Better error handling
-- Better documentation
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
