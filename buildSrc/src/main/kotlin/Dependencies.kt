@@ -4,7 +4,7 @@ private const val kotlinVersion = "1.3.50"
 
 object GradlePlugins {
   object Versions {
-    const val gradleandroid = "3.5.2"
+    const val gradleandroid = "4.0.0-alpha09"
     const val gradleversions = "0.27.0"
   }
 
@@ -44,7 +44,7 @@ object Deps {
     const val dagger = "2.25.2"
     const val retrofit = "2.6.0"
     const val room = "2.0.0"
-    const val glide = "4.9.0"
+    const val glide = "4.11.0"
     const val okHttpLoggingInterceptor = "3.14.2"
     const val timber = "4.7.1"
 
