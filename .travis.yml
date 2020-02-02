@@ -1,6 +1,5 @@
 language: android
 jdk: oraclejdk8
-sudo: required
 
 # Needed for constraintlayout - https://code.google.com/p/android/issues/detail?id=212128
 before_install:
@@ -15,7 +14,6 @@ android:
   components:
     - tools
     - platform-tools
-    - ndk
     - build-tools-29.0.0
     - android-29
     - android-21
@@ -29,6 +27,5 @@ before_script:
    - android-wait-for-emulator
 
 script:
-  - cat local.properties
   # Workaround for constraintlayout - https://code.google.com/p/android/issues/detail?id=212128
   - ./gradlew dependencies || true && ./gradlew build connectedCheck
