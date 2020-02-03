@@ -3,9 +3,12 @@ package br.com.moov.data.movie.tmdb
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.util.Locale
+import javax.inject.Inject
 
-class TMDBRequestInterceptor(private val apiKey: String,
-    private val cacheDuration: Long) : Interceptor {
+class TMDBRequestInterceptor @Inject constructor(
+    private val apiKey: String,
+    private val cacheDuration: Long
+) : Interceptor {
 
   companion object {
     const val QUERY_PARAM_API_KEY = "api_key"
@@ -16,7 +19,7 @@ class TMDBRequestInterceptor(private val apiKey: String,
   override fun intercept(chain: Interceptor.Chain): Response {
     val request = chain.request()
 
-    val url = request.url().newBuilder()
+    val url = request.url.newBuilder()
         .addQueryParameter(QUERY_PARAM_API_KEY, apiKey)
         .addQueryParameter(QUERY_PARAM_LANGUAGE, Locale.getDefault().getLanguageString())
         .build()

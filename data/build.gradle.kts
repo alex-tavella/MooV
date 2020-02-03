@@ -29,13 +29,15 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = AndroidSdk.javaVersion
+    targetCompatibility = AndroidSdk.javaVersion
   }
 }
 
 dependencies {
   implementation(project(Modules.domain))
+
+  implementation(Deps.okHttp)
 
   // Retrofit
   implementation(Deps.retrofit)
@@ -46,8 +48,9 @@ dependencies {
   implementation(Deps.kotlinStdlib)
   implementation(Deps.coroutines)
 
-  // Koin
-  implementation(Deps.koinAndroid)
+  // DI
+  implementation(Deps.dagger)
+  kapt(Deps.daggerCompiler)
 
   // Room
   implementation(Deps.room)

@@ -4,8 +4,9 @@ import br.com.moov.data.movie.bookmark.BookmarkDataSource
 import br.com.moov.domain.movie.Movie
 import br.com.moov.domain.movie.MovieDetail
 import br.com.moov.domain.movie.MovieRepository
+import javax.inject.Inject
 
-class MovieRepositoryImpl(
+class MovieRepositoryImpl @Inject constructor(
     private val tmdbMovieDataSource: MovieDataSource,
     private val bookmarkDataSource: BookmarkDataSource,
     private val movieMapper: MovieMapper) : MovieRepository {

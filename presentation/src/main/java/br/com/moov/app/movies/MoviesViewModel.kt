@@ -11,8 +11,9 @@ import br.com.moov.app.util.logd
 import br.com.moov.domain.movie.Movie
 import br.com.moov.domain.movie.MovieBookmarkInteractor
 import br.com.moov.domain.movie.MoviesInteractor
+import javax.inject.Inject
 
-class MoviesViewModel(
+class MoviesViewModel @Inject constructor(
     private val moviesInteractor: MoviesInteractor,
     private val bookmarkInteractor: MovieBookmarkInteractor
 ) : BaseViewModel<MoviesUiEvent, MoviesUiModel>() {

@@ -1,5 +1,7 @@
 package br.com.moov.domain.movie
 
+import javax.inject.Inject
+
 interface MovieBookmarkInteractor {
   suspend fun getBookmarkedMovies(movies: List<Movie>): List<Movie>
   suspend fun bookmarkMovie(movie: Movie)
@@ -7,7 +9,7 @@ interface MovieBookmarkInteractor {
   suspend fun unbookmarkMovie(movieId: Int)
 }
 
-class MovieBookmarkInteractorImpl(
+class MovieBookmarkInteractorImpl @Inject constructor(
     private val movieRepository: MovieRepository) : MovieBookmarkInteractor {
 
   override suspend fun getBookmarkedMovies(movies: List<Movie>): List<Movie> {

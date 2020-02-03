@@ -1,9 +1,6 @@
 package br.com.moov.data.movie.tmdb
 
-import okhttp3.OkHttpClient
 import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -21,19 +18,6 @@ interface TMDBDApi {
 
   @GET("/3/configuration")
   fun getConfiguration(): Call<ConfigurationsResponse>
-
-  companion object {
-    private const val API_BASE_URL = "https://api.themoviedb.org"
-
-    fun create(okHttpClient: OkHttpClient): TMDBDApi {
-      return Retrofit.Builder()
-          .baseUrl(API_BASE_URL)
-          .client(okHttpClient)
-          .addConverterFactory(GsonConverterFactory.create())
-          .build()
-          .create(TMDBDApi::class.java)
-    }
-  }
 }
 
 data class ConfigurationsResponse(val images: ImageConfigurations)

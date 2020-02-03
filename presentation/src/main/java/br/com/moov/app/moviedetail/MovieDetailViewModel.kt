@@ -8,8 +8,9 @@ import br.com.moov.app.moviedetail.MovieDetailUiEvent.MovieFavoritedUiEvent
 import br.com.moov.domain.movie.MovieBookmarkInteractor
 import br.com.moov.domain.movie.MovieDetail
 import br.com.moov.domain.movie.MovieDetailInteractor
+import javax.inject.Inject
 
-class MovieDetailViewModel(
+class MovieDetailViewModel @Inject constructor(
     private val movieDetailInteractor: MovieDetailInteractor,
     private val bookmarkInteractor: MovieBookmarkInteractor
 ) : BaseViewModel<MovieDetailUiEvent, MovieDetailUiModel>() {
