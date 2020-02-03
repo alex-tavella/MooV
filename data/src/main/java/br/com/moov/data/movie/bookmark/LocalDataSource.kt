@@ -2,8 +2,9 @@ package br.com.moov.data.movie.bookmark
 
 import br.com.moov.data.movie.bookmark.database.MooVDatabase
 import br.com.moov.data.movie.bookmark.database.entity.MovieEntity
+import javax.inject.Inject
 
-class LocalDataSource(private val database: MooVDatabase) : BookmarkDataSource {
+class LocalDataSource @Inject constructor(private val database: MooVDatabase) : BookmarkDataSource {
   override suspend fun getBookmarks(): List<MovieEntity> {
     return database.moviesDao().getAll()
   }

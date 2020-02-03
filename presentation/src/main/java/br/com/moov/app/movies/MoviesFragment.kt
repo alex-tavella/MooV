@@ -1,13 +1,17 @@
 package br.com.moov.app.movies
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import br.com.moov.app.R
 import br.com.moov.app.core.BaseFragment
+import br.com.moov.app.core.appComponent
+import br.com.moov.app.core.createViewModel
 import br.com.moov.app.moviedetail.MovieDetailActivity
 import br.com.moov.app.movies.MoviesUiEvent.EnterScreenUiEvent
 import br.com.moov.app.movies.MoviesUiEvent.FinishedScrollingUiEvent
@@ -16,11 +20,16 @@ import br.com.moov.app.util.DialogFactory
 import br.com.moov.app.util.logd
 import br.com.moov.app.util.onEndReached
 import br.com.moov.domain.movie.Movie
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
 class MoviesFragment : BaseFragment() {
 
-  private val viewModel by viewModel<MoviesViewModel>()
+  @Inject
+  lateinit var viewModelProviderFactory: ViewModelProvider.Factory
+
+  private val viewModel by lazy {
+    createViewModel<MoviesViewModel>(viewModelProviderFactory)
+  }
 
   private val loadingProgressBar: ProgressBar? by lazy {
     view?.findViewById<ProgressBar>(R.id.progressBar)
@@ -29,6 +38,11 @@ class MoviesFragment : BaseFragment() {
   private val recyclerView by lazy { view?.findViewById<RecyclerView>(R.id.rv_movies) }
 
   private val adapter by lazy { MovieAdapter(this::onMovieClick, this::onMovieFavorite) }
+
+  override fun onAttach(context: Context) {
+    super.onAttach(context)
+    appComponent().inject(this)
+  }
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
       savedInstanceState: Bundle?): View? {

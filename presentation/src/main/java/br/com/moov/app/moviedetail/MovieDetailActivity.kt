@@ -11,18 +11,26 @@ import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityOptionsCompat
+import androidx.lifecycle.ViewModelProvider
 import br.com.moov.app.R
 import br.com.moov.app.core.BaseActivity
+import br.com.moov.app.core.appComponent
+import br.com.moov.app.core.createViewModel
 import br.com.moov.app.moviedetail.MovieDetailUiEvent.EnterScreen
 import br.com.moov.app.moviedetail.MovieDetailUiEvent.MovieFavoritedUiEvent
 import br.com.moov.app.util.DialogFactory
 import br.com.moov.app.util.logd
 import com.bumptech.glide.Glide
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import javax.inject.Inject
 
 class MovieDetailActivity : BaseActivity() {
 
-  private val viewModel by viewModel<MovieDetailViewModel>()
+  @Inject
+  lateinit var viewModelProviderFactory: ViewModelProvider.Factory
+
+  private val viewModel by lazy {
+    createViewModel<MovieDetailViewModel>(viewModelProviderFactory)
+  }
 
   private var uiModel: MovieDetailUiModel? = null
 
@@ -38,6 +46,7 @@ class MovieDetailActivity : BaseActivity() {
   private val loadingView by lazy { findViewById<ProgressBar>(R.id.progressBar) }
 
   override fun onCreate(savedInstanceState: Bundle?) {
+    appComponent().inject(this)
     super.onCreate(savedInstanceState)
     setContentView(R.layout.activity_movie_detail)
 

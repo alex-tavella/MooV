@@ -13,7 +13,7 @@ android {
     minSdkVersion(AndroidSdk.minSdk)
     targetSdkVersion(AndroidSdk.targetSdk)
     versionCode = 1
-    versionName ="1.0.0"
+    versionName = "1.0.0"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -25,8 +25,8 @@ android {
   }
 
   compileOptions {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = AndroidSdk.javaVersion
+    targetCompatibility = AndroidSdk.javaVersion
   }
 
   testOptions {
@@ -41,11 +41,15 @@ dependencies {
   implementation(Deps.androidxAppCompat)
   implementation(Deps.androidxMaterial)
   implementation(Deps.androidxConstraintlayout)
-  implementation(Deps.koinAndroidxViewModel)
+  implementation(Deps.androidxLifecycle)
   implementation(Deps.coroutinesAndroid)
   implementation(Deps.kotlinStdlib)
   implementation(Deps.glide)
   kapt(Deps.glideCompiler)
+  implementation(Deps.dagger)
+  kapt(Deps.daggerCompiler)
+  implementation(Deps.okHttp)
+  implementation(Deps.retrofit)
 
   testImplementation(Deps.mockitoKotlin)
   testImplementation(Deps.junit)

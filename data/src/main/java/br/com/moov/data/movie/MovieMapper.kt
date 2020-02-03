@@ -6,8 +6,9 @@ import br.com.moov.data.movie.tmdb.TMDBMovie
 import br.com.moov.data.movie.tmdb.TMDBMovieDetail
 import br.com.moov.domain.movie.Movie
 import br.com.moov.domain.movie.MovieDetail
+import javax.inject.Inject
 
-open class MovieMapper {
+open class MovieMapper @Inject constructor() {
   open fun map(tmdbMovie: TMDBMovie, imageConfigs: ImageConfigurations): Movie {
     return Movie(tmdbMovie.id, tmdbMovie.original_title,
         getPosterUrl(imageConfigs, tmdbMovie.poster_path))

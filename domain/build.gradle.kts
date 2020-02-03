@@ -1,5 +1,6 @@
 plugins {
   id(BuildPlugins.kotlin)
+  id(BuildPlugins.kotlinKapt)
 }
 
 tasks.register<Jar>("testJar") {
@@ -15,11 +16,12 @@ artifacts {
   add("testArtifacts", tasks.getByName("testJar"))
 }
 
-setProperty("targetCompatibility", JavaVersion.VERSION_1_8)
-setProperty("sourceCompatibility", JavaVersion.VERSION_1_8)
+setProperty("targetCompatibility", AndroidSdk.javaVersion)
+setProperty("sourceCompatibility", AndroidSdk.javaVersion)
 
 dependencies {
-  implementation(Deps.koin)
+  implementation(Deps.dagger)
+  kapt(Deps.daggerCompiler)
   implementation(Deps.coroutines)
 
   testImplementation(Deps.junit)
