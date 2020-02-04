@@ -1,26 +1,31 @@
 package br.com.moov.app.core
 
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import br.com.moov.app.AppComponent
 import br.com.moov.app.AppComponentProvider
 
-inline fun <reified T : ViewModel> AppCompatActivity.createViewModel(
+inline fun <reified T : ViewModel> AppCompatActivity.viewModel(
     viewModelProviderFactory: ViewModelProvider.Factory
-): T {
-    return T::class.java.let { clazz ->
-        ViewModelProvider(this, viewModelProviderFactory).get(clazz)
-    }
+): Lazy<T> {
+    return viewModels { viewModelProviderFactory }
 }
 
-inline fun <reified VM : ViewModel> Fragment.createViewModel(
+inline fun <reified VM : ViewModel> Fragment.viewModel(
     viewModelProviderFactory: ViewModelProvider.Factory
-): VM {
-    return VM::class.java.let { clazz ->
-        ViewModelProvider(this, viewModelProviderFactory).get(clazz)
-    }
+): Lazy<VM> {
+    return viewModels { viewModelProviderFactory }
+}
+
+inline fun <reified VM : ViewModel> Fragment.activityViewModel(
+    viewModelProviderFactory: ViewModelProvider.Factory
+): Lazy<VM> {
+    return activityViewModels { viewModelProviderFactory }
 }
 
 fun AppCompatActivity.appComponent(): AppComponent {

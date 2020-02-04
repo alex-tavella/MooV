@@ -36,6 +36,8 @@ android {
 dependencies {
     implementation(project(Modules.data))
     implementation(project(Modules.domain))
+    implementation(Deps.androidxActivityKtx)
+    implementation(Deps.androidxFragmentKtx)
     implementation(Deps.androidxAppCompat)
     implementation(Deps.androidxMaterial)
     implementation(Deps.androidxConstraintlayout)
