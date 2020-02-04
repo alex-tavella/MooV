@@ -8,18 +8,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 
 abstract class BaseActivity : AppCompatActivity(), CoroutineScope {
-  private lateinit var job: Job
+    private lateinit var job: Job
 
-  override val coroutineContext: CoroutineContext
-    get() = job + Dispatchers.Main
+    override val coroutineContext: CoroutineContext
+        get() = job + Dispatchers.Main
 
-  override fun onCreate(savedInstanceState: Bundle?) {
-    super.onCreate(savedInstanceState)
-    job = Job()
-  }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        job = Job()
+    }
 
-  override fun onDestroy() {
-    super.onDestroy()
-    job.cancel()
-  }
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
+    }
 }

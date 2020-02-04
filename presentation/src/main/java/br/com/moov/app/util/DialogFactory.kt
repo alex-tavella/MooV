@@ -9,11 +9,15 @@ typealias OkFunc = (DialogInterface, Int) -> Unit
 
 object DialogFactory {
 
-  fun createErrorDialog(activity: Activity, errorMessage: String, onOkAction: OkFunc): AlertDialog {
-    return AlertDialog.Builder(activity)
-        .setTitle(activity.getString(string.dialog_title_error))
-        .setMessage(errorMessage)
-        .setPositiveButton(android.R.string.ok, onOkAction)
-        .create()
-  }
+    fun createErrorDialog(
+        activity: Activity,
+        errorMessage: String,
+        onOkAction: OkFunc
+    ): AlertDialog {
+        return AlertDialog.Builder(activity)
+            .setTitle(activity.getString(string.dialog_title_error))
+            .setMessage(errorMessage)
+            .setPositiveButton(android.R.string.ok, onOkAction)
+            .create()
+    }
 }

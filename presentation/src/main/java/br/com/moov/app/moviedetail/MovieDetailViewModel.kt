@@ -11,55 +11,60 @@ import br.com.moov.domain.movie.MovieDetailInteractor
 import javax.inject.Inject
 
 class MovieDetailViewModel @Inject constructor(
-  private val movieDetailInteractor: MovieDetailInteractor,
-  private val bookmarkInteractor: MovieBookmarkInteractor
+    private val movieDetailInteractor: MovieDetailInteractor,
+    private val bookmarkInteractor: MovieBookmarkInteractor
 ) : BaseViewModel<MovieDetailUiEvent, MovieDetailUiModel>() {
 
-  override suspend fun processUiEvent(uiEvent: MovieDetailUiEvent) {
-    when (uiEvent) {
-      is EnterScreen -> {
-        handleEnterScreen(uiEvent)
-      }
-      is MovieFavoritedUiEvent -> {
-        handleMovieFavorited(uiEvent)
-      }
+    override suspend fun processUiEvent(uiEvent: MovieDetailUiEvent) {
+        when (uiEvent) {
+            is EnterScreen -> {
+                handleEnterScreen(uiEvent)
+            }
+            is MovieFavoritedUiEvent -> {
+                handleMovieFavorited(uiEvent)
+            }
+        }
     }
-  }
 
-  private suspend fun handleEnterScreen(uiEvent: EnterScreen) {
-    emitUiModel(MovieDetailUiModel(loading = true))
-    val result = runCatching {
-      movieDetailInteractor.getMovieDetail(uiEvent.movieId)
+    private suspend fun handleEnterScreen(uiEvent: EnterScreen) {
+        emitUiModel(MovieDetailUiModel(loading = true))
+        val result = runCatching {
+            movieDetailInteractor.getMovieDetail(uiEvent.movieId)
+        }
+        emitUiModel(
+            MovieDetailUiModel(
+                loading = false, movie = result.getOrNull(),
+                error = result.exceptionOrNull()
+            )
+        )
     }
-    emitUiModel(MovieDetailUiModel(loading = false, movie = result.getOrNull(),
-        error = result.exceptionOrNull()))
-  }
 
-  private suspend fun handleMovieFavorited(uiEvent: MovieFavoritedUiEvent) {
-    val result = runCatching {
-      if (uiEvent.favorited) {
-        bookmarkInteractor.bookmarkMovie(uiEvent.movie)
-        uiEvent.movie.copy(isBookmarked = true)
-      } else {
-        bookmarkInteractor.unbookmarkMovie(uiEvent.movie.id!!)
-        uiEvent.movie.copy(isBookmarked = false)
-      }
+    private suspend fun handleMovieFavorited(uiEvent: MovieFavoritedUiEvent) {
+        val result = runCatching {
+            if (uiEvent.favorited) {
+                bookmarkInteractor.bookmarkMovie(uiEvent.movie)
+                uiEvent.movie.copy(isBookmarked = true)
+            } else {
+                bookmarkInteractor.unbookmarkMovie(uiEvent.movie.id!!)
+                uiEvent.movie.copy(isBookmarked = false)
+            }
+        }
+        emitUiModel(
+            MovieDetailUiModel(movie = result.getOrNull(), error = result.exceptionOrNull())
+        )
     }
-    emitUiModel(
-        MovieDetailUiModel(movie = result.getOrNull(), error = result.exceptionOrNull()))
-  }
 }
 
 class MovieDetailUiModel(
-  val loading: Boolean = false,
-  val movie: MovieDetail? = null,
-  error: Throwable? = null
+    val loading: Boolean = false,
+    val movie: MovieDetail? = null,
+    error: Throwable? = null
 ) : UiModel(error)
 
 sealed class MovieDetailUiEvent : UiEvent() {
-  class EnterScreen(val movieId: Int) : MovieDetailUiEvent()
-  data class MovieFavoritedUiEvent(
-    val movie: MovieDetail,
-    val favorited: Boolean
-  ) : MovieDetailUiEvent()
+    class EnterScreen(val movieId: Int) : MovieDetailUiEvent()
+    data class MovieFavoritedUiEvent(
+        val movie: MovieDetail,
+        val favorited: Boolean
+    ) : MovieDetailUiEvent()
 }

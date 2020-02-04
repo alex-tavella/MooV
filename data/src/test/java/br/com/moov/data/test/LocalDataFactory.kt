@@ -5,12 +5,13 @@ import br.com.moov.test.DataFactory
 
 object LocalDataFactory {
 
-  fun newMovieList() = mutableListOf<MovieEntity>().apply {
-    repeat(DataFactory.randomInt(10)) { add(newMovie()) }
-  }
+    fun newMovieList() = mutableListOf<MovieEntity>().apply {
+        repeat(DataFactory.randomInt(10)) { add(newMovie()) }
+    }
 
-  fun newMovie() = MovieEntity(
-      id = DataFactory.randomInt(),
-      title = DataFactory.randomString(),
-      thumbnailPath = DataFactory.randomPathString())
+    fun newMovie() = MovieEntity(
+        id = DataFactory.randomInt(),
+        title = DataFactory.randomString(),
+        thumbnailPath = DataFactory.randomPathString()
+    )
 }

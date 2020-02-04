@@ -24,12 +24,12 @@ internal annotation class ViewModelKey(val value: KClass<out ViewModel>)
 @Module
 interface PresentationModule {
 
-  @[Binds IntoMap ViewModelKey(MoviesViewModel::class)]
-  fun bindsMoviesViewModel(moviesViewModel: MoviesViewModel): ViewModel
+    @[Binds IntoMap ViewModelKey(MoviesViewModel::class)]
+    fun bindsMoviesViewModel(moviesViewModel: MoviesViewModel): ViewModel
 
-  @[Binds IntoMap ViewModelKey(MovieDetailViewModel::class)]
-  fun bindsMovieDetailViewModel(movieDetailViewModel: MovieDetailViewModel): ViewModel
+    @[Binds IntoMap ViewModelKey(MovieDetailViewModel::class)]
+    fun bindsMovieDetailViewModel(movieDetailViewModel: MovieDetailViewModel): ViewModel
 
-  @[Binds Singleton]
-  fun bindsViewModelFactory(factory: DefaultViewModelProviderFactory): ViewModelProvider.Factory
+    @[Binds Singleton]
+    fun bindsViewModelFactory(factory: DefaultViewModelProviderFactory): ViewModelProvider.Factory
 }

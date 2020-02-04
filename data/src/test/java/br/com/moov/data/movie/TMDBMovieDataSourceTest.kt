@@ -20,137 +20,147 @@ import retrofit2.mock.Calls
 @RunWith(JUnit4::class)
 class TMDBMovieDataSourceTest {
 
-  private val tmdbApi: TMDBDApi = mock()
+    private val tmdbApi: TMDBDApi = mock()
 
-  private lateinit var tmdbMovieDataSource: MovieDataSource
+    private lateinit var tmdbMovieDataSource: MovieDataSource
 
-  @Before
-  @Throws(Exception::class)
-  fun setUp() {
-    tmdbMovieDataSource = TMDBMovieDataSource(tmdbApi)
-  }
-
-  @Test
-  fun `get popular movies`() {
-    // Given
-    val movieDiscoverResponse = RemoteDataFactory.newMovieResponse()
-    whenever(tmdbApi.discoverMovies(any(), any(), any()))
-        .thenReturn(Calls.response(movieDiscoverResponse))
-
-    // When
-    val page = 1
-    val sortBy = "popularity.desc"
-    val voteCount = 100
-    val movies = runBlocking {
-      tmdbMovieDataSource.getMovies(page, sortBy, voteCount)
+    @Before
+    @Throws(Exception::class)
+    fun setUp() {
+        tmdbMovieDataSource = TMDBMovieDataSource(tmdbApi)
     }
 
-    // Then
-    assert(movies == movieDiscoverResponse.results)
-    val pageCaptor = argumentCaptor<Int>()
-    val sortByCaptor = argumentCaptor<String>()
-    val voteCountCaptor = argumentCaptor<Int>()
-    verify(tmdbApi).discoverMovies(pageCaptor.capture(), sortByCaptor.capture(),
-        voteCountCaptor.capture())
-    assert(pageCaptor.firstValue == page)
-    assert(sortByCaptor.firstValue == sortBy)
-    assert(voteCountCaptor.firstValue == voteCount)
-  }
+    @Test
+    fun `get popular movies`() {
+        // Given
+        val movieDiscoverResponse = RemoteDataFactory.newMovieResponse()
+        whenever(tmdbApi.discoverMovies(any(), any(), any()))
+            .thenReturn(Calls.response(movieDiscoverResponse))
 
-  @Test
-  fun `get popular movies empty response`() {
-    // Given
-    whenever(tmdbApi.discoverMovies(any(), any(), any()))
-        .thenReturn(Calls.response(RemoteDataFactory
-            .newMovieResponse().copy(results = emptyList())))
+        // When
+        val page = 1
+        val sortBy = "popularity.desc"
+        val voteCount = 100
+        val movies = runBlocking {
+            tmdbMovieDataSource.getMovies(page, sortBy, voteCount)
+        }
 
-    // When
-    val page = 1
-    val sortBy = "popularity.desc"
-    val voteCount = 100
-    val movies = runBlocking {
-      tmdbMovieDataSource.getMovies(page, sortBy, voteCount)
-    }
-
-    // Then
-    assert(movies == emptyList<TMDBMovie>())
-    val pageCaptor = argumentCaptor<Int>()
-    val sortByCaptor = argumentCaptor<String>()
-    val voteCountCaptor = argumentCaptor<Int>()
-    verify(tmdbApi).discoverMovies(pageCaptor.capture(), sortByCaptor.capture(),
-        voteCountCaptor.capture())
-    assert(pageCaptor.firstValue == page)
-    assert(sortByCaptor.firstValue == sortBy)
-    assert(voteCountCaptor.firstValue == voteCount)
-  }
-
-  @Test
-  fun `get popular movies error`() {
-    // Given
-    whenever(tmdbApi.discoverMovies(any(), any(), any()))
-        .thenThrow(IllegalStateException())
-
-    runBlocking {
-      val page = 1
-      val sortBy = "popularity.desc"
-      val voteCount = 100
-      try {
-        tmdbMovieDataSource.getMovies(page, sortBy, voteCount)
-        Fail.failBecauseExceptionWasNotThrown<Any>(IllegalStateException::class.java)
-      } catch (e: Exception) {
         // Then
-        assert(e is IllegalStateException)
-      } finally {
+        assert(movies == movieDiscoverResponse.results)
         val pageCaptor = argumentCaptor<Int>()
         val sortByCaptor = argumentCaptor<String>()
         val voteCountCaptor = argumentCaptor<Int>()
-        verify(tmdbApi).discoverMovies(pageCaptor.capture(), sortByCaptor.capture(),
-            voteCountCaptor.capture())
+        verify(tmdbApi).discoverMovies(
+            pageCaptor.capture(), sortByCaptor.capture(),
+            voteCountCaptor.capture()
+        )
         assert(pageCaptor.firstValue == page)
         assert(sortByCaptor.firstValue == sortBy)
         assert(voteCountCaptor.firstValue == voteCount)
-      }
     }
-  }
 
-  @Test
-  fun `get movie details`() {
-    // Given
-    whenever(tmdbApi.getMovie(any()))
-        .thenReturn(Calls.response(RemoteDataFactory.newTMDBMovieDetail()))
+    @Test
+    fun `get popular movies empty response`() {
+        // Given
+        whenever(tmdbApi.discoverMovies(any(), any(), any()))
+            .thenReturn(
+                Calls.response(
+                    RemoteDataFactory
+                        .newMovieResponse().copy(results = emptyList())
+                )
+            )
 
-    runBlocking {
-      // When
-      val movieId = DataFactory.randomInt()
-      tmdbMovieDataSource.getMovieDetail(movieId)
+        // When
+        val page = 1
+        val sortBy = "popularity.desc"
+        val voteCount = 100
+        val movies = runBlocking {
+            tmdbMovieDataSource.getMovies(page, sortBy, voteCount)
+        }
 
-      // Then
-      val idCaptor = argumentCaptor<Int>()
-      verify(tmdbApi).getMovie(idCaptor.capture())
-      assert(idCaptor.firstValue == movieId)
+        // Then
+        assert(movies == emptyList<TMDBMovie>())
+        val pageCaptor = argumentCaptor<Int>()
+        val sortByCaptor = argumentCaptor<String>()
+        val voteCountCaptor = argumentCaptor<Int>()
+        verify(tmdbApi).discoverMovies(
+            pageCaptor.capture(), sortByCaptor.capture(),
+            voteCountCaptor.capture()
+        )
+        assert(pageCaptor.firstValue == page)
+        assert(sortByCaptor.firstValue == sortBy)
+        assert(voteCountCaptor.firstValue == voteCount)
     }
-  }
 
-  @Test
-  fun `get movie details error`() {
-    // Given
-    whenever(tmdbApi.getMovie(any())).thenThrow(IllegalStateException())
+    @Test
+    fun `get popular movies error`() {
+        // Given
+        whenever(tmdbApi.discoverMovies(any(), any(), any()))
+            .thenThrow(IllegalStateException())
 
-    runBlocking {
-      // When
-      val movieId = DataFactory.randomInt()
-      val result = runCatching {
-        tmdbMovieDataSource.getMovieDetail(movieId)
-      }
-
-      // Then
-      val idCaptor = argumentCaptor<Int>()
-      verify(tmdbApi).getMovie(idCaptor.capture())
-      assert(idCaptor.firstValue == movieId)
-      assert(result.isFailure)
-      assert(!result.isSuccess)
-      assert(result.getOrNull() == null)
-      assert(result.exceptionOrNull() is IllegalStateException)
+        runBlocking {
+            val page = 1
+            val sortBy = "popularity.desc"
+            val voteCount = 100
+            try {
+                tmdbMovieDataSource.getMovies(page, sortBy, voteCount)
+                Fail.failBecauseExceptionWasNotThrown<Any>(IllegalStateException::class.java)
+            } catch (e: Exception) {
+                // Then
+                assert(e is IllegalStateException)
+            } finally {
+                val pageCaptor = argumentCaptor<Int>()
+                val sortByCaptor = argumentCaptor<String>()
+                val voteCountCaptor = argumentCaptor<Int>()
+                verify(tmdbApi).discoverMovies(
+                    pageCaptor.capture(), sortByCaptor.capture(),
+                    voteCountCaptor.capture()
+                )
+                assert(pageCaptor.firstValue == page)
+                assert(sortByCaptor.firstValue == sortBy)
+                assert(voteCountCaptor.firstValue == voteCount)
+            }
+        }
     }
-  }
+
+    @Test
+    fun `get movie details`() {
+        // Given
+        whenever(tmdbApi.getMovie(any()))
+            .thenReturn(Calls.response(RemoteDataFactory.newTMDBMovieDetail()))
+
+        runBlocking {
+            // When
+            val movieId = DataFactory.randomInt()
+            tmdbMovieDataSource.getMovieDetail(movieId)
+
+            // Then
+            val idCaptor = argumentCaptor<Int>()
+            verify(tmdbApi).getMovie(idCaptor.capture())
+            assert(idCaptor.firstValue == movieId)
+        }
+    }
+
+    @Test
+    fun `get movie details error`() {
+        // Given
+        whenever(tmdbApi.getMovie(any())).thenThrow(IllegalStateException())
+
+        runBlocking {
+            // When
+            val movieId = DataFactory.randomInt()
+            val result = runCatching {
+                tmdbMovieDataSource.getMovieDetail(movieId)
+            }
+
+            // Then
+            val idCaptor = argumentCaptor<Int>()
+            verify(tmdbApi).getMovie(idCaptor.capture())
+            assert(idCaptor.firstValue == movieId)
+            assert(result.isFailure)
+            assert(!result.isSuccess)
+            assert(result.getOrNull() == null)
+            assert(result.exceptionOrNull() is IllegalStateException)
+        }
+    }
 }
