@@ -35,10 +35,13 @@ subprojects {
         kotlin {
             target("**/*.kt")
             ktlint(BuildPlugins.Versions.ktlint)
+            licenseHeaderFile(project.rootProject.file("spotless/copyright.kt"))
+            endWithNewline()
         }
         kotlinGradle {
             target("*.gradle.kts")
             ktlint(BuildPlugins.Versions.ktlint)
+            endWithNewline()
         }
     }
 
