@@ -46,8 +46,6 @@ dependencies {
   kapt(Deps.glideCompiler)
   implementation(Deps.dagger)
   kapt(Deps.daggerCompiler)
-  implementation(Deps.okHttp)
-  implementation(Deps.retrofit)
 
   testImplementation(Deps.mockitoKotlin)
   testImplementation(Deps.junit)
