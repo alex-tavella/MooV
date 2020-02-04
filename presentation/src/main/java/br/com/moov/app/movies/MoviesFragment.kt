@@ -6,12 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import br.com.moov.app.R
 import br.com.moov.app.core.BaseFragment
 import br.com.moov.app.core.appComponent
-import br.com.moov.app.core.viewModel
 import br.com.moov.app.moviedetail.MovieDetailActivity
 import br.com.moov.app.movies.MoviesUiEvent.EnterScreenUiEvent
 import br.com.moov.app.movies.MoviesUiEvent.FinishedScrollingUiEvent
@@ -27,7 +27,7 @@ class MoviesFragment : BaseFragment() {
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModel<MoviesViewModel>(viewModelProviderFactory)
+    private val viewModel by viewModels<MoviesViewModel> { viewModelProviderFactory }
 
     private val loadingProgressBar: ProgressBar? by lazy {
         view?.findViewById<ProgressBar>(R.id.progressBar)

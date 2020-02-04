@@ -9,13 +9,13 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.ViewModelProvider
 import br.com.moov.app.R
 import br.com.moov.app.core.BaseActivity
 import br.com.moov.app.core.appComponent
-import br.com.moov.app.core.viewModel
 import br.com.moov.app.moviedetail.MovieDetailUiEvent.EnterScreen
 import br.com.moov.app.moviedetail.MovieDetailUiEvent.MovieFavoritedUiEvent
 import br.com.moov.app.util.DialogFactory
@@ -28,7 +28,7 @@ class MovieDetailActivity : BaseActivity() {
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProvider.Factory
 
-    private val viewModel by viewModel<MovieDetailViewModel>(viewModelProviderFactory)
+    private val viewModel by viewModels<MovieDetailViewModel> { viewModelProviderFactory }
 
     private var uiModel: MovieDetailUiModel? = null
 
