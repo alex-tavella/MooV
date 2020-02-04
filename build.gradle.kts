@@ -37,7 +37,7 @@ subprojects {
       ktlint(BuildPlugins.Versions.ktlint).userData(mapOf("indent_size" to "2", "continuation_indent_size" to "2"))
     }
     kotlinGradle {
-      target("**/*.kt")
+      target("*.gradle.kts")
       ktlint(BuildPlugins.Versions.ktlint).userData(mapOf("indent_size" to "2", "continuation_indent_size" to "2"))
     }
   }
@@ -49,7 +49,6 @@ subprojects {
 
       // Enable experimental coroutines APIs, including Flow
       freeCompilerArgs + "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi"
-      freeCompilerArgs + "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
       freeCompilerArgs + "-Xuse-experimental=kotlinx.coroutines.FlowPreview"
       freeCompilerArgs + "-Xuse-experimental=kotlin.Experimental"
 
