@@ -43,6 +43,8 @@ object Deps {
         const val androidx_lifecycle = "2.2.0"
         const val androidx_recyclerview = "1.1.0-rc01"
         const val androidx_constraintLayout = "2.0.0-beta4"
+        const val androidx_activityKtx = "1.1.0"
+        const val androidx_fragmentKtx = "1.2.0"
         const val material = "1.2.0-alpha04"
         const val play_core_ktx = "1.6.4"
         const val coroutines = "1.3.2"
@@ -69,6 +71,10 @@ object Deps {
     const val androidxAppCompat = "androidx.appcompat:appcompat:${Versions.androidx_appcompat}"
     const val androidxLifecycle =
         "androidx.lifecycle:lifecycle-extensions:${Versions.androidx_lifecycle}"
+    const val androidxActivityKtx =
+        "androidx.activity:activity-ktx:${Versions.androidx_activityKtx}"
+    const val androidxFragmentKtx =
+        "androidx.fragment:fragment-ktx:${Versions.androidx_fragmentKtx}"
     const val androidxViewmodelKtx =
         "androidx.lifecycle:lifecycle-viewmodel-ktx:${Versions.androidx_viewmodel}"
     const val androidxConstraintlayout =
