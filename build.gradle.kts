@@ -6,10 +6,13 @@ buildscript {
   }
 
   dependencies {
-        classpath(GradlePlugins.android)
-        classpath(GradlePlugins.kotlin)
-        classpath(GradlePlugins.gradleVersions)
+    classpath(GradlePlugins.android)
+    classpath(GradlePlugins.kotlin)
   }
+}
+
+plugins {
+  id(GradlePlugins.gradleVersions).version(GradlePlugins.Versions.gradleversions)
 }
 
 allprojects {

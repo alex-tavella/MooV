@@ -10,7 +10,7 @@ object GradlePlugins {
 
   const val android = "com.android.tools.build:gradle:${Versions.gradleandroid}"
   const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-  const val gradleVersions = "com.github.ben-manes:gradle-versions-plugin:${Versions.gradleversions}"
+  const val gradleVersions = "com.github.ben-manes.versions"
 }
 
 object BuildPlugins {

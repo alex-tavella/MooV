@@ -27,17 +27,44 @@ jobs:
       - name: Copy CI gradle.properties
         run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
-      - uses: actions/cache@v1
+      - uses: actions/cache@v1.1.0
         with:
-          path: ~/.gradle/caches/jars-3
-          key: ${{ runner.os }}-gradlejars-${{ hashFiles('checksum.txt') }}
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('checksum.txt') }}
           restore-keys: |
-            ${{ runner.os }}-gradlejars-
-      - uses: actions/cache@v1
-        with:
-          path: ~/.gradle/caches/build-cache-1
-          key: ${{ runner.os }}-gradlebuildcache-${{ hashFiles('checksum.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-gradlebuildcache-
+            ${{ runner.os }}-gradle-
+
       - name: Build with Gradle
-        run: ./gradlew assembleDebug test check --stacktrace
+        run: ./gradlew presentation:assembleDebug presentation:lintDebug testDebug dependencyUpdates --scan
+
+      - name: Upload build outputs
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          name: build-outputs
+          path: presentation/build/outputs
+
+      - name: Upload build reports
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          name: build-reports
+          path: presentation/build/reports
+
+      - name: Upload dependency updates report
+        uses: actions/upload-artifact@v1
+        with:
+          name: dependency-updates
+          path: build/dependencyUpdates
+
+      - name: Copy test results
+        if: always()
+        run: |
+          mkdir -p junit
+          find . -type f -regex ".*/build/test-results/.*xml" -exec cp {} junit/ \;
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v1
+        with:
+          name: junit-results
+          path: junit
