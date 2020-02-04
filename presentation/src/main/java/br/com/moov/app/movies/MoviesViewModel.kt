@@ -14,8 +14,8 @@ import br.com.moov.domain.movie.MoviesInteractor
 import javax.inject.Inject
 
 class MoviesViewModel @Inject constructor(
-    private val moviesInteractor: MoviesInteractor,
-    private val bookmarkInteractor: MovieBookmarkInteractor
+  private val moviesInteractor: MoviesInteractor,
+  private val bookmarkInteractor: MovieBookmarkInteractor
 ) : BaseViewModel<MoviesUiEvent, MoviesUiModel>() {
 
   private val movies = mutableListOf<Movie>()
@@ -106,6 +106,7 @@ sealed class MoviesUiEvent : UiEvent() {
 }
 
 class MoviesUiModel(
-    val loading: Boolean = false,
-    val movies: List<Movie> = emptyList(),
-    error: Throwable? = null) : UiModel(error)
+  val loading: Boolean = false,
+  val movies: List<Movie> = emptyList(),
+  error: Throwable? = null
+) : UiModel(error)

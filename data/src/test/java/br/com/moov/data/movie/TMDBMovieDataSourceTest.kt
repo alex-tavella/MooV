@@ -98,7 +98,7 @@ class TMDBMovieDataSourceTest {
         tmdbMovieDataSource.getMovies(page, sortBy, voteCount)
         Fail.failBecauseExceptionWasNotThrown<Any>(IllegalStateException::class.java)
       } catch (e: Exception) {
-        //Then
+        // Then
         assert(e is IllegalStateException)
       } finally {
         val pageCaptor = argumentCaptor<Int>()
@@ -124,7 +124,7 @@ class TMDBMovieDataSourceTest {
       val movieId = DataFactory.randomInt()
       tmdbMovieDataSource.getMovieDetail(movieId)
 
-      //Then
+      // Then
       val idCaptor = argumentCaptor<Int>()
       verify(tmdbApi).getMovie(idCaptor.capture())
       assert(idCaptor.firstValue == movieId)
@@ -143,7 +143,7 @@ class TMDBMovieDataSourceTest {
         tmdbMovieDataSource.getMovieDetail(movieId)
       }
 
-      //Then
+      // Then
       val idCaptor = argumentCaptor<Int>()
       verify(tmdbApi).getMovie(idCaptor.capture())
       assert(idCaptor.firstValue == movieId)

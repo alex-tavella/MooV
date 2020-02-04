@@ -1,6 +1,7 @@
 package br.com.moov.app.core
 
 import androidx.lifecycle.ViewModel
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -8,9 +9,9 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
-abstract class BaseViewModel<in I: UiEvent, O : UiModel> : ViewModel(), CoroutineScope {
+@Suppress("EXPERIMENTAL_API_USAGE")
+abstract class BaseViewModel<in I : UiEvent, O : UiModel> : ViewModel(), CoroutineScope {
 
   private val job: Job = Job()
 

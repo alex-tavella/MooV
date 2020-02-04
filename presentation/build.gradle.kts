@@ -4,7 +4,6 @@ plugins {
   id(BuildPlugins.kotlinKapt)
 }
 
-
 android {
   compileSdkVersion(AndroidSdk.compileSdk)
 
@@ -33,7 +32,6 @@ android {
     unitTests.isReturnDefaultValues = true
   }
 }
-
 
 dependencies {
   implementation(project(Modules.data))

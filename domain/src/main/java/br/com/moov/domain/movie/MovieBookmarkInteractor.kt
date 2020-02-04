@@ -10,7 +10,8 @@ interface MovieBookmarkInteractor {
 }
 
 class MovieBookmarkInteractorImpl @Inject constructor(
-    private val movieRepository: MovieRepository) : MovieBookmarkInteractor {
+  private val movieRepository: MovieRepository
+) : MovieBookmarkInteractor {
 
   override suspend fun getBookmarkedMovies(movies: List<Movie>): List<Movie> {
     return movieRepository.getBookmarkedMovies(movies)
@@ -27,5 +28,4 @@ class MovieBookmarkInteractorImpl @Inject constructor(
   override suspend fun unbookmarkMovie(movieId: Int) {
     movieRepository.unbookmark(movieId)
   }
-
 }

@@ -9,8 +9,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 inline fun RecyclerView.onEndReached(
-    coroutineScope: CoroutineScope,
-    crossinline block: () -> Unit) {
+  coroutineScope: CoroutineScope,
+  crossinline block: () -> Unit
+) {
 
   val channel by lazy {
     Channel<Unit>(Channel.RENDEZVOUS).also { channel ->

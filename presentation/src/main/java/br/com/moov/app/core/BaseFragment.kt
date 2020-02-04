@@ -2,10 +2,10 @@ package br.com.moov.app.core
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
+import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlin.coroutines.CoroutineContext
 
 abstract class BaseFragment : Fragment(), CoroutineScope {
   private lateinit var job: Job

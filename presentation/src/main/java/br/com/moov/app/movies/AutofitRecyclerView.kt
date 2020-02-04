@@ -1,10 +1,9 @@
 package br.com.moov.app.movies
 
 import android.content.Context
+import android.util.AttributeSet
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import android.util.AttributeSet
-
 
 class AutofitRecyclerView : RecyclerView {
 

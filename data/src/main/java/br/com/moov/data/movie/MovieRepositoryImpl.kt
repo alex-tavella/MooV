@@ -7,9 +7,10 @@ import br.com.moov.domain.movie.MovieRepository
 import javax.inject.Inject
 
 class MovieRepositoryImpl @Inject constructor(
-    private val tmdbMovieDataSource: MovieDataSource,
-    private val bookmarkDataSource: BookmarkDataSource,
-    private val movieMapper: MovieMapper) : MovieRepository {
+  private val tmdbMovieDataSource: MovieDataSource,
+  private val bookmarkDataSource: BookmarkDataSource,
+  private val movieMapper: MovieMapper
+) : MovieRepository {
 
   override suspend fun getPopularMovies(page: Int): List<Movie> {
     val tmdbMovies = tmdbMovieDataSource.getMovies(page, SORT_ORDER_POPULARITY,

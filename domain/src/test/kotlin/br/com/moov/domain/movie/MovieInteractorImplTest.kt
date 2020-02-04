@@ -56,7 +56,6 @@ class MovieInteractorImplTest {
       val page2 = 2
       whenever(repository.getPopularMovies(page2)).thenReturn(expectedMovies2)
 
-
       // When
       val result1 = interactor.getPopularMovies(page1)
       val result2 = interactor.getPopularMovies(page2)

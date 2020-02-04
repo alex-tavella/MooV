@@ -1,13 +1,13 @@
 package br.com.moov.data.movie.tmdb
 
-import okhttp3.Interceptor
-import okhttp3.Response
 import java.util.Locale
 import javax.inject.Inject
+import okhttp3.Interceptor
+import okhttp3.Response
 
 class TMDBRequestInterceptor @Inject constructor(
-    private val apiKey: String,
-    private val cacheDuration: Long
+  private val apiKey: String,
+  private val cacheDuration: Long
 ) : Interceptor {
 
   companion object {
