@@ -31,65 +31,67 @@ private annotation class BaseUrl
 
 @Module(includes = [RemoteDataModule::class, LocalDataModule::class])
 interface DataModule {
-  @[Binds Singleton]
-  fun bindsMovieDataSource(tmdbMovieDataSource: TMDBMovieDataSource): MovieDataSource
+    @[Binds Singleton]
+    fun bindsMovieDataSource(tmdbMovieDataSource: TMDBMovieDataSource): MovieDataSource
 
-  @[Binds Singleton]
-  fun bindsBookmarkDataSource(localDataSource: LocalDataSource): BookmarkDataSource
+    @[Binds Singleton]
+    fun bindsBookmarkDataSource(localDataSource: LocalDataSource): BookmarkDataSource
 
-  @[Binds Singleton]
-  fun bindsMovieRepository(movieRepository: MovieRepositoryImpl): MovieRepository
+    @[Binds Singleton]
+    fun bindsMovieRepository(movieRepository: MovieRepositoryImpl): MovieRepository
 
-  @[Binds Singleton]
-  fun bindsTmdbInterceptor(tmdbRequestInterceptor: TMDBRequestInterceptor): Interceptor
+    @[Binds Singleton]
+    fun bindsTmdbInterceptor(tmdbRequestInterceptor: TMDBRequestInterceptor): Interceptor
 }
 
 @Module
 object RemoteDataModule {
 
-  @[Provides JvmStatic Singleton BaseUrl]
-  fun providesBaseUrl() = "https://api.themoviedb.org"
+    @[Provides JvmStatic Singleton BaseUrl]
+    fun providesBaseUrl() = "https://api.themoviedb.org"
 
-  @[Provides JvmStatic Singleton]
-  fun providesApiKey(apiKeyStore: TMDBApiKeyStore): String = apiKeyStore.getApiKey()
+    @[Provides JvmStatic Singleton]
+    fun providesApiKey(apiKeyStore: TMDBApiKeyStore): String = apiKeyStore.getApiKey()
 
-  @[Provides JvmStatic Singleton]
-  fun providesCacheDuration(): Long = TimeUnit.DAYS.toSeconds(1)
+    @[Provides JvmStatic Singleton]
+    fun providesCacheDuration(): Long = TimeUnit.DAYS.toSeconds(1)
 
-  @[Provides JvmStatic Singleton]
-  fun providesCache(context: Context): Cache = Cache(context.cacheDir, 10 * 1024 * 1024)
+    @[Provides JvmStatic Singleton]
+    fun providesCache(context: Context): Cache = Cache(context.cacheDir, 10 * 1024 * 1024)
 
-  @[Provides JvmStatic Singleton]
-  fun providesOkHttpClient(cache: Cache, interceptor: Interceptor): OkHttpClient {
-    val builder = OkHttpClient().newBuilder()
+    @[Provides JvmStatic Singleton]
+    fun providesOkHttpClient(cache: Cache, interceptor: Interceptor): OkHttpClient {
+        val builder = OkHttpClient().newBuilder()
 
-    if (BuildConfig.DEBUG) {
-      builder.addInterceptor(HttpLoggingInterceptor(Logger.DEFAULT)
-          .setLevel(HttpLoggingInterceptor.Level.BODY))
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(
+                HttpLoggingInterceptor(Logger.DEFAULT)
+                    .setLevel(HttpLoggingInterceptor.Level.BODY)
+            )
+        }
+        return builder
+            .cache(cache)
+            .addInterceptor(interceptor)
+            .build()
     }
-    return builder
-        .cache(cache)
-        .addInterceptor(interceptor)
-        .build()
-  }
 
-  @[Provides JvmStatic Singleton]
-  fun providesRetrofit(okHttpClient: OkHttpClient, @BaseUrl baseUrl: String): Retrofit {
-    return Retrofit.Builder()
-        .baseUrl(baseUrl)
-        .client(okHttpClient)
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
-  }
+    @[Provides JvmStatic Singleton]
+    fun providesRetrofit(okHttpClient: OkHttpClient, @BaseUrl baseUrl: String): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .client(okHttpClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
 
-  @[Provides JvmStatic Singleton]
-  fun providesTMDBApi(retrofit: Retrofit): TMDBDApi {
-    return retrofit.create(TMDBDApi::class.java)
-  }
+    @[Provides JvmStatic Singleton]
+    fun providesTMDBApi(retrofit: Retrofit): TMDBDApi {
+        return retrofit.create(TMDBDApi::class.java)
+    }
 }
 
 @Module
 object LocalDataModule {
-  @[Provides JvmStatic Singleton]
-  fun providesMooVDatabase(context: Context): MooVDatabase = MooVDatabase.create(context)
+    @[Provides JvmStatic Singleton]
+    fun providesMooVDatabase(context: Context): MooVDatabase = MooVDatabase.create(context)
 }

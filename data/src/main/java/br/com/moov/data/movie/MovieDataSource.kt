@@ -8,16 +8,16 @@ import br.com.moov.data.movie.tmdb.TMDBMovieDetail
 import javax.inject.Inject
 
 interface MovieDataSource {
-  suspend fun getMovies(page: Int, sortBy: String, voteCount: Int): List<TMDBMovie>
-  suspend fun getMovieDetail(id: Int): TMDBMovieDetail
-  suspend fun getImageConfigs(): ImageConfigurations
+    suspend fun getMovies(page: Int, sortBy: String, voteCount: Int): List<TMDBMovie>
+    suspend fun getMovieDetail(id: Int): TMDBMovieDetail
+    suspend fun getImageConfigs(): ImageConfigurations
 }
 
 class TMDBMovieDataSource @Inject constructor(private val tmdbdApi: TMDBDApi) : MovieDataSource {
-  override suspend fun getMovies(page: Int, sortBy: String, voteCount: Int): List<TMDBMovie> =
-      tmdbdApi.discoverMovies(page, sortBy, voteCount).await().results
+    override suspend fun getMovies(page: Int, sortBy: String, voteCount: Int): List<TMDBMovie> =
+        tmdbdApi.discoverMovies(page, sortBy, voteCount).await().results
 
-  override suspend fun getMovieDetail(id: Int): TMDBMovieDetail = tmdbdApi.getMovie(id).await()
+    override suspend fun getMovieDetail(id: Int): TMDBMovieDetail = tmdbdApi.getMovie(id).await()
 
-  override suspend fun getImageConfigs() = tmdbdApi.getConfiguration().await().images
+    override suspend fun getImageConfigs() = tmdbdApi.getConfiguration().await().images
 }

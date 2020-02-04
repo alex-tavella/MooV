@@ -1,27 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    >
-  <ImageView
-      android:id="@+id/iv_movie_poster"
-      android:layout_width="160dp"
-      android:layout_height="wrap_content"
-      android:minHeight="240dp"
-      android:scaleType="centerCrop"
-      android:transitionName="poster"
-      tools:ignore="ContentDescription"
-      />
+    android:layout_height="wrap_content">
 
-  <CheckBox
-      android:id="@+id/ib_movie_bookmark"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"
-      android:layout_alignBottom="@id/iv_movie_poster"
-      android:layout_alignEnd="@id/iv_movie_poster"
-      android:button="@drawable/ic_favorite"
-      android:contentDescription="@string/content_description_bookmark_icon"
-      />
+    <ImageView
+        android:id="@+id/iv_movie_poster"
+        android:layout_width="160dp"
+        android:layout_height="wrap_content"
+        android:minHeight="240dp"
+        android:scaleType="centerCrop"
+        android:transitionName="poster"
+        tools:ignore="ContentDescription" />
+
+    <CheckBox
+        android:id="@+id/ib_movie_bookmark"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignEnd="@id/iv_movie_poster"
+        android:layout_alignBottom="@id/iv_movie_poster"
+        android:button="@drawable/ic_favorite"
+        android:contentDescription="@string/content_description_bookmark_icon" />
 </RelativeLayout>

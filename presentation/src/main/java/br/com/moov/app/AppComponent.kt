@@ -10,22 +10,23 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [
-  DomainModule::class,
-  DataModule::class,
-  PresentationModule::class]
+@Component(
+    modules = [
+        DomainModule::class,
+        DataModule::class,
+        PresentationModule::class]
 )
 interface AppComponent {
 
-  fun inject(movieDetailActivity: MovieDetailActivity)
-  fun inject(moviesFragment: MoviesFragment)
+    fun inject(movieDetailActivity: MovieDetailActivity)
+    fun inject(moviesFragment: MoviesFragment)
 
-  @Component.Factory
-  interface Factory {
-    fun create(@BindsInstance context: Context): AppComponent
-  }
+    @Component.Factory
+    interface Factory {
+        fun create(@BindsInstance context: Context): AppComponent
+    }
 }
 
 interface AppComponentProvider {
-  val appComponent: AppComponent
+    val appComponent: AppComponent
 }
