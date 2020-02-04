@@ -1,6 +1,6 @@
 import org.gradle.api.JavaVersion
 
-private const val kotlinVersion = "1.3.50"
+private const val kotlinVersion = "1.3.61"
 
 object GradlePlugins {
     object Versions {
@@ -38,28 +38,28 @@ object AndroidSdk {
 object Deps {
     object Versions {
         const val androidx_core = "1.2.0-beta02"
-        const val androidx_appcompat = "1.0.2"
+        const val androidx_appcompat = "1.2.0-alpha02"
         const val androidx_viewmodel = "2.1.0-beta01"
-        const val androidx_lifecycle = "2.2.0-alpha01"
+        const val androidx_lifecycle = "2.2.0"
         const val androidx_recyclerview = "1.1.0-rc01"
-        const val androidx_constraintLayout = "2.0.0-beta3"
-        const val material = "1.2.0-alpha01"
+        const val androidx_constraintLayout = "2.0.0-beta4"
+        const val material = "1.2.0-alpha04"
         const val play_core_ktx = "1.6.4"
         const val coroutines = "1.3.2"
-        const val dagger = "2.25.2"
-        const val retrofit = "2.6.0"
+        const val dagger = "2.26"
+        const val retrofit = "2.7.1"
         const val okhttp = "4.3.1"
-        const val room = "2.0.0"
+        const val room = "2.2.3"
         const val glide = "4.11.0"
         const val timber = "4.7.1"
 
-        const val junit = "4.12"
+        const val junit = "4.13"
         const val mockk = "1.9.3"
         const val kotest = "3.4.2"
-        const val androidx_espresso = "3.2.0"
+        const val androidx_espresso = "3.3.0-alpha03"
         const val androidx_testing = "1.1.1"
-        const val assertj = "3.12.2"
-        const val test_runner = "1.2.0"
+        const val assertj = "3.15.0"
+        const val test_runner = "1.3.0-alpha03"
         const val mockito_kotlin = "2.1.0"
     }
 
@@ -101,7 +101,7 @@ object Deps {
         "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockito_kotlin}"
     const val assertj = "org.assertj:assertj-core:${Versions.assertj}"
     const val androidxRules = "androidx.test:rules:${Versions.androidx_testing}"
-    const val androidxRunner = "androidx.test:runner:${Versions.androidx_testing}"
+    const val androidxRunner = "androidx.test:runner:${Versions.test_runner}"
     const val androidxEspressocore =
         "androidx.test.espresso:espresso-core:${Versions.androidx_espresso}"
 }
