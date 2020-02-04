@@ -6,14 +6,19 @@ object GradlePlugins {
   object Versions {
     const val gradleandroid = "4.0.0-alpha09"
     const val gradleversions = "0.27.0"
+    const val spotless = "3.27.1"
   }
 
   const val android = "com.android.tools.build:gradle:${Versions.gradleandroid}"
   const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
   const val gradleVersions = "com.github.ben-manes.versions"
+  const val spotless = "com.diffplug.gradle.spotless"
 }
 
 object BuildPlugins {
+  object Versions {
+    const val ktlint = "0.35.0"
+  }
   const val androidApplication = "com.android.application"
   const val androidLibrary = "com.android.library"
   const val kotlinAndroid = "kotlin-android"

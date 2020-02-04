@@ -17,11 +17,11 @@ interface DomainModule {
 
   @[Binds Singleton]
   fun bindsMovieDetailInteractor(
-      movieDetailInteractor: MovieDetailInteractorImpl
+    movieDetailInteractor: MovieDetailInteractorImpl
   ): MovieDetailInteractor
 
   @[Binds Singleton]
   fun bindsMovieBookmarkInteractor(
-      moviesBookmarkInteractor: MovieBookmarkInteractorImpl
+    moviesBookmarkInteractor: MovieBookmarkInteractorImpl
   ): MovieBookmarkInteractor
 }

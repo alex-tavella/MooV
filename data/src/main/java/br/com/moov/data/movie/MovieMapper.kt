@@ -29,18 +29,18 @@ open class MovieMapper @Inject constructor() {
   }
 
   private fun getPosterUrl(imageConfigs: ImageConfigurations, path: String?): String? {
-    if (!imageConfigs.base_url.isNullOrBlank()
-        && !path.isNullOrBlank()
-        && imageConfigs.poster_sizes.isNotEmpty()) {
+    if (!imageConfigs.base_url.isNullOrBlank() &&
+        !path.isNullOrBlank() &&
+        imageConfigs.poster_sizes.isNotEmpty()) {
       return imageConfigs.base_url + selectConfigurationOption(imageConfigs.poster_sizes) + path
     }
     return null
   }
 
   private fun getBackdropUrl(imageConfigs: ImageConfigurations, path: String?): String? {
-    if (!imageConfigs.base_url.isNullOrBlank()
-        && !path.isNullOrBlank()
-        && imageConfigs.backdrop_sizes.isNotEmpty()) {
+    if (!imageConfigs.base_url.isNullOrBlank() &&
+        !path.isNullOrBlank() &&
+        imageConfigs.backdrop_sizes.isNotEmpty()) {
       return imageConfigs.base_url + selectConfigurationOption(imageConfigs.backdrop_sizes) + path
     }
     return null

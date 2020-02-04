@@ -11,8 +11,8 @@ import br.com.moov.domain.movie.MovieDetailInteractor
 import javax.inject.Inject
 
 class MovieDetailViewModel @Inject constructor(
-    private val movieDetailInteractor: MovieDetailInteractor,
-    private val bookmarkInteractor: MovieBookmarkInteractor
+  private val movieDetailInteractor: MovieDetailInteractor,
+  private val bookmarkInteractor: MovieBookmarkInteractor
 ) : BaseViewModel<MovieDetailUiEvent, MovieDetailUiModel>() {
 
   override suspend fun processUiEvent(uiEvent: MovieDetailUiEvent) {
@@ -51,14 +51,15 @@ class MovieDetailViewModel @Inject constructor(
 }
 
 class MovieDetailUiModel(
-    val loading: Boolean = false,
-    val movie: MovieDetail? = null,
-    error: Throwable? = null) : UiModel(error)
+  val loading: Boolean = false,
+  val movie: MovieDetail? = null,
+  error: Throwable? = null
+) : UiModel(error)
 
 sealed class MovieDetailUiEvent : UiEvent() {
   class EnterScreen(val movieId: Int) : MovieDetailUiEvent()
   data class MovieFavoritedUiEvent(
-      val movie: MovieDetail,
-      val favorited: Boolean
+    val movie: MovieDetail,
+    val favorited: Boolean
   ) : MovieDetailUiEvent()
 }

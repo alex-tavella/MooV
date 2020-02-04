@@ -7,7 +7,8 @@ interface MovieDetailInteractor {
 }
 
 class MovieDetailInteractorImpl @Inject constructor(
-    private val movieRepository: MovieRepository) : MovieDetailInteractor {
+  private val movieRepository: MovieRepository
+) : MovieDetailInteractor {
   override suspend fun getMovieDetail(movieId: Int): MovieDetail {
     return movieRepository.getMovieDetail(movieId)
   }

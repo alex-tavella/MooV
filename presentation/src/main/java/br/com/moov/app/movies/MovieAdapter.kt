@@ -15,9 +15,10 @@ typealias OnMovieClick = (View, Int?) -> Unit
 typealias OnMovieFavoriteChanged = (Boolean, Movie) -> Unit
 
 class MovieAdapter(
-    private val movieClickDelegate: OnMovieClick,
-    private val movieFavoriteDelegate: OnMovieFavoriteChanged)
-  : RecyclerView.Adapter<MovieViewHolder>() {
+  private val movieClickDelegate: OnMovieClick,
+  private val movieFavoriteDelegate: OnMovieFavoriteChanged
+) :
+  RecyclerView.Adapter<MovieViewHolder>() {
 
   private val movies = mutableListOf<Movie>()
 
@@ -40,7 +41,6 @@ class MovieAdapter(
         val newMovie = items[newItemPosition]
         return oldMovie.isBookmarked == newMovie.isBookmarked
       }
-
     })
 
     movies.clear()
@@ -64,9 +64,10 @@ class MovieAdapter(
 }
 
 class MovieViewHolder(
-    itemView: View,
-    private val movieClickDelegate: OnMovieClick,
-    private val onMovieFavoriteChange: OnMovieFavoriteChanged) : RecyclerView.ViewHolder(itemView) {
+  itemView: View,
+  private val movieClickDelegate: OnMovieClick,
+  private val onMovieFavoriteChange: OnMovieFavoriteChanged
+) : RecyclerView.ViewHolder(itemView) {
 
   private val posterView by lazy { itemView.findViewById<ImageView>(R.id.iv_movie_poster) }
   private val favoriteView by lazy { itemView.findViewById<CheckBox>(R.id.ib_movie_bookmark) }

@@ -7,7 +7,8 @@ interface MoviesInteractor {
 }
 
 class MoviesInteractorImpl @Inject constructor(
-    private val movieRepository: MovieRepository) : MoviesInteractor {
+  private val movieRepository: MovieRepository
+) : MoviesInteractor {
   override suspend fun getPopularMovies(page: Int): List<Movie> = movieRepository.getPopularMovies(
       page)
 }
