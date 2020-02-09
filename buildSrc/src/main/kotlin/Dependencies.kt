@@ -54,6 +54,7 @@ object Deps {
         const val room = "2.2.3"
         const val glide = "4.11.0"
         const val timber = "4.7.1"
+        const val moshi = "1.9.2"
 
         const val junit = "4.13"
         const val mockk = "1.9.3"
@@ -95,7 +96,9 @@ object Deps {
     const val okHttpLoggingInterceptor =
         "com.squareup.okhttp3:logging-interceptor:${Versions.okhttp}"
     const val retrofit = "com.squareup.retrofit2:retrofit:${Versions.retrofit}"
-    const val gsonRetrofitConverter = "com.squareup.retrofit2:converter-gson:${Versions.retrofit}"
+    const val moshiRetrofitConverter = "com.squareup.retrofit2:converter-moshi:${Versions.retrofit}"
+    const val moshi = "com.squareup.moshi:moshi:${Versions.moshi}"
+    const val moshiCompiler = "com.squareup.moshi:moshi-kotlin-codegen:${Versions.moshi}"
     const val glide = "com.github.bumptech.glide:glide:${Versions.glide}"
     const val glideCompiler = "com.github.bumptech.glide:compiler:${Versions.glide}"
     const val timber = "com.jakewharton.timber:timber:${Versions.timber}"

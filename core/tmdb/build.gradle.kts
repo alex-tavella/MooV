@@ -10,8 +10,10 @@ dependencies {
     implementation(Deps.coroutines)
     implementation(Deps.okHttp)
     implementation(Deps.retrofit)
-    implementation(Deps.gsonRetrofitConverter)
+    implementation(Deps.moshiRetrofitConverter)
     implementation(Deps.okHttpLoggingInterceptor)
+    implementation(Deps.moshi)
+    kapt(Deps.moshiCompiler)
     implementation(Deps.dagger)
     kapt(Deps.daggerCompiler)
 }

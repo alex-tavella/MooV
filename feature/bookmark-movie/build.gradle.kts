@@ -4,6 +4,24 @@ plugins {
     id(BuildPlugins.kotlinKapt)
 }
 
+kapt {
+    correctErrorTypes = true
+    useBuildCache = true
+}
+
+android {
+    defaultConfig {
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = mapOf(
+                    "room.schemaLocation" to "$projectDir/schemas",
+                    "room.incremental" to "true"
+                )
+            }
+        }
+    }
+}
+
 dependencies {
     implementation(project(Modules.core))
     implementation(project(Modules.coreAndroid))
@@ -13,8 +31,10 @@ dependencies {
     implementation(Deps.dagger)
     kapt(Deps.daggerCompiler)
 
-    // Room
-    implementation(Deps.room)
+    // error when using implementation instead of api
+    // e: Supertypes of the following classes cannot be resolved. Please make sure you have the required dependencies in the classpath:
+    //     class br.com.bookmark.movie.data.local.BookmarksDatabase, unresolved supertypes: androidx.room.RoomDatabase
+    api(Deps.room)
     implementation(Deps.roomKtx)
     kapt(Deps.roomCompiler)
 
