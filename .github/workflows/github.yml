@@ -35,21 +35,21 @@ jobs:
             ${{ runner.os }}-gradle-
 
       - name: Build with Gradle
-        run: ./gradlew spotlessCheck presentation:assembleDebug presentation:lintDebug testDebug dependencyUpdates --scan
+        run: ./gradlew spotlessCheck app:assembleDebug app:lintDebug testDebug dependencyUpdates --scan
 
       - name: Upload build outputs
         if: always()
         uses: actions/upload-artifact@v1
         with:
           name: build-outputs
-          path: presentation/build/outputs
+          path: app/build/outputs
 
       - name: Upload build reports
         if: always()
         uses: actions/upload-artifact@v1
         with:
           name: build-reports
-          path: presentation/build/reports
+          path: app/build/reports
 
       - name: Upload dependency updates report
         uses: actions/upload-artifact@v1
