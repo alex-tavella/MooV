@@ -15,6 +15,9 @@
  */
 package br.com.moov.movies.data.remote
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 internal data class MovieDiscoverResponse(
     val page: Int,
     val results: List<TmdbMovie>,
@@ -22,6 +25,7 @@ internal data class MovieDiscoverResponse(
     val total_pages: Int
 )
 
+@JsonClass(generateAdapter = true)
 internal data class TmdbMovie(
     val id: Int,
     val poster_path: String? = null,

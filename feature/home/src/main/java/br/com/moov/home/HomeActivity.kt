@@ -26,8 +26,6 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
 
-        if (savedInstanceState == null) {
-            moviesNavigator.openMoviesScreen(supportFragmentManager, R.id.container)
-        }
+        moviesNavigator.openMoviesScreen(supportFragmentManager, R.id.container)
     }
 }

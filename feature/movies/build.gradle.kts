@@ -22,5 +22,7 @@ dependencies {
     implementation(Deps.dagger)
     kapt(Deps.daggerCompiler)
     implementation(Deps.retrofit)
+    implementation(Deps.moshi)
+    kapt(Deps.moshiCompiler)
     implementation(Deps.glide)
 }

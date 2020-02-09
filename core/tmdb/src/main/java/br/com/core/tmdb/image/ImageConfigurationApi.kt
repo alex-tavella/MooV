@@ -15,6 +15,7 @@
  */
 package br.com.core.tmdb.image
 
+import com.squareup.moshi.JsonClass
 import retrofit2.http.GET
 
 internal interface ImageConfigurationApi {
@@ -22,8 +23,10 @@ internal interface ImageConfigurationApi {
     suspend fun getConfiguration(): ConfigurationsResponse
 }
 
+@JsonClass(generateAdapter = true)
 internal data class ConfigurationsResponse(val images: ImageConfigurations)
 
+@JsonClass(generateAdapter = true)
 internal data class ImageConfigurations(
     val base_url: String,
     val backdrop_sizes: List<String> = emptyList(),

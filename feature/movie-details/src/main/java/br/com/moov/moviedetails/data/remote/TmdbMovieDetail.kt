@@ -15,6 +15,9 @@
  */
 package br.com.moov.moviedetails.data.remote
 
+import com.squareup.moshi.JsonClass
+
+@JsonClass(generateAdapter = true)
 internal data class TmdbMovieDetail(
     val id: Int,
     val poster_path: String? = null,
@@ -32,4 +35,5 @@ internal data class TmdbMovieDetail(
     val genres: List<Genre> = emptyList()
 )
 
+@JsonClass(generateAdapter = true)
 internal data class Genre(val id: Int? = null, val name: String? = null)
