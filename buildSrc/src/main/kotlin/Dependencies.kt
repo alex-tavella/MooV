@@ -41,10 +41,10 @@ object Deps {
         const val androidx_appcompat = "1.2.0-alpha02"
         const val androidx_viewmodel = "2.1.0-beta01"
         const val androidx_lifecycle = "2.2.0"
-        const val androidx_recyclerview = "1.1.0-rc01"
+        const val androidx_recyclerview = "1.2.0-alpha01"
         const val androidx_constraintLayout = "2.0.0-beta4"
         const val androidx_activityKtx = "1.1.0"
-        const val androidx_fragmentKtx = "1.2.0"
+        const val androidx_fragmentKtx = "1.2.1"
         const val material = "1.2.0-alpha04"
         const val play_core_ktx = "1.6.4"
         const val coroutines = "1.3.2"
@@ -89,6 +89,7 @@ object Deps {
     const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
     const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
     const val room = "androidx.room:room-runtime:${Versions.room}"
+    const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"
     const val okHttp = "com.squareup.okhttp3:okhttp:${Versions.okhttp}"
     const val okHttpLoggingInterceptor =
@@ -113,7 +114,24 @@ object Deps {
 }
 
 object Modules {
-    const val domain = ":domain"
-    const val data = ":data"
-    const val presentation = ":presentation"
+    const val core = ":core"
+    const val coreAndroid = ":core:android"
+    const val diBridge = ":di-bridge"
+
+    object Features {
+        const val home = ":feature:home"
+        const val movies = ":feature:movies"
+        const val movieDetails = ":feature:movie-details"
+        const val bookmarkMovie = ":feature:bookmark-movie"
+    }
+
+    object FeatureApis {
+        const val movies = ":feature-api:movies"
+        const val movieDetails = ":feature-api:movie-details"
+        const val bookmarkMovie = ":feature-api:bookmark-movie"
+    }
+
+    object CoreLibs {
+        const val tmdb = ":core:tmdb"
+    }
 }

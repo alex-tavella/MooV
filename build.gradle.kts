@@ -58,4 +58,42 @@ subprojects {
             jvmTarget = "1.8"
         }
     }
+
+    afterEvaluate {
+        if (this.hasProperty("android")) {
+            configure<com.android.build.gradle.BaseExtension> {
+                compileSdkVersion(AndroidSdk.compileSdk)
+
+                defaultConfig {
+                    minSdkVersion(AndroidSdk.minSdk)
+                    targetSdkVersion(AndroidSdk.targetSdk)
+
+                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+                }
+
+                buildTypes {
+                    getByName("release") {
+                        isMinifyEnabled = false
+                    }
+                }
+
+                compileOptions {
+                    sourceCompatibility = AndroidSdk.javaVersion
+                    targetCompatibility = AndroidSdk.javaVersion
+                }
+
+                packagingOptions {
+                    exclude("META-INF/DEPENDENCIES")
+                    exclude("META-INF/LICENSE")
+                    exclude("META-INF/LICENSE.txt")
+                    exclude("META-INF/license.txt")
+                    exclude("META-INF/NOTICE")
+                    exclude("META-INF/NOTICE.txt")
+                    exclude("META-INF/notice.txt")
+                    exclude("META-INF/ASL2.0")
+                    exclude("META-INF/*.kotlin_module")
+                }
+            }
+        }
+    }
 }

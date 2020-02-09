@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="content_description_bookmark_icon">Favorite/unfavorite movie</string>
+    <string name="error_message_movies_param">Error when loading movies: %1$s</string>
+</resources>

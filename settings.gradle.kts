@@ -1,4 +1,12 @@
-include(":presentation", ":data", ":domain")
-
-
-
+include(":app")
+include(":feature:home")
+include(":di-bridge")
+include(":core:tmdb")
+include(":feature:movie-details")
+include(":feature:bookmark-movie")
+include(":feature-api:bookmark-movie")
+include(":feature-api:movies")
+include(":feature-api:movie-details")
+include(":core:android")
+include(":core")
+include(":feature:movies")
