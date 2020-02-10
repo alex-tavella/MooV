@@ -15,7 +15,26 @@
  */
 package br.com.moov.dibridge
 
+import br.com.moov.bookmark.movie.BookmarkMovieUseCase
+import br.com.moov.bookmark.movie.UnBookmarkMovieUseCase
+import br.com.moov.core.ImageUrlResolver
+import br.com.moov.moviedetails.navigation.MovieDetailsNavigator
+import br.com.moov.movies.navigation.MoviesNavigator
+import retrofit2.Retrofit
+
 interface CoreComponent : FeatureApisProvider, CoreApisProvider
+
+interface CoreApisProvider {
+    fun retrofit(): Retrofit
+    fun imageUrlResolver(): ImageUrlResolver
+}
+
+interface FeatureApisProvider {
+    fun bookmarkMovieUseCase(): BookmarkMovieUseCase
+    fun unBookmarkMovieUseCase(): UnBookmarkMovieUseCase
+    fun moviesNavigator(): MoviesNavigator
+    fun movieDetailsNavigator(): MovieDetailsNavigator
+}
 
 interface CoreComponentProvider {
     val coreComponent: CoreComponent
