@@ -25,11 +25,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import br.com.core.android.BaseFragment
+import br.com.core.android.dependencies
 import br.com.core.android.logd
 import br.com.core.android.views.DialogFactory
 import br.com.core.android.views.MarginDecoration
 import br.com.core.android.views.onEndReached
-import br.com.moov.dibridge.coreComponent
 import br.com.moov.moviedetails.navigation.MovieDetailsNavigator
 import br.com.moov.movies.R
 import br.com.moov.movies.di.DaggerMoviesComponent
@@ -59,7 +59,7 @@ internal class MoviesFragment : BaseFragment() {
 
     override fun onAttach(context: Context) {
         DaggerMoviesComponent.factory()
-            .create(coreComponent())
+            .create(dependencies())
             .inject(this)
         super.onAttach(context)
     }

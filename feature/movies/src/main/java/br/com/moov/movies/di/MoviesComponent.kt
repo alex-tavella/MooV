@@ -15,13 +15,17 @@
  */
 package br.com.moov.movies.di
 
-import br.com.moov.dibridge.CoreComponent
+import br.com.moov.bookmark.movie.BookmarkMovieUseCase
+import br.com.moov.bookmark.movie.UnBookmarkMovieUseCase
+import br.com.moov.core.ImageUrlResolver
+import br.com.moov.moviedetails.navigation.MovieDetailsNavigator
 import br.com.moov.movies.view.MoviesFragment
 import dagger.Component
+import retrofit2.Retrofit
 
 @Component(
     modules = [MoviesInternalModule::class],
-    dependencies = [CoreComponent::class]
+    dependencies = [MoviesDependencies::class]
 )
 internal interface MoviesComponent {
 
@@ -29,6 +33,14 @@ internal interface MoviesComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(coreComponent: CoreComponent): MoviesComponent
+        fun create(dependencies: MoviesDependencies): MoviesComponent
     }
+}
+
+interface MoviesDependencies {
+    fun retrofit(): Retrofit
+    fun imageUrlResolver(): ImageUrlResolver
+    fun bookmarkUseCase(): BookmarkMovieUseCase
+    fun unBookmarkUseCase(): UnBookmarkMovieUseCase
+    fun movieDetailNavigator(): MovieDetailsNavigator
 }

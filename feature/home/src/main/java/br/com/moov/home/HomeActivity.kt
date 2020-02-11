@@ -17,12 +17,12 @@ package br.com.moov.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import br.com.moov.dibridge.coreComponent
+import br.com.core.android.dependencies
 
 class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val moviesNavigator = coreComponent().moviesNavigator()
+        val moviesNavigator = dependencies<HomeDependencies>().moviesNavigator()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.home_activity)
 

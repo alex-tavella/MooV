@@ -19,8 +19,6 @@ dependencies {
     implementation(Deps.dagger)
     kapt(Deps.daggerCompiler)
 
-    implementation(project(Modules.diBridge))
-
     implementation(Deps.retrofit)
 
     implementation(project(Modules.FeatureApis.movies))

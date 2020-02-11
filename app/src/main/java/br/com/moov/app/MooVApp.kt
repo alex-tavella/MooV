@@ -17,16 +17,17 @@ package br.com.moov.app
 
 import android.app.Application
 import android.os.StrictMode
+import br.com.core.android.DependenciesProvider
 import br.com.core.android.logd
-import br.com.moov.dibridge.CoreComponent
-import br.com.moov.dibridge.CoreComponentProvider
 
-class MooVApp : Application(), CoreComponentProvider {
+class MooVApp : Application(), DependenciesProvider<Any> {
 
-    override val coreComponent: CoreComponent by lazy {
+    private val coreComponent by lazy {
         DaggerAppComponent.factory()
             .create(this)
     }
+
+    override fun dependencies() = coreComponent
 
     override fun onCreate() {
         if (BuildConfig.DEBUG) {
