@@ -33,7 +33,8 @@ inline fun <reified D> Context.dependencies(): D {
     }
     val deps = dependencies()
     require(deps is D) {
-        "${deps?.javaClass} is not a subtype of ${D::class.java}"
+        "${deps?.javaClass} is not a subtype of ${D::class.java}. " +
+            "Did you forget to setup this module dependencies on the Application class?"
     }
     return deps
 }
