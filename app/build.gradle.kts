@@ -21,6 +21,8 @@ dependencies {
 
     implementation(Deps.retrofit)
 
+    implementation(project(Modules.diBridge))
+
     implementation(project(Modules.FeatureApis.movies))
     implementation(project(Modules.FeatureApis.movieDetails))
     implementation(project(Modules.FeatureApis.bookmarkMovie))

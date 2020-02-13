@@ -18,10 +18,8 @@ package br.com.moov.app
 import android.content.Context
 import br.com.bookmark.movie.BookmarkExposedModule
 import br.com.core.tmdb.TmdbModule
-import br.com.moov.home.HomeDependencies
-import br.com.moov.moviedetails.di.MovieDetailsDependencies
+import br.com.moov.dibridge.AppComponentDependencies
 import br.com.moov.moviedetails.di.MovieDetailsExposedModule
-import br.com.moov.movies.di.MoviesDependencies
 import br.com.moov.movies.di.MoviesExposedModule
 import dagger.BindsInstance
 import dagger.Component
@@ -36,7 +34,7 @@ import javax.inject.Singleton
     ]
 )
 @Singleton
-interface AppComponent : MoviesDependencies, MovieDetailsDependencies, HomeDependencies {
+interface AppComponent : AppComponentDependencies {
 
     @Component.Factory
     interface Factory {

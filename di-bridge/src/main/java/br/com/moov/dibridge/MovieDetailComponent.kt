@@ -13,10 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.moov.home
+package br.com.moov.dibridge
 
-import br.com.moov.movies.navigation.MoviesNavigator
+import br.com.moov.bookmark.movie.BookmarkMovieUseCase
+import br.com.moov.bookmark.movie.UnBookmarkMovieUseCase
+import br.com.moov.core.ImageUrlResolver
+import br.com.moov.moviedetails.navigation.MovieDetailsNavigator
+import retrofit2.Retrofit
 
-interface HomeDependencies {
-    fun moviesNavigator(): MoviesNavigator
+interface MovieDetailsDependencies {
+    fun retrofit(): Retrofit
+    fun imageUrlResolver(): ImageUrlResolver
+    fun bookmarkUseCase(): BookmarkMovieUseCase
+    fun unBookmarkUseCase(): UnBookmarkMovieUseCase
+    fun movieDetailNavigator(): MovieDetailsNavigator
 }

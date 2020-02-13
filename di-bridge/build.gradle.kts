@@ -6,9 +6,9 @@ plugins {
 dependencies {
     implementation(project(Modules.core))
     implementation(project(Modules.coreAndroid))
-    implementation(project(Modules.diBridge))
     implementation(project(Modules.FeatureApis.movies))
+    implementation(project(Modules.FeatureApis.movieDetails))
+    implementation(project(Modules.FeatureApis.bookmarkMovie))
     implementation(Deps.androidxAppCompat)
-    implementation(Deps.androidxMaterial)
-    implementation(Deps.kotlinStdlib)
+    implementation(Deps.retrofit)
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Alex Almeida Tavella
+ * Copyright 2020 Thiago de Oliveira Pires
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.moov.home
+package br.com.moov.dibridge
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import br.com.moov.dibridge.dependencies
+interface AppComponentDependencies :
+        HomeDependencies,
+        MoviesDependencies,
+        MovieDetailsDependencies
 
-class HomeActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        val moviesNavigator = dependencies().moviesNavigator()
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.home_activity)
-
-        moviesNavigator.openMoviesScreen(supportFragmentManager, R.id.container)
-    }
+interface AppComponentDependenciesProvider {
+    fun dependencies(): AppComponentDependencies
 }

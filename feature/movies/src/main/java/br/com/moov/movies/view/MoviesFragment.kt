@@ -25,11 +25,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import br.com.core.android.BaseFragment
-import br.com.core.android.dependencies
 import br.com.core.android.logd
 import br.com.core.android.views.DialogFactory
 import br.com.core.android.views.MarginDecoration
 import br.com.core.android.views.onEndReached
+import br.com.moov.dibridge.dependencies
 import br.com.moov.moviedetails.navigation.MovieDetailsNavigator
 import br.com.moov.movies.R
 import br.com.moov.movies.di.DaggerMoviesComponent

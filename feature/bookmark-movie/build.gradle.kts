@@ -25,6 +25,7 @@ android {
 dependencies {
     implementation(project(Modules.core))
     implementation(project(Modules.coreAndroid))
+    implementation(project(Modules.diBridge))
     implementation(project(Modules.FeatureApis.bookmarkMovie))
     implementation(Deps.coroutinesAndroid)
     implementation(Deps.kotlinStdlib)

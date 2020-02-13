@@ -29,9 +29,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.ViewModelProvider
 import br.com.core.android.BaseActivity
-import br.com.core.android.dependencies
 import br.com.core.android.logd
 import br.com.core.android.views.DialogFactory
+import br.com.moov.dibridge.dependencies
 import br.com.moov.moviedetails.R
 import br.com.moov.moviedetails.di.DaggerMovieDetailComponent
 import br.com.moov.moviedetails.viewmodel.MovieDetailUiEvent

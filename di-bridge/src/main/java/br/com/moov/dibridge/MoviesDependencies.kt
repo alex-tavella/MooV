@@ -13,19 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.moov.home
+package br.com.moov.dibridge
 
-import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
-import br.com.moov.dibridge.dependencies
+import br.com.moov.bookmark.movie.BookmarkMovieUseCase
+import br.com.moov.bookmark.movie.UnBookmarkMovieUseCase
+import br.com.moov.core.ImageUrlResolver
+import br.com.moov.moviedetails.navigation.MovieDetailsNavigator
+import retrofit2.Retrofit
 
-class HomeActivity : AppCompatActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        val moviesNavigator = dependencies().moviesNavigator()
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.home_activity)
-
-        moviesNavigator.openMoviesScreen(supportFragmentManager, R.id.container)
-    }
+interface MoviesDependencies {
+    fun retrofit(): Retrofit
+    fun imageUrlResolver(): ImageUrlResolver
+    fun bookmarkUseCase(): BookmarkMovieUseCase
+    fun unBookmarkUseCase(): UnBookmarkMovieUseCase
+    fun movieDetailNavigator(): MovieDetailsNavigator
 }

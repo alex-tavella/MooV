@@ -1,6 +1,7 @@
 include(":app")
-include(":feature:home")
+include(":di-bridge")
 include(":core-lib:tmdb")
+include(":feature:home")
 include(":feature:movie-details")
 include(":feature:bookmark-movie")
 include(":feature-api:bookmark-movie")
