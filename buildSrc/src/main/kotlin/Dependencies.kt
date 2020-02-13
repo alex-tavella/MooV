@@ -4,7 +4,7 @@ private const val kotlinVersion = "1.3.61"
 
 object GradlePlugins {
     object Versions {
-        const val gradleandroid = "3.5.3"//4.0.0-alpha09"
+        const val gradleandroid = "4.0.0-alpha09"
         const val gradleversions = "0.27.0"
         const val spotless = "3.27.1"
     }
