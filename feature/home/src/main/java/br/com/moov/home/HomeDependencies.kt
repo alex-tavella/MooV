@@ -13,15 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.moov.dibridge
+package br.com.moov.home
 
-import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import br.com.moov.movies.navigation.MoviesNavigator
 
-fun AppCompatActivity.coreComponent(): CoreComponent {
-    return (application as CoreComponentProvider).coreComponent
-}
-
-fun Fragment.coreComponent(): CoreComponent {
-    return (requireContext().applicationContext as CoreComponentProvider).coreComponent
+interface HomeDependencies {
+    fun moviesNavigator(): MoviesNavigator
 }

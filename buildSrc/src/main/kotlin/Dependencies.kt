@@ -119,7 +119,6 @@ object Deps {
 object Modules {
     const val core = ":core"
     const val coreAndroid = ":core-android"
-    const val diBridge = ":di-bridge"
 
     object Features {
         const val home = ":feature:home"
