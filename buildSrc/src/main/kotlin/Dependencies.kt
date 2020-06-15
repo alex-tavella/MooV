@@ -1,12 +1,12 @@
 import org.gradle.api.JavaVersion
 
-private const val kotlinVersion = "1.3.61"
+private const val kotlinVersion = "1.3.72"
 
 object GradlePlugins {
     object Versions {
-        const val gradleandroid = "4.0.0-alpha09"
-        const val gradleversions = "0.27.0"
-        const val spotless = "3.27.1"
+        const val gradleandroid = "4.2.0-alpha01"
+        const val gradleversions = "0.28.0"
+        const val spotless = "4.3.0"
     }
 
     const val android = "com.android.tools.build:gradle:${Versions.gradleandroid}"
@@ -38,20 +38,20 @@ object AndroidSdk {
 object Deps {
     object Versions {
         const val androidx_core = "1.2.0-beta02"
-        const val androidx_appcompat = "1.2.0-alpha02"
+        const val androidx_appcompat = "1.3.0-alpha01"
         const val androidx_viewmodel = "2.1.0-beta01"
         const val androidx_lifecycle = "2.2.0"
-        const val androidx_recyclerview = "1.2.0-alpha01"
-        const val androidx_constraintLayout = "2.0.0-beta4"
-        const val androidx_activityKtx = "1.1.0"
-        const val androidx_fragmentKtx = "1.2.1"
-        const val material = "1.2.0-alpha04"
+        const val androidx_recyclerview = "1.2.0-alpha03"
+        const val androidx_constraintLayout = "2.0.0-beta7"
+        const val androidx_activityKtx = "1.2.0-alpha06"
+        const val androidx_fragmentKtx = "1.3.0-alpha06"
+        const val material = "1.3.0-alpha01"
         const val play_core_ktx = "1.6.4"
         const val coroutines = "1.3.2"
-        const val dagger = "2.26"
-        const val retrofit = "2.7.1"
-        const val okhttp = "4.3.1"
-        const val room = "2.2.3"
+        const val dagger = "2.28"
+        const val retrofit = "2.9.0"
+        const val okhttp = "4.7.2"
+        const val room = "2.3.0-alpha01"
         const val glide = "4.11.0"
         const val timber = "4.7.1"
         const val moshi = "1.9.2"
@@ -59,10 +59,10 @@ object Deps {
         const val junit = "4.13"
         const val mockk = "1.9.3"
         const val kotest = "3.4.2"
-        const val androidx_espresso = "3.3.0-alpha03"
+        const val androidx_espresso = "3.3.0-rc01"
         const val androidx_testing = "1.1.1"
-        const val assertj = "3.15.0"
-        const val test_runner = "1.3.0-alpha03"
+        const val assertj = "3.16.1"
+        const val test_runner = "1.3.0-rc01"
         const val mockito_kotlin = "2.1.0"
     }
 
