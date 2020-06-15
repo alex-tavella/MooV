@@ -121,16 +121,16 @@ object Modules {
     const val coreAndroid = ":core-android"
 
     object Features {
-        const val home = ":feature:home"
-        const val movies = ":feature:movies"
-        const val movieDetails = ":feature:movie-details"
-        const val bookmarkMovie = ":feature:bookmark-movie"
+        const val home = ":feature:home:impl"
+        const val movies = ":feature:movies:impl"
+        const val movieDetails = ":feature:movie-details:impl"
+        const val bookmarkMovie = ":feature:bookmark-movie:impl"
     }
 
     object FeatureApis {
-        const val movies = ":feature-api:movies"
-        const val movieDetails = ":feature-api:movie-details"
-        const val bookmarkMovie = ":feature-api:bookmark-movie"
+        const val movies = ":feature:movies:public"
+        const val movieDetails = ":feature:movie-details:public"
+        const val bookmarkMovie = ":feature:bookmark-movie:public"
     }
 
     object CoreLibs {
