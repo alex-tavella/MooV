@@ -7,12 +7,14 @@ object GradlePlugins {
         const val gradleandroid = "4.2.0-alpha01"
         const val gradleversions = "0.28.0"
         const val spotless = "4.3.0"
+        const val hilt = "2.28-alpha"
     }
 
     const val android = "com.android.tools.build:gradle:${Versions.gradleandroid}"
     const val kotlin = "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     const val gradleVersions = "com.github.ben-manes.versions"
     const val spotless = "com.diffplug.gradle.spotless"
+    const val hilt = "com.google.dagger:hilt-android-gradle-plugin:${Versions.hilt}"
 }
 
 object BuildPlugins {
@@ -25,6 +27,7 @@ object BuildPlugins {
     const val kotlinAndroid = "kotlin-android"
     const val kotlinKapt = "kotlin-kapt"
     const val kotlin = "kotlin"
+    const val hilt = "dagger.hilt.android.plugin"
 }
 
 object AndroidSdk {
@@ -49,6 +52,7 @@ object Deps {
         const val play_core_ktx = "1.6.4"
         const val coroutines = "1.3.2"
         const val dagger = "2.28"
+        const val hilt = "2.28-alpha"
         const val retrofit = "2.9.0"
         const val okhttp = "4.7.2"
         const val room = "2.3.0-alpha01"
@@ -89,6 +93,8 @@ object Deps {
         "org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutines}"
     const val dagger = "com.google.dagger:dagger:${Versions.dagger}"
     const val daggerCompiler = "com.google.dagger:dagger-compiler:${Versions.dagger}"
+    const val hilt = "com.google.dagger:hilt-android:${Versions.hilt}"
+    const val hiltCompiler = "com.google.dagger:hilt-android-compiler:${Versions.hilt}"
     const val room = "androidx.room:room-runtime:${Versions.room}"
     const val roomKtx = "androidx.room:room-ktx:${Versions.room}"
     const val roomCompiler = "androidx.room:room-compiler:${Versions.room}"

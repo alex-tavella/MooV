@@ -30,8 +30,12 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 
 @Module(includes = [BookmarkInternalModule::class])
+@InstallIn(ApplicationComponent::class)
 object BookmarkExposedModule
 
 @Module
@@ -51,7 +55,7 @@ internal interface BookmarkInternalModule {
 
     companion object {
         @[Provides Reusable]
-        fun providesDatabase(context: Context): BookmarksDatabase {
+        fun providesDatabase(@ApplicationContext context: Context): BookmarksDatabase {
             return BookmarksDatabase.create(context)
         }
 

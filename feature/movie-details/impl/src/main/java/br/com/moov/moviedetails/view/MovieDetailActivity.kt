@@ -29,15 +29,16 @@ import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.ViewModelProvider
 import br.com.core.android.BaseActivity
-import br.com.core.android.dependencies
 import br.com.core.android.logd
 import br.com.core.android.views.DialogFactory
 import br.com.moov.moviedetails.R
 import br.com.moov.moviedetails.di.DaggerMovieDetailComponent
+import br.com.moov.moviedetails.di.MovieDetailsDependencies
 import br.com.moov.moviedetails.viewmodel.MovieDetailUiEvent
 import br.com.moov.moviedetails.viewmodel.MovieDetailUiModel
 import br.com.moov.moviedetails.viewmodel.MovieDetailViewModel
 import com.bumptech.glide.Glide
+import dagger.hilt.EntryPoints
 import javax.inject.Inject
 
 class MovieDetailActivity : BaseActivity() {
@@ -62,7 +63,7 @@ class MovieDetailActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         DaggerMovieDetailComponent.factory()
-            .create(dependencies())
+            .create(EntryPoints.get(applicationContext, MovieDetailsDependencies::class.java))
             .inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)

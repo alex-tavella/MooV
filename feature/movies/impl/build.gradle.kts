@@ -4,6 +4,13 @@ plugins {
     id(BuildPlugins.kotlinKapt)
 }
 
+kapt {
+    correctErrorTypes = true
+    arguments {
+        arg("dagger.hilt.disableModulesHaveInstallInCheck", true)
+    }
+}
+
 dependencies {
     implementation(project(Modules.core))
     implementation(project(Modules.coreAndroid))
@@ -18,8 +25,8 @@ dependencies {
     implementation(Deps.androidxLifecycle)
     implementation(Deps.coroutinesAndroid)
     implementation(Deps.kotlinStdlib)
-    implementation(Deps.dagger)
-    kapt(Deps.daggerCompiler)
+    implementation(Deps.hilt)
+    kapt(Deps.hiltCompiler)
     implementation(Deps.retrofit)
     implementation(Deps.moshi)
     kapt(Deps.moshiCompiler)

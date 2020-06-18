@@ -17,17 +17,11 @@ package br.com.moov.app
 
 import android.app.Application
 import android.os.StrictMode
-import br.com.core.android.DependenciesProvider
 import br.com.core.android.logd
+import dagger.hilt.android.HiltAndroidApp
 
-class MooVApp : Application(), DependenciesProvider<Any> {
-
-    private val coreComponent by lazy {
-        DaggerAppComponent.factory()
-            .create(this)
-    }
-
-    override fun dependencies() = coreComponent
+@HiltAndroidApp
+class MooVApp : Application() {
 
     override fun onCreate() {
         if (BuildConfig.DEBUG) {

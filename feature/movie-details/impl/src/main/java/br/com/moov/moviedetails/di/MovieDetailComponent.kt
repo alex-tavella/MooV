@@ -18,9 +18,11 @@ package br.com.moov.moviedetails.di
 import br.com.moov.bookmark.movie.BookmarkMovieUseCase
 import br.com.moov.bookmark.movie.UnBookmarkMovieUseCase
 import br.com.moov.core.ImageUrlResolver
-import br.com.moov.moviedetails.navigation.MovieDetailsNavigator
 import br.com.moov.moviedetails.view.MovieDetailActivity
 import dagger.Component
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import retrofit2.Retrofit
 
 @Component(
@@ -37,10 +39,10 @@ internal interface MovieDetailComponent {
     }
 }
 
+@[EntryPoint InstallIn(ApplicationComponent::class)]
 interface MovieDetailsDependencies {
     fun retrofit(): Retrofit
     fun imageUrlResolver(): ImageUrlResolver
     fun bookmarkUseCase(): BookmarkMovieUseCase
     fun unBookmarkUseCase(): UnBookmarkMovieUseCase
-    fun movieDetailNavigator(): MovieDetailsNavigator
 }

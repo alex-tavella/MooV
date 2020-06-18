@@ -21,6 +21,9 @@ import br.com.moov.core.ImageUrlResolver
 import br.com.moov.moviedetails.navigation.MovieDetailsNavigator
 import br.com.moov.movies.view.MoviesFragment
 import dagger.Component
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import retrofit2.Retrofit
 
 @Component(
@@ -37,6 +40,7 @@ internal interface MoviesComponent {
     }
 }
 
+@[EntryPoint InstallIn(ApplicationComponent::class)]
 interface MoviesDependencies {
     fun retrofit(): Retrofit
     fun imageUrlResolver(): ImageUrlResolver

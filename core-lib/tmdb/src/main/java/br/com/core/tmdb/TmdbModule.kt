@@ -26,6 +26,9 @@ import br.com.moov.core.ImageUrlResolver
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
+import dagger.hilt.android.qualifiers.ApplicationContext
 import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
@@ -44,6 +47,7 @@ private annotation class BaseUrl
         TmdbInternalModule::class
     ]
 )
+@InstallIn(ApplicationComponent::class)
 interface TmdbModule
 
 @Module
@@ -71,7 +75,7 @@ internal interface TmdbInternalModule {
         fun providesCacheDuration(): Long = TimeUnit.DAYS.toSeconds(1)
 
         @[Provides Singleton]
-        fun providesCache(context: Context): Cache = Cache(context.cacheDir, 10 * 1024 * 1024)
+        fun providesCache(@ApplicationContext context: Context): Cache = Cache(context.cacheDir, 10 * 1024 * 1024)
 
         @[Provides Singleton]
         fun providesOkHttpClient(
