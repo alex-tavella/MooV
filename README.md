@@ -1,3 +1,4 @@
+![CI](https://github.com/alex-tavella/MooV/workflows/CI/badge.svg)
 # MooV
 
 App that lets users browse for most popular movies and favourite the ones they like.
