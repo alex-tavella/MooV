@@ -15,7 +15,6 @@
  */
 package br.com.moov.movies.view
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,20 +24,20 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import br.com.core.android.BaseFragment
-import br.com.core.android.dependencies
 import br.com.core.android.logd
 import br.com.core.android.views.DialogFactory
 import br.com.core.android.views.MarginDecoration
 import br.com.core.android.views.onEndReached
 import br.com.moov.moviedetails.navigation.MovieDetailsNavigator
 import br.com.moov.movies.R
-import br.com.moov.movies.di.DaggerMoviesComponent
 import br.com.moov.movies.domain.Movie
 import br.com.moov.movies.viewmodel.MoviesUiEvent
 import br.com.moov.movies.viewmodel.MoviesUiModel
 import br.com.moov.movies.viewmodel.MoviesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+@AndroidEntryPoint
 internal class MoviesFragment : BaseFragment() {
 
     @Inject
@@ -56,13 +55,6 @@ internal class MoviesFragment : BaseFragment() {
     private val recyclerView by lazy { view?.findViewById<RecyclerView>(R.id.rv_movies) }
 
     private val adapter by lazy { MovieAdapter(this::onMovieClick, this::onMovieFavorite) }
-
-    override fun onAttach(context: Context) {
-        DaggerMoviesComponent.factory()
-            .create(dependencies())
-            .inject(this)
-        super.onAttach(context)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,

@@ -4,6 +4,10 @@ plugins {
     id(BuildPlugins.kotlinKapt)
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
     implementation(project(Modules.core))
     implementation(Deps.kotlinStdlib)
@@ -16,4 +20,6 @@ dependencies {
     kapt(Deps.moshiCompiler)
     implementation(Deps.dagger)
     kapt(Deps.daggerCompiler)
+    implementation(Deps.hilt)
+    kapt(Deps.hiltCompiler)
 }

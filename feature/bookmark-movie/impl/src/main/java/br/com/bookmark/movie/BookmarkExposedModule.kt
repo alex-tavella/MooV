@@ -30,11 +30,15 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.Reusable
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 
 @Module(includes = [BookmarkInternalModule::class])
+@InstallIn(ApplicationComponent::class)
 object BookmarkExposedModule
 
 @Module
+@InstallIn(ApplicationComponent::class)
 internal interface BookmarkInternalModule {
 
     @[Binds Reusable]

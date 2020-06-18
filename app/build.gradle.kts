@@ -2,6 +2,7 @@ plugins {
     id(BuildPlugins.androidApplication)
     id(BuildPlugins.kotlinAndroid)
     id(BuildPlugins.kotlinKapt)
+    id(BuildPlugins.hilt)
 }
 
 android {
@@ -12,12 +13,18 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
     implementation(project(Modules.core))
     implementation(project(Modules.coreAndroid))
 
     implementation(Deps.dagger)
     kapt(Deps.daggerCompiler)
+    implementation(Deps.hilt)
+    kapt(Deps.hiltCompiler)
 
     implementation(Deps.retrofit)
 

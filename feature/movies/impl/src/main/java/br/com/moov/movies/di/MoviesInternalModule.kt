@@ -30,6 +30,8 @@ import br.com.moov.movies.viewmodel.MoviesViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.FragmentComponent
 import dagger.multibindings.IntoMap
 import retrofit2.Retrofit
 
@@ -41,9 +43,11 @@ import retrofit2.Retrofit
         MoviesViewModule::class
     ]
 )
+@InstallIn(FragmentComponent::class)
 internal interface MoviesInternalModule
 
 @Module
+@InstallIn(FragmentComponent::class)
 internal interface MoviesDataModule {
 
     @[Binds]
@@ -61,12 +65,14 @@ internal interface MoviesDataModule {
 }
 
 @Module
+@InstallIn(FragmentComponent::class)
 internal interface MoviesDomainModule {
     @[Binds]
     fun bindsGetMoviesUseCase(getMovies: GetMovies): GetMoviesUseCase
 }
 
 @Module
+@InstallIn(FragmentComponent::class)
 internal interface MoviesViewModelModule {
 
     @[Binds IntoMap ViewModelKey(MoviesViewModel::class)]
@@ -79,4 +85,5 @@ internal interface MoviesViewModelModule {
 }
 
 @Module
+@InstallIn(FragmentComponent::class)
 internal interface MoviesViewModule

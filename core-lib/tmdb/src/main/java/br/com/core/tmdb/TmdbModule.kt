@@ -26,6 +26,8 @@ import br.com.moov.core.ImageUrlResolver
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ApplicationComponent
 import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
 import javax.inject.Singleton
@@ -44,9 +46,11 @@ private annotation class BaseUrl
         TmdbInternalModule::class
     ]
 )
+@InstallIn(ApplicationComponent::class)
 interface TmdbModule
 
 @Module
+@InstallIn(ApplicationComponent::class)
 internal interface TmdbInternalModule {
 
     @[Binds Singleton]

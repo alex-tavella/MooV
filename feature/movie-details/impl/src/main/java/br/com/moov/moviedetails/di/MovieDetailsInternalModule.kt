@@ -30,6 +30,8 @@ import br.com.moov.moviedetails.viewmodel.MovieDetailViewModel
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.multibindings.IntoMap
 import retrofit2.Retrofit
 
@@ -41,9 +43,11 @@ import retrofit2.Retrofit
         MovieDetailsViewModule::class
     ]
 )
+@InstallIn(ActivityRetainedComponent::class)
 internal interface MovieDetailsInternalModule
 
 @Module
+@InstallIn(ActivityRetainedComponent::class)
 internal interface MovieDetailsDataModule {
 
     @Binds
@@ -65,6 +69,7 @@ internal interface MovieDetailsDataModule {
 }
 
 @Module
+@InstallIn(ActivityRetainedComponent::class)
 internal interface MovieDetailsDomainModule {
 
     @Binds
@@ -72,6 +77,7 @@ internal interface MovieDetailsDomainModule {
 }
 
 @Module
+@InstallIn(ActivityRetainedComponent::class)
 internal interface MovieDetailsViewModelModule {
     @[Binds IntoMap ViewModelKey(MovieDetailViewModel::class)]
     fun bindsMoviesViewModel(movieDetailViewModel: MovieDetailViewModel): ViewModel
@@ -83,4 +89,5 @@ internal interface MovieDetailsViewModelModule {
 }
 
 @Module
+@InstallIn(ActivityRetainedComponent::class)
 internal interface MovieDetailsViewModule

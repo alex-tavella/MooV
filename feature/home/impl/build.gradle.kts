@@ -1,6 +1,12 @@
 plugins {
     id(BuildPlugins.androidLibrary)
     id(BuildPlugins.kotlinAndroid)
+    id(BuildPlugins.kotlinKapt)
+    id(BuildPlugins.hilt)
+}
+
+kapt {
+    correctErrorTypes = true
 }
 
 dependencies {
@@ -10,4 +16,6 @@ dependencies {
     implementation(Deps.androidxAppCompat)
     implementation(Deps.androidxMaterial)
     implementation(Deps.kotlinStdlib)
+    implementation(Deps.hilt)
+    kapt(Deps.hiltCompiler)
 }
