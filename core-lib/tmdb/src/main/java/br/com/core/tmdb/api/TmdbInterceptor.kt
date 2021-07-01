@@ -15,10 +15,10 @@
  */
 package br.com.core.tmdb.api
 
-import java.util.Locale
-import javax.inject.Inject
 import okhttp3.Interceptor
 import okhttp3.Response
+import java.util.Locale
+import javax.inject.Inject
 
 internal class TmdbRequestInterceptor @Inject constructor(
     private val apiKey: String,

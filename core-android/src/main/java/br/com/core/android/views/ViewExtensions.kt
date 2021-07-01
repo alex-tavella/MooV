@@ -47,7 +47,7 @@ inline fun RecyclerView.onEndReached(
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (itemCount - findLastVisibleItemPosition() <= 3 && dy > 20 && itemCount > 0) {
-                    channel.offer(Unit)
+                    channel.trySend(Unit)
                 }
             }
         })

@@ -33,6 +33,7 @@ internal class TmdbMovieMapper @Inject constructor(
             overview = tmdbMovie.overview,
             voteAverage = tmdbMovie.vote_average,
             backdropUrl = tmdbMovie.backdrop_path?.let { imageUrlResolver.getBackdropUrl(it) },
-            genres = tmdbMovie.genres.mapNotNull { it.name })
+            genres = tmdbMovie.genres.mapNotNull { it.name }
+        )
     }
 }

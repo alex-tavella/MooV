@@ -26,15 +26,15 @@ import br.com.moov.core.ImageUrlResolver
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import java.util.concurrent.TimeUnit
-import javax.inject.Qualifier
-import javax.inject.Singleton
 import okhttp3.Cache
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import java.util.concurrent.TimeUnit
+import javax.inject.Qualifier
+import javax.inject.Singleton
 
 @Qualifier
 private annotation class BaseUrl
@@ -71,7 +71,7 @@ internal interface TmdbInternalModule {
         fun providesCacheDuration(): Long = TimeUnit.DAYS.toSeconds(1)
 
         @[Provides Singleton]
-        fun providesCache(context: Context): Cache = Cache(context.cacheDir, 10 * 1024 * 1024)
+        fun providesCache(context: Context): Cache = Cache(context.cacheDir, (10 * 1024 * 1024).toLong())
 
         @[Provides Singleton]
         fun providesOkHttpClient(

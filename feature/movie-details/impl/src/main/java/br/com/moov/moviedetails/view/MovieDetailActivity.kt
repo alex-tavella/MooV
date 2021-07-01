@@ -100,9 +100,9 @@ class MovieDetailActivity : BaseActivity() {
             val isFavorite = uiModel?.movie?.isBookmarked ?: false
             setIcon(
                 if (isFavorite)
-                    br.com.moov.bookmark.movie.R.drawable.ic_favorite
+                    R.drawable.ic_favorite
                 else
-                    br.com.moov.bookmark.movie.R.drawable.ic_favorite_border
+                    R.drawable.ic_favorite_border
             )
         }
         return result
@@ -178,7 +178,8 @@ class MovieDetailActivity : BaseActivity() {
             }
             activity.startActivity(
                 Intent(activity, MovieDetailActivity::class.java)
-                    .putExtra(EXTRA_MOVIE_ID, movieId), options?.toBundle()
+                    .putExtra(EXTRA_MOVIE_ID, movieId),
+                options?.toBundle()
             )
         }
     }
