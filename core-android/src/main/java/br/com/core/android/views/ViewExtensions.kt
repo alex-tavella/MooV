@@ -52,7 +52,8 @@ inline fun RecyclerView.onEndReached(
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (itemCount - findLastVisibleItemPosition() <= THRESHOLD_END &&
-                    dy > THRESHOLD_DELTA_Y && itemCount > 0) {
+                    dy > THRESHOLD_DELTA_Y && itemCount > 0
+                ) {
                     channel.trySend(Unit)
                 }
             }
