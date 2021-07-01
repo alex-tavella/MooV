@@ -15,6 +15,7 @@
  */
 package br.com.core.tmdb.image
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import retrofit2.http.GET
 
@@ -28,7 +29,7 @@ internal data class ConfigurationsResponse(val images: ImageConfigurations)
 
 @JsonClass(generateAdapter = true)
 internal data class ImageConfigurations(
-    val base_url: String,
-    val backdrop_sizes: List<String> = emptyList(),
-    val poster_sizes: List<String> = emptyList()
+    @Json(name = "base_url") val baseUrl: String,
+    @Json(name = "backdrop_sizes") val backdropSizes: List<String> = emptyList(),
+    @Json(name = "poster_sizes") val posterSizes: List<String> = emptyList()
 )

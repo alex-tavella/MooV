@@ -25,8 +25,8 @@ internal class MoviesResponseMapper @Inject constructor(
     suspend fun map(tmdbMovie: TmdbMovie): Movie {
         return Movie(
             id = tmdbMovie.id,
-            title = tmdbMovie.original_title,
-            thumbnailUrl = tmdbMovie.poster_path?.let { imageUrlResolver.getPosterUrl(it) }
+            title = tmdbMovie.originalTitle,
+            thumbnailUrl = tmdbMovie.posterPath?.let { imageUrlResolver.getPosterUrl(it) }
         )
     }
 }

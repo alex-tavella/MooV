@@ -8,6 +8,7 @@ object GradlePlugins {
         const val gradleversions = "0.39.0"
         const val spotless = "5.14.0"
         const val gradleDoctorVersion = "0.7.0"
+        const val detekt = "1.17.1"
     }
 
     const val android = "com.android.tools.build:gradle:${Versions.gradleandroid}"
@@ -15,6 +16,7 @@ object GradlePlugins {
     const val gradleVersions = "com.github.ben-manes.versions"
     const val spotless = "com.diffplug.spotless"
     const val gradleDoctor = "com.osacky.doctor"
+    const val detekt = "io.gitlab.arturbosch.detekt"
 }
 
 object BuildPlugins {

@@ -15,21 +15,22 @@
  */
 package br.com.moov.movies.data.remote
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 internal data class MovieDiscoverResponse(
-    val page: Int,
-    val results: List<TmdbMovie>,
-    val total_results: Int,
-    val total_pages: Int
+    @Json(name = "page") val page: Int,
+    @Json(name = "results") val results: List<TmdbMovie>,
+    @Json(name = "total_results") val totalResults: Int,
+    @Json(name = "total_pages") val totalPages: Int
 )
 
 @JsonClass(generateAdapter = true)
 internal data class TmdbMovie(
-    val id: Int,
-    val poster_path: String? = null,
-    val original_title: String,
-    val popularity: Float = 0F,
-    val vote_count: Int = 0
+    @Json(name = "id") val id: Int,
+    @Json(name = "poster_path") val posterPath: String? = null,
+    @Json(name = "original_title") val originalTitle: String,
+    @Json(name = "popularity") val popularity: Float = 0F,
+    @Json(name = "vote_count") val voteCount: Int = 0
 )

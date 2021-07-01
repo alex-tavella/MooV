@@ -25,14 +25,14 @@ internal class TmdbMovieMapper @Inject constructor(
     suspend fun map(tmdbMovie: TmdbMovieDetail): MovieDetail {
         return MovieDetail(
             id = tmdbMovie.id,
-            title = tmdbMovie.original_title,
-            posterUrl = tmdbMovie.poster_path?.let { imageUrlResolver.getPosterUrl(it) },
+            title = tmdbMovie.originalTitle,
+            posterUrl = tmdbMovie.posterPath?.let { imageUrlResolver.getPosterUrl(it) },
             popularity = tmdbMovie.popularity,
-            originalLanguage = tmdbMovie.original_language,
-            releaseDate = tmdbMovie.release_date,
+            originalLanguage = tmdbMovie.originalLanguage,
+            releaseDate = tmdbMovie.releaseDate,
             overview = tmdbMovie.overview,
-            voteAverage = tmdbMovie.vote_average,
-            backdropUrl = tmdbMovie.backdrop_path?.let { imageUrlResolver.getBackdropUrl(it) },
+            voteAverage = tmdbMovie.voteAverage,
+            backdropUrl = tmdbMovie.backdropPath?.let { imageUrlResolver.getBackdropUrl(it) },
             genres = tmdbMovie.genres.mapNotNull { it.name }
         )
     }

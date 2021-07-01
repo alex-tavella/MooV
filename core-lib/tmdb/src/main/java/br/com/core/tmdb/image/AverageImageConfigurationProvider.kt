@@ -24,16 +24,16 @@ internal class AverageImageConfigurationProvider @Inject constructor(
     private lateinit var imageConfigs: ConfigurationsResponse
 
     private val baseUrl: String
-        get() = imageConfigs.images.base_url
+        get() = imageConfigs.images.baseUrl
 
     override suspend fun getBasePosterUrl(): String {
         fetchConfigsIfNeeded()
-        return baseUrl + selectAverageOption(imageConfigs.images.poster_sizes)
+        return baseUrl + selectAverageOption(imageConfigs.images.posterSizes)
     }
 
     override suspend fun getBaseBackdropUrl(): String {
         fetchConfigsIfNeeded()
-        return baseUrl + selectAverageOption(imageConfigs.images.backdrop_sizes)
+        return baseUrl + selectAverageOption(imageConfigs.images.backdropSizes)
     }
 
     private suspend fun fetchConfigsIfNeeded() {

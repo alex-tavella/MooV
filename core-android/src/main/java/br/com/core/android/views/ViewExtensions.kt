@@ -24,6 +24,10 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+const val DELAY_ON_END = 500L
+const val THRESHOLD_END = 3
+const val THRESHOLD_DELTA_Y = 20
+
 inline fun RecyclerView.onEndReached(
     coroutineScope: CoroutineScope,
     crossinline block: () -> Unit
@@ -32,9 +36,10 @@ inline fun RecyclerView.onEndReached(
     val channel by lazy {
         Channel<Unit>(Channel.RENDEZVOUS).also { channel ->
             coroutineScope.launch {
+                @Suppress("UnusedPrivateMember")
                 for (event in channel) {
                     block()
-                    delay(500)
+                    delay(DELAY_ON_END)
                 }
             }
         }
@@ -46,7 +51,8 @@ inline fun RecyclerView.onEndReached(
         addOnScrollListener(object : OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
-                if (itemCount - findLastVisibleItemPosition() <= 3 && dy > 20 && itemCount > 0) {
+                if (itemCount - findLastVisibleItemPosition() <= THRESHOLD_END &&
+                    dy > THRESHOLD_DELTA_Y && itemCount > 0) {
                     channel.trySend(Unit)
                 }
             }

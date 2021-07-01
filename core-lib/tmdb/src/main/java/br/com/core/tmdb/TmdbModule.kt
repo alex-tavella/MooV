@@ -46,6 +46,8 @@ private annotation class BaseUrl
 )
 interface TmdbModule
 
+private const val CACHE_SIZE: Long = 10 * 1024 * 1024
+
 @Module
 internal interface TmdbInternalModule {
 
@@ -71,7 +73,7 @@ internal interface TmdbInternalModule {
         fun providesCacheDuration(): Long = TimeUnit.DAYS.toSeconds(1)
 
         @[Provides Singleton]
-        fun providesCache(context: Context): Cache = Cache(context.cacheDir, (10 * 1024 * 1024).toLong())
+        fun providesCache(context: Context): Cache = Cache(context.cacheDir, CACHE_SIZE)
 
         @[Provides Singleton]
         fun providesOkHttpClient(

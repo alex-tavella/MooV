@@ -14,7 +14,8 @@ buildscript {
 plugins {
     id(GradlePlugins.spotless) version GradlePlugins.Versions.spotless
     id(GradlePlugins.gradleVersions) version GradlePlugins.Versions.gradleversions
-    id(GradlePlugins.gradleDoctor) version GradlePlugins.Versions.gradleDoctorVersion
+    // id(GradlePlugins.gradleDoctor) version GradlePlugins.Versions.gradleDoctorVersion
+    id(GradlePlugins.detekt) version GradlePlugins.Versions.detekt
 }
 
 allprojects {
@@ -44,6 +45,21 @@ subprojects {
             ktlint(BuildPlugins.Versions.ktlint)
             endWithNewline()
         }
+    }
+
+    apply(plugin = GradlePlugins.detekt)
+    detekt {
+        buildUponDefaultConfig = true
+
+        reports {
+            html.enabled = true
+            xml.enabled = true
+        }
+    }
+
+    tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
+        // Target version of the generated JVM bytecode. It is used for type resolution.
+        jvmTarget = "1.8"
     }
 
     tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().all {
