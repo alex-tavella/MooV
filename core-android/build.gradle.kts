@@ -7,7 +7,7 @@ plugins {
 }
 
 anvil {
-    generateDaggerFactories
+    generateDaggerFactories.set(true)
 }
 
 dependencies {
@@ -21,7 +21,6 @@ dependencies {
     implementation(Deps.glide)
     kapt(Deps.glideCompiler)
     implementation(Deps.dagger)
-    kapt(Deps.daggerCompiler)
 
     androidTestImplementation(Deps.androidxRunner)
     androidTestImplementation(Deps.androidxEspressocore)

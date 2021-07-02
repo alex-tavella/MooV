@@ -6,10 +6,6 @@ plugins {
     id(GradlePlugins.anvil) version GradlePlugins.Versions.anvil
 }
 
-anvil {
-    generateDaggerFactories
-}
-
 android {
     defaultConfig {
         kapt {

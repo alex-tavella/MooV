@@ -56,7 +56,7 @@ internal interface TmdbInternalModule {
 
     companion object {
         @[Provides Singleton BaseUrl]
-        fun providesBaseUrl() = "https://api.themoviedb.org"
+        fun providesBaseUrl(): String = "https://api.themoviedb.org"
 
         @[Provides Singleton]
         fun providesApiKey(apiKeyStore: TmdbApiKeyStore): String = apiKeyStore.getApiKey()

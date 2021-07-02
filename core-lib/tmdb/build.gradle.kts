@@ -6,7 +6,7 @@ plugins {
 }
 
 anvil {
-    generateDaggerFactories
+    generateDaggerFactories.set(true)
 }
 
 dependencies {
@@ -20,5 +20,4 @@ dependencies {
     implementation(Deps.moshi)
     kapt(Deps.moshiCompiler)
     implementation(Deps.dagger)
-    kapt(Deps.daggerCompiler)
 }
