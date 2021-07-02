@@ -22,7 +22,9 @@ import br.com.core.tmdb.image.AverageImageConfigurationProvider
 import br.com.core.tmdb.image.ImageConfigurationApi
 import br.com.core.tmdb.image.ImageConfigurationProvider
 import br.com.core.tmdb.image.TmdbImageUrlResolver
+import br.com.moov.core.AppScope
 import br.com.moov.core.ImageUrlResolver
+import com.squareup.anvil.annotations.ContributesTo
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -44,23 +46,13 @@ private annotation class BaseUrl
         TmdbInternalModule::class
     ]
 )
+@ContributesTo(AppScope::class)
 interface TmdbModule
 
 private const val CACHE_SIZE: Long = 10 * 1024 * 1024
 
 @Module
 internal interface TmdbInternalModule {
-
-    @[Binds Singleton]
-    fun bindsTmdbInterceptor(tmdbRequestInterceptor: TmdbRequestInterceptor): Interceptor
-
-    @[Binds Singleton]
-    fun bindsImageConfigurationProvider(
-        imageConfigurationProvider: AverageImageConfigurationProvider
-    ): ImageConfigurationProvider
-
-    @[Binds Singleton]
-    fun bindsImageUrlResolver(tmdbImageUrlResolver: TmdbImageUrlResolver): ImageUrlResolver
 
     companion object {
         @[Provides Singleton BaseUrl]

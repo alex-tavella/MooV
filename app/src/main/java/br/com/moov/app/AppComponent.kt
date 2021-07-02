@@ -16,25 +16,16 @@
 package br.com.moov.app
 
 import android.content.Context
-import br.com.bookmark.movie.BookmarkExposedModule
-import br.com.core.tmdb.TmdbModule
+import br.com.moov.core.AppScope
 import br.com.moov.home.HomeDependencies
 import br.com.moov.moviedetails.di.MovieDetailsDependencies
-import br.com.moov.moviedetails.di.MovieDetailsExposedModule
 import br.com.moov.movies.di.MoviesDependencies
-import br.com.moov.movies.di.MoviesExposedModule
+import com.squareup.anvil.annotations.MergeComponent
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
-@Component(
-    modules = [
-        MoviesExposedModule::class,
-        MovieDetailsExposedModule::class,
-        BookmarkExposedModule::class,
-        TmdbModule::class
-    ]
-)
+@MergeComponent(scope = AppScope::class)
 @Singleton
 interface AppComponent : MoviesDependencies, MovieDetailsDependencies, HomeDependencies {
 

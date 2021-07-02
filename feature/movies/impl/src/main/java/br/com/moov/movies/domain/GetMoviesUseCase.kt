@@ -15,6 +15,6 @@
  */
 package br.com.moov.movies.domain
 
-internal interface GetMoviesUseCase {
+interface GetMoviesUseCase {
     suspend operator fun invoke(page: Int): List<Movie>
 }

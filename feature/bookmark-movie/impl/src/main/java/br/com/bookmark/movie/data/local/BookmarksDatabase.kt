@@ -26,7 +26,7 @@ import br.com.bookmark.movie.data.local.entity.MovieBookmark
     version = BookmarksDatabase.DB_VERSION,
     entities = [MovieBookmark::class]
 )
-internal abstract class BookmarksDatabase : RoomDatabase() {
+abstract class BookmarksDatabase : RoomDatabase() {
 
     abstract fun movieBookmarksDao(): MovieBookmarksDao
 

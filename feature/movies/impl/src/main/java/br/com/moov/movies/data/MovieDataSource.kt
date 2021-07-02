@@ -17,6 +17,6 @@ package br.com.moov.movies.data
 
 import br.com.moov.movies.data.remote.TmdbMovie
 
-internal interface MovieDataSource {
+interface MovieDataSource {
     suspend fun getMovies(page: Int, sortBy: String, voteCount: Int): List<TmdbMovie>
 }

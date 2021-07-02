@@ -20,11 +20,12 @@ import br.com.moov.bookmark.movie.UnBookmarkMovieUseCase
 import br.com.moov.core.ImageUrlResolver
 import br.com.moov.moviedetails.navigation.MovieDetailsNavigator
 import br.com.moov.movies.view.MoviesFragment
+import com.squareup.anvil.annotations.MergeComponent
 import dagger.Component
 import retrofit2.Retrofit
 
-@Component(
-    modules = [MoviesInternalModule::class],
+@MergeComponent(
+    scope = MoviesScope::class,
     dependencies = [MoviesDependencies::class]
 )
 internal interface MoviesComponent {
@@ -36,6 +37,8 @@ internal interface MoviesComponent {
         fun create(dependencies: MoviesDependencies): MoviesComponent
     }
 }
+
+interface MoviesScope
 
 interface MoviesDependencies {
     fun retrofit(): Retrofit

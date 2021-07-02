@@ -15,12 +15,15 @@
  */
 package br.com.core.tmdb.api
 
+import br.com.moov.core.AppScope
+import com.squareup.anvil.annotations.ContributesBinding
 import okhttp3.Interceptor
 import okhttp3.Response
 import java.util.Locale
 import javax.inject.Inject
 
-internal class TmdbRequestInterceptor @Inject constructor(
+@ContributesBinding(AppScope::class)
+class TmdbRequestInterceptor @Inject constructor(
     private val apiKey: String,
     private val cacheDuration: Long
 ) : Interceptor {

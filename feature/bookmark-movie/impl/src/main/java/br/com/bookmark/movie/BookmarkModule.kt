@@ -13,26 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.bookmark.movie.data.local
+package br.com.bookmark.movie
 
-import br.com.bookmark.movie.data.BookmarkDataSource
+import android.content.Context
+import br.com.bookmark.movie.data.local.BookmarksDatabase
 import br.com.bookmark.movie.data.local.dao.MovieBookmarksDao
-import br.com.bookmark.movie.data.local.entity.MovieBookmark
 import br.com.moov.core.AppScope
-import com.squareup.anvil.annotations.ContributesBinding
-import javax.inject.Inject
-import javax.inject.Singleton
+import com.squareup.anvil.annotations.ContributesTo
+import dagger.Module
+import dagger.Provides
+import dagger.Reusable
 
-@ContributesBinding(AppScope::class)
-class LocalBookmarkDataSource @Inject constructor(
-    private val movieBookmarksDao: MovieBookmarksDao
-) : BookmarkDataSource {
+@Module
+@ContributesTo(AppScope::class)
+object BookmarkModule {
 
-    override suspend fun bookmarkMovie(movieId: Int) {
-        movieBookmarksDao.insert(MovieBookmark(movieId))
+    @[Provides Reusable]
+    fun providesDatabase(context: Context): BookmarksDatabase {
+        return BookmarksDatabase.create(context)
     }
 
-    override suspend fun unBookmarkMovie(movieId: Int) {
-        movieBookmarksDao.delete(movieId)
+    @[Provides Reusable]
+    fun providesMovieBookmarksDao(database: BookmarksDatabase): MovieBookmarksDao {
+        return database.movieBookmarksDao()
     }
 }

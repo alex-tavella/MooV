@@ -15,6 +15,6 @@
  */
 package br.com.moov.movies.domain
 
-internal interface MoviesRepository {
+interface MoviesRepository {
     suspend fun getMovies(page: Int): List<Movie>
 }

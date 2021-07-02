@@ -19,14 +19,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import br.com.core.android.DefaultViewModelProviderFactory
 import br.com.core.android.ViewModelKey
-import br.com.moov.movies.data.DefaultMoviesRepository
-import br.com.moov.movies.data.MovieDataSource
-import br.com.moov.movies.data.remote.TMDBMovieDataSource
 import br.com.moov.movies.data.remote.TmdbMoviesApi
-import br.com.moov.movies.domain.GetMovies
-import br.com.moov.movies.domain.GetMoviesUseCase
-import br.com.moov.movies.domain.MoviesRepository
 import br.com.moov.movies.viewmodel.MoviesViewModel
+import com.squareup.anvil.annotations.ContributesTo
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -36,34 +31,18 @@ import retrofit2.Retrofit
 @Module(
     includes = [
         MoviesDataModule::class,
-        MoviesDomainModule::class,
         MoviesViewModelModule::class,
-        MoviesViewModule::class
+
     ]
 )
-internal interface MoviesInternalModule
+@ContributesTo(MoviesScope::class)
+interface MoviesInternalModule
 
 @Module
-internal interface MoviesDataModule {
-
-    @[Binds]
-    fun bindsMoviesDataSource(moviesRemoteDataSource: TMDBMovieDataSource): MovieDataSource
-
-    @[Binds]
-    fun bindsMoviesRepository(moviesRepository: DefaultMoviesRepository): MoviesRepository
-
-    companion object {
-
-        @[Provides]
-        fun providesApi(retrofit: Retrofit): TmdbMoviesApi =
-            retrofit.create(TmdbMoviesApi::class.java)
-    }
-}
-
-@Module
-internal interface MoviesDomainModule {
-    @[Binds]
-    fun bindsGetMoviesUseCase(getMovies: GetMovies): GetMoviesUseCase
+internal object MoviesDataModule {
+    @Provides
+    fun providesApi(retrofit: Retrofit): TmdbMoviesApi =
+        retrofit.create(TmdbMoviesApi::class.java)
 }
 
 @Module
@@ -77,6 +56,3 @@ internal interface MoviesViewModelModule {
         viewModelProviderFactory: DefaultViewModelProviderFactory
     ): ViewModelProvider.Factory
 }
-
-@Module
-internal interface MoviesViewModule

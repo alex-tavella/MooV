@@ -15,7 +15,7 @@
  */
 package br.com.moov.moviedetails.domain
 
-internal data class MovieDetail(
+data class MovieDetail(
     val id: Int,
     val title: String?,
     val posterUrl: String? = null,

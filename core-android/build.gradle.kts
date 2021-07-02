@@ -3,6 +3,11 @@ plugins {
     id(BuildPlugins.kotlinAndroid)
     id(BuildPlugins.kotlinKapt)
     id(BuildPlugins.coroutinesOptIn)
+    id(GradlePlugins.anvil) version GradlePlugins.Versions.anvil
+}
+
+anvil {
+    generateDaggerFactories
 }
 
 dependencies {

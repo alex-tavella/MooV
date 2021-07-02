@@ -15,7 +15,7 @@
  */
 package br.com.bookmark.movie.data
 
-internal interface BookmarkDataSource {
+interface BookmarkDataSource {
     suspend fun bookmarkMovie(movieId: Int)
     suspend fun unBookmarkMovie(movieId: Int)
 }

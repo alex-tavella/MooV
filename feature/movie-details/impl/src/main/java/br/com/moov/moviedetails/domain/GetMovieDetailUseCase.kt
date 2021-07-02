@@ -15,6 +15,6 @@
  */
 package br.com.moov.moviedetails.domain
 
-internal interface GetMovieDetailUseCase {
+interface GetMovieDetailUseCase {
     suspend operator fun invoke(movieId: Int): MovieDetail
 }

@@ -15,7 +15,7 @@
  */
 package br.com.core.tmdb.image
 
-internal interface ImageConfigurationProvider {
+interface ImageConfigurationProvider {
     suspend fun getBasePosterUrl(): String
     suspend fun getBaseBackdropUrl(): String
 }

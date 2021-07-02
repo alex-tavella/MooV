@@ -19,7 +19,7 @@ import br.com.moov.core.ImageUrlResolver
 import br.com.moov.moviedetails.domain.MovieDetail
 import javax.inject.Inject
 
-internal class TmdbMovieMapper @Inject constructor(
+class TmdbMovieMapper @Inject constructor(
     private val imageUrlResolver: ImageUrlResolver
 ) {
     suspend fun map(tmdbMovie: TmdbMovieDetail): MovieDetail {

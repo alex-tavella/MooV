@@ -19,7 +19,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-internal data class TmdbMovieDetail(
+data class TmdbMovieDetail(
     @Json(name = "id") val id: Int,
     @Json(name = "poster_path") val posterPath: String? = null,
     @Json(name = "adult") val adult: Boolean = false,
@@ -37,7 +37,7 @@ internal data class TmdbMovieDetail(
 )
 
 @JsonClass(generateAdapter = true)
-internal data class Genre(
+data class Genre(
     @Json(name = "id") val id: Int? = null,
     @Json(name = "name") val name: String? = null
 )
