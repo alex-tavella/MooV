@@ -18,15 +18,18 @@ package br.com.moov.moviedetails.di
 import br.com.moov.bookmark.movie.BookmarkMovieUseCase
 import br.com.moov.bookmark.movie.UnBookmarkMovieUseCase
 import br.com.moov.core.ImageUrlResolver
+import br.com.moov.core.SingleIn
 import br.com.moov.moviedetails.navigation.MovieDetailsNavigator
 import br.com.moov.moviedetails.view.MovieDetailActivity
+import com.squareup.anvil.annotations.MergeComponent
 import dagger.Component
 import retrofit2.Retrofit
 
-@Component(
-    modules = [MovieDetailsInternalModule::class],
+@MergeComponent(
+    scope = MovieDetailScope::class,
     dependencies = [MovieDetailsDependencies::class]
 )
+@SingleIn(MovieDetailScope::class)
 internal interface MovieDetailComponent {
 
     fun inject(movieDetailActivity: MovieDetailActivity)
@@ -36,6 +39,8 @@ internal interface MovieDetailComponent {
         fun create(dependencies: MovieDetailsDependencies): MovieDetailComponent
     }
 }
+
+interface MovieDetailScope
 
 interface MovieDetailsDependencies {
     fun retrofit(): Retrofit

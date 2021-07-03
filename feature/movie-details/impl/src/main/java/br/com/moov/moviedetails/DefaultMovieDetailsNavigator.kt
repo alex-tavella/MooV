@@ -17,10 +17,13 @@ package br.com.moov.moviedetails
 
 import android.view.View
 import androidx.fragment.app.FragmentActivity
+import br.com.moov.core.AppScope
 import br.com.moov.moviedetails.navigation.MovieDetailsNavigator
 import br.com.moov.moviedetails.view.MovieDetailActivity
+import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
 
+@ContributesBinding(AppScope::class)
 class DefaultMovieDetailsNavigator @Inject constructor() : MovieDetailsNavigator {
 
     override fun openMovieDetailsScreen(

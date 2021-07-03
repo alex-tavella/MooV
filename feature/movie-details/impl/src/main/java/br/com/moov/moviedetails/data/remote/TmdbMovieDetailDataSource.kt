@@ -16,9 +16,12 @@
 package br.com.moov.moviedetails.data.remote
 
 import br.com.moov.moviedetails.data.MovieDetailDataSource
+import br.com.moov.moviedetails.di.MovieDetailScope
+import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
 
-internal class TmdbMovieDetailDataSource @Inject constructor(
+@ContributesBinding(MovieDetailScope::class)
+class TmdbMovieDetailDataSource @Inject constructor(
     private val movieDetailApi: TMDBDMovieDetailApi
 ) : MovieDetailDataSource {
     override suspend fun getMovieDetail(movieId: Int): TmdbMovieDetail {

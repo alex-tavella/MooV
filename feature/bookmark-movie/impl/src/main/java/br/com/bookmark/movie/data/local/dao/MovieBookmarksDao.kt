@@ -21,7 +21,7 @@ import androidx.room.Query
 import br.com.bookmark.movie.data.local.entity.MovieBookmark
 
 @Dao
-internal interface MovieBookmarksDao {
+interface MovieBookmarksDao {
 
     @Query("SELECT * FROM movie_bookmark")
     suspend fun getAll(): List<MovieBookmark>

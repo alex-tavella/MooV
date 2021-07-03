@@ -22,7 +22,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
 
-abstract class BaseActivity : AppCompatActivity(), CoroutineScope {
+open class BaseActivity : AppCompatActivity(), CoroutineScope {
     private lateinit var job: Job
 
     override val coroutineContext: CoroutineContext

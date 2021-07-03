@@ -19,6 +19,6 @@ import javax.inject.Inject
 
 private const val KEY = "12893b65fa1774765a53d7b9a1b07b70"
 
-internal class TmdbApiKeyStore @Inject constructor() {
+class TmdbApiKeyStore @Inject constructor() {
     fun getApiKey() = KEY
 }

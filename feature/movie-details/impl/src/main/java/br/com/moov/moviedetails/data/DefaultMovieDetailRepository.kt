@@ -16,11 +16,14 @@
 package br.com.moov.moviedetails.data
 
 import br.com.moov.moviedetails.data.remote.TmdbMovieMapper
+import br.com.moov.moviedetails.di.MovieDetailScope
 import br.com.moov.moviedetails.domain.MovieDetail
 import br.com.moov.moviedetails.domain.MovieDetailRepository
+import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
 
-internal class DefaultMovieDetailRepository @Inject constructor(
+@ContributesBinding(MovieDetailScope::class)
+class DefaultMovieDetailRepository @Inject constructor(
     private val movieDetailDataSource: MovieDetailDataSource,
     private val tmdbMovieMapper: TmdbMovieMapper
 ) : MovieDetailRepository {

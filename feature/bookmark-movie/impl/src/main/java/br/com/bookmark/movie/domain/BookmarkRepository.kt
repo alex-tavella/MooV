@@ -15,7 +15,7 @@
  */
 package br.com.bookmark.movie.domain
 
-internal interface BookmarkRepository {
+interface BookmarkRepository {
     suspend fun bookmarkMovie(movieId: Int)
     suspend fun unBookmarkMovie(movieId: Int)
 }

@@ -19,14 +19,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import br.com.core.android.DefaultViewModelProviderFactory
 import br.com.core.android.ViewModelKey
-import br.com.moov.moviedetails.data.DefaultMovieDetailRepository
-import br.com.moov.moviedetails.data.MovieDetailDataSource
 import br.com.moov.moviedetails.data.remote.TMDBDMovieDetailApi
-import br.com.moov.moviedetails.data.remote.TmdbMovieDetailDataSource
-import br.com.moov.moviedetails.domain.GetMovieDetail
-import br.com.moov.moviedetails.domain.GetMovieDetailUseCase
-import br.com.moov.moviedetails.domain.MovieDetailRepository
 import br.com.moov.moviedetails.viewmodel.MovieDetailViewModel
+import com.squareup.anvil.annotations.ContributesTo
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -36,39 +31,18 @@ import retrofit2.Retrofit
 @Module(
     includes = [
         MovieDetailsDataModule::class,
-        MovieDetailsDomainModule::class,
         MovieDetailsViewModelModule::class,
-        MovieDetailsViewModule::class
     ]
 )
-internal interface MovieDetailsInternalModule
+@ContributesTo(MovieDetailScope::class)
+interface MovieDetailsInternalModule
 
 @Module
-internal interface MovieDetailsDataModule {
-
-    @Binds
-    fun bindsMovieDetailDataSource(
-        tmdbMovieDetailDataSource: TmdbMovieDetailDataSource
-    ): MovieDetailDataSource
-
-    @Binds
-    fun bindsMovieDetailRepository(
-        movieDetailRepository: DefaultMovieDetailRepository
-    ): MovieDetailRepository
-
-    companion object {
-        @[Provides]
-        fun providesMovieDetailsApi(retrofit: Retrofit): TMDBDMovieDetailApi {
-            return retrofit.create(TMDBDMovieDetailApi::class.java)
-        }
+internal object MovieDetailsDataModule {
+    @Provides
+    fun providesMovieDetailsApi(retrofit: Retrofit): TMDBDMovieDetailApi {
+        return retrofit.create(TMDBDMovieDetailApi::class.java)
     }
-}
-
-@Module
-internal interface MovieDetailsDomainModule {
-
-    @Binds
-    fun bindsGetMovieDetailUseCase(getMovieDetail: GetMovieDetail): GetMovieDetailUseCase
 }
 
 @Module
@@ -81,6 +55,3 @@ internal interface MovieDetailsViewModelModule {
         viewModelProviderFactory: DefaultViewModelProviderFactory
     ): ViewModelProvider.Factory
 }
-
-@Module
-internal interface MovieDetailsViewModule

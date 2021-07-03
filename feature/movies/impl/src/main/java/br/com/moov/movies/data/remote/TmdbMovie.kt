@@ -19,7 +19,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-internal data class MovieDiscoverResponse(
+data class MovieDiscoverResponse(
     @Json(name = "page") val page: Int,
     @Json(name = "results") val results: List<TmdbMovie>,
     @Json(name = "total_results") val totalResults: Int,
@@ -27,7 +27,7 @@ internal data class MovieDiscoverResponse(
 )
 
 @JsonClass(generateAdapter = true)
-internal data class TmdbMovie(
+data class TmdbMovie(
     @Json(name = "id") val id: Int,
     @Json(name = "poster_path") val posterPath: String? = null,
     @Json(name = "original_title") val originalTitle: String,

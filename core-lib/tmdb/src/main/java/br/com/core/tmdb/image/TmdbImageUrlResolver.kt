@@ -15,10 +15,13 @@
  */
 package br.com.core.tmdb.image
 
+import br.com.moov.core.AppScope
 import br.com.moov.core.ImageUrlResolver
+import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
 
-internal class TmdbImageUrlResolver @Inject constructor(
+@ContributesBinding(AppScope::class)
+class TmdbImageUrlResolver @Inject constructor(
     private val imageConfigurationProvider: ImageConfigurationProvider
 ) : ImageUrlResolver {
 

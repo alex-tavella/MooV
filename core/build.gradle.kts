@@ -7,4 +7,5 @@ setProperty("sourceCompatibility", AndroidSdk.javaVersion)
 
 dependencies {
     implementation(Deps.kotlinStdlib)
+    implementation(Deps.inject)
 }

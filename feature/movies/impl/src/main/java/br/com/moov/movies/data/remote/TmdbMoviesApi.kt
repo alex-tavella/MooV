@@ -18,7 +18,7 @@ package br.com.moov.movies.data.remote
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-internal interface TmdbMoviesApi {
+interface TmdbMoviesApi {
 
     @GET("/3/discover/movie")
     suspend fun discoverMovies(

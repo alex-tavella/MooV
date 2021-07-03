@@ -2,6 +2,11 @@ plugins {
     id(BuildPlugins.androidLibrary)
     id(BuildPlugins.kotlinAndroid)
     id(BuildPlugins.kotlinKapt)
+    id(GradlePlugins.anvil) version GradlePlugins.Versions.anvil
+}
+
+anvil {
+    generateDaggerFactories.set(true)
 }
 
 dependencies {
@@ -15,5 +20,4 @@ dependencies {
     implementation(Deps.moshi)
     kapt(Deps.moshiCompiler)
     implementation(Deps.dagger)
-    kapt(Deps.daggerCompiler)
 }

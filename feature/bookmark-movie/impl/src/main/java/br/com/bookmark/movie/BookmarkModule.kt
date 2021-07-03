@@ -13,24 +13,28 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.moov.app
+package br.com.bookmark.movie
 
 import android.content.Context
+import br.com.bookmark.movie.data.local.BookmarksDatabase
+import br.com.bookmark.movie.data.local.dao.MovieBookmarksDao
 import br.com.moov.core.AppScope
-import br.com.moov.core.SingleIn
-import br.com.moov.home.HomeDependencies
-import br.com.moov.moviedetails.di.MovieDetailsDependencies
-import br.com.moov.movies.di.MoviesDependencies
-import com.squareup.anvil.annotations.MergeComponent
-import dagger.BindsInstance
-import dagger.Component
+import com.squareup.anvil.annotations.ContributesTo
+import dagger.Module
+import dagger.Provides
+import dagger.Reusable
 
-@SingleIn(AppScope::class)
-@MergeComponent(scope = AppScope::class)
-interface AppComponent : MoviesDependencies, MovieDetailsDependencies, HomeDependencies {
+@Module
+@ContributesTo(AppScope::class)
+object BookmarkModule {
 
-    @Component.Factory
-    interface Factory {
-        fun create(@BindsInstance context: Context): AppComponent
+    @[Provides Reusable]
+    fun providesDatabase(context: Context): BookmarksDatabase {
+        return BookmarksDatabase.create(context)
+    }
+
+    @[Provides Reusable]
+    fun providesMovieBookmarksDao(database: BookmarksDatabase): MovieBookmarksDao {
+        return database.movieBookmarksDao()
     }
 }

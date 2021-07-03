@@ -18,9 +18,12 @@ package br.com.bookmark.movie.data.local
 import br.com.bookmark.movie.data.BookmarkDataSource
 import br.com.bookmark.movie.data.local.dao.MovieBookmarksDao
 import br.com.bookmark.movie.data.local.entity.MovieBookmark
+import br.com.moov.core.AppScope
+import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
 
-internal class LocalBookmarkDataSource @Inject constructor(
+@ContributesBinding(AppScope::class)
+class LocalBookmarkDataSource @Inject constructor(
     private val movieBookmarksDao: MovieBookmarksDao
 ) : BookmarkDataSource {
 

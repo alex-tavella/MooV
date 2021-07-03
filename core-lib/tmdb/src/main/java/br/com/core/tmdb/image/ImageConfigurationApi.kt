@@ -19,16 +19,16 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import retrofit2.http.GET
 
-internal interface ImageConfigurationApi {
+interface ImageConfigurationApi {
     @GET("/3/configuration")
     suspend fun getConfiguration(): ConfigurationsResponse
 }
 
 @JsonClass(generateAdapter = true)
-internal data class ConfigurationsResponse(val images: ImageConfigurations)
+data class ConfigurationsResponse(val images: ImageConfigurations)
 
 @JsonClass(generateAdapter = true)
-internal data class ImageConfigurations(
+data class ImageConfigurations(
     @Json(name = "base_url") val baseUrl: String,
     @Json(name = "backdrop_sizes") val backdropSizes: List<String> = emptyList(),
     @Json(name = "poster_sizes") val posterSizes: List<String> = emptyList()

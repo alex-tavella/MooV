@@ -9,6 +9,7 @@ object GradlePlugins {
         const val spotless = "5.14.0"
         const val gradleDoctorVersion = "0.7.0"
         const val detekt = "1.17.1"
+        const val anvil = "2.3.3"
     }
 
     const val android = "com.android.tools.build:gradle:${Versions.gradleandroid}"
@@ -17,6 +18,7 @@ object GradlePlugins {
     const val spotless = "com.diffplug.spotless"
     const val gradleDoctor = "com.osacky.doctor"
     const val detekt = "io.gitlab.arturbosch.detekt"
+    const val anvil = "com.squareup.anvil"
 }
 
 object BuildPlugins {
@@ -118,6 +120,7 @@ object Deps {
     const val androidxRunner = "androidx.test:runner:${Versions.test_runner}"
     const val androidxEspressocore =
         "androidx.test.espresso:espresso-core:${Versions.androidx_espresso}"
+    const val inject = "javax.inject:javax.inject:1"
 }
 
 object Modules {

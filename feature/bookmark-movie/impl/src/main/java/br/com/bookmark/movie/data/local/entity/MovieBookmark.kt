@@ -19,6 +19,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "movie_bookmark")
-internal data class MovieBookmark(
+data class MovieBookmark(
     @PrimaryKey(autoGenerate = false) val id: Int
 )

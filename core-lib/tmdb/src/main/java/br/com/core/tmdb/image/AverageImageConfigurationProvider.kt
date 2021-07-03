@@ -15,9 +15,14 @@
  */
 package br.com.core.tmdb.image
 
+import br.com.moov.core.AppScope
+import br.com.moov.core.SingleIn
+import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
 
-internal class AverageImageConfigurationProvider @Inject constructor(
+@ContributesBinding(AppScope::class)
+@SingleIn(AppScope::class)
+class AverageImageConfigurationProvider @Inject constructor(
     private val imageConfigurationApi: ImageConfigurationApi
 ) : ImageConfigurationProvider {
 

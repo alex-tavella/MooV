@@ -16,11 +16,14 @@
 package br.com.moov.movies.data
 
 import br.com.moov.movies.data.remote.MoviesResponseMapper
+import br.com.moov.movies.di.MoviesScope
 import br.com.moov.movies.domain.Movie
 import br.com.moov.movies.domain.MoviesRepository
+import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
 
-internal class DefaultMoviesRepository @Inject constructor(
+@ContributesBinding(MoviesScope::class)
+class DefaultMoviesRepository @Inject constructor(
     private val movieDataSource: MovieDataSource,
     private val movieMapper: MoviesResponseMapper
 ) : MoviesRepository {
