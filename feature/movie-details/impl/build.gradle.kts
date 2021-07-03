@@ -25,4 +25,6 @@ dependencies {
     implementation(Deps.moshi)
     kapt(Deps.moshiCompiler)
     implementation(Deps.glide)
+
+    testImplementation(Deps.junit)
 }

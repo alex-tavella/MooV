@@ -16,5 +16,5 @@
 package br.com.moov.moviedetails.domain
 
 interface MovieDetailRepository {
-    suspend fun getMovieDetail(movieId: Int): MovieDetail
+    suspend fun getMovieDetail(movieId: Int): MovieDetail?
 }

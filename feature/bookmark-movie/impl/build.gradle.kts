@@ -33,9 +33,7 @@ dependencies {
     implementation(Deps.roomKtx)
     kapt(Deps.roomCompiler)
 
-    testImplementation(Deps.mockitoKotlin)
     testImplementation(Deps.junit)
-    testImplementation(Deps.assertj)
 
     androidTestImplementation(Deps.androidxRunner)
     androidTestImplementation(Deps.androidxEspressocore)

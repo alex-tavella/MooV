@@ -17,12 +17,21 @@ package br.com.moov.movies.data.remote
 
 import br.com.moov.movies.data.MovieDataSource
 import br.com.moov.movies.di.MoviesScope
+import br.com.moov.movies.domain.Movie
 import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
 
+private const val SORT_ORDER_POPULARITY = "popularity.desc"
+private const val THRESHOLD_VOTE_COUNT = 100
+
 @ContributesBinding(MoviesScope::class)
-class TMDBMovieDataSource @Inject constructor(private val tmdbdApi: TmdbMoviesApi) :
-    MovieDataSource {
-    override suspend fun getMovies(page: Int, sortBy: String, voteCount: Int): List<TmdbMovie> =
-        tmdbdApi.discoverMovies(page, sortBy, voteCount).results
+class TMDBMovieDataSource @Inject constructor(
+    private val tmdbdApi: TmdbMoviesApi,
+    private val mapper: MoviesResponseMapper
+) : MovieDataSource {
+    override suspend fun getMovies(page: Int): List<Movie> =
+        runCatching {
+            tmdbdApi.discoverMovies(page, SORT_ORDER_POPULARITY, THRESHOLD_VOTE_COUNT).results
+        }.getOrNull()
+            ?.map { mapper.map(it) } ?: emptyList()
 }

@@ -23,7 +23,7 @@ import javax.inject.Inject
 class GetMovieDetail @Inject constructor(
     private val movieDetailRepository: MovieDetailRepository
 ) : GetMovieDetailUseCase {
-    override suspend fun invoke(movieId: Int): MovieDetail {
+    override suspend fun invoke(movieId: Int): MovieDetail? {
         return movieDetailRepository.getMovieDetail(movieId)
     }
 }

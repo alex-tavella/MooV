@@ -19,7 +19,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import br.com.core.android.DefaultViewModelProviderFactory
 import br.com.core.android.ViewModelKey
-import br.com.moov.moviedetails.data.remote.TMDBDMovieDetailApi
+import br.com.moov.moviedetails.data.remote.TMDBMovieDetailApi
 import br.com.moov.moviedetails.viewmodel.MovieDetailViewModel
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Binds
@@ -40,8 +40,8 @@ interface MovieDetailsInternalModule
 @Module
 internal object MovieDetailsDataModule {
     @Provides
-    fun providesMovieDetailsApi(retrofit: Retrofit): TMDBDMovieDetailApi {
-        return retrofit.create(TMDBDMovieDetailApi::class.java)
+    fun providesMovieDetailsApi(retrofit: Retrofit): TMDBMovieDetailApi {
+        return retrofit.create(TMDBMovieDetailApi::class.java)
     }
 }
 

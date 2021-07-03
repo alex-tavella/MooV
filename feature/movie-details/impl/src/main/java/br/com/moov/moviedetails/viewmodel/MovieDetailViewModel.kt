@@ -43,13 +43,12 @@ internal class MovieDetailViewModel @Inject constructor(
 
     private suspend fun handleEnterScreen(uiEvent: MovieDetailUiEvent.EnterScreen) {
         emitUiModel(MovieDetailUiModel(loading = true))
-        val result = runCatching {
-            getMovieDetail(uiEvent.movieId)
-        }
+        val result = getMovieDetail(uiEvent.movieId)
         emitUiModel(
             MovieDetailUiModel(
-                loading = false, movie = result.getOrNull(),
-                error = result.exceptionOrNull()
+                loading = false,
+                movie = result,
+                error = null
             )
         )
     }

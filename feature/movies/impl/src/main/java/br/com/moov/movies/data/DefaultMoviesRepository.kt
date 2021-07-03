@@ -15,7 +15,6 @@
  */
 package br.com.moov.movies.data
 
-import br.com.moov.movies.data.remote.MoviesResponseMapper
 import br.com.moov.movies.di.MoviesScope
 import br.com.moov.movies.domain.Movie
 import br.com.moov.movies.domain.MoviesRepository
@@ -25,18 +24,9 @@ import javax.inject.Inject
 @ContributesBinding(MoviesScope::class)
 class DefaultMoviesRepository @Inject constructor(
     private val movieDataSource: MovieDataSource,
-    private val movieMapper: MoviesResponseMapper
 ) : MoviesRepository {
 
     override suspend fun getMovies(page: Int): List<Movie> {
-        return movieDataSource.getMovies(
-            page, SORT_ORDER_POPULARITY,
-            THRESHOLD_VOTE_COUNT
-        ).map { movieMapper.map(it) }
-    }
-
-    companion object {
-        const val SORT_ORDER_POPULARITY = "popularity.desc"
-        const val THRESHOLD_VOTE_COUNT = 100
+        return movieDataSource.getMovies(page)
     }
 }

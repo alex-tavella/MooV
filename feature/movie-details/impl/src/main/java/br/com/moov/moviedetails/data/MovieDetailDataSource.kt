@@ -15,8 +15,8 @@
  */
 package br.com.moov.moviedetails.data
 
-import br.com.moov.moviedetails.data.remote.TmdbMovieDetail
+import br.com.moov.moviedetails.domain.MovieDetail
 
 interface MovieDetailDataSource {
-    suspend fun getMovieDetail(movieId: Int): TmdbMovieDetail
+    suspend fun getMovieDetail(movieId: Int): MovieDetail?
 }

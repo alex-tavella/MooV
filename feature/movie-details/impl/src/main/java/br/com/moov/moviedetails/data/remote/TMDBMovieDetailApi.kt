@@ -18,7 +18,7 @@ package br.com.moov.moviedetails.data.remote
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface TMDBDMovieDetailApi {
+interface TMDBMovieDetailApi {
 
     @GET("/3/movie/{movieId}")
     suspend fun getMovie(@Path("movieId") movieId: Int): TmdbMovieDetail

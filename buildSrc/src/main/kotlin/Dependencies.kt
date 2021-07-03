@@ -64,12 +64,9 @@ object Deps {
 
         const val junit = "4.13.2"
         const val mockk = "1.9.3"
-        const val kotest = "3.4.2"
         const val androidx_espresso = "3.4.0"
         const val androidx_testing = "1.1.1"
-        const val assertj = "3.20.2"
         const val test_runner = "1.4.0"
-        const val mockito_kotlin = "2.2.0"
     }
 
     const val kotlinStdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlinVersion"
@@ -111,11 +108,7 @@ object Deps {
 
     const val junit = "junit:junit:${Versions.junit}"
     const val mockk = "io.mockk:mockk:${Versions.mockk}"
-    const val kotest = "io.kotlintest:kotlintest-runner-junit5:${Versions.kotest}"
     const val retrofitMock = "com.squareup.retrofit2:retrofit-mock:${Versions.retrofit}"
-    const val mockitoKotlin =
-        "com.nhaarman.mockitokotlin2:mockito-kotlin:${Versions.mockito_kotlin}"
-    const val assertj = "org.assertj:assertj-core:${Versions.assertj}"
     const val androidxRules = "androidx.test:rules:${Versions.androidx_testing}"
     const val androidxRunner = "androidx.test:runner:${Versions.test_runner}"
     const val androidxEspressocore =

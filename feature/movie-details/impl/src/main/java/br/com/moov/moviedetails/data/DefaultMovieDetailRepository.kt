@@ -25,10 +25,8 @@ import javax.inject.Inject
 @ContributesBinding(MovieDetailScope::class)
 class DefaultMovieDetailRepository @Inject constructor(
     private val movieDetailDataSource: MovieDetailDataSource,
-    private val tmdbMovieMapper: TmdbMovieMapper
 ) : MovieDetailRepository {
-    override suspend fun getMovieDetail(movieId: Int): MovieDetail {
+    override suspend fun getMovieDetail(movieId: Int): MovieDetail? {
         return movieDetailDataSource.getMovieDetail(movieId)
-            .let { tmdbMovieMapper.map(it) }
     }
 }
