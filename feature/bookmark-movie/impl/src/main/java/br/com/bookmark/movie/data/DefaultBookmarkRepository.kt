@@ -16,7 +16,11 @@
 package br.com.bookmark.movie.data
 
 import br.com.bookmark.movie.domain.BookmarkRepository
-import br.com.moov.core.AppScope
+import br.com.bookmark.movie.domain.error.BookmarkError
+import br.com.bookmark.movie.domain.error.UnbookmarkError
+import br.com.moov.core.di.AppScope
+import br.com.moov.core.result.Result
+import br.com.moov.core.result.mapError
 import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
 
@@ -24,11 +28,13 @@ import javax.inject.Inject
 class DefaultBookmarkRepository @Inject constructor(
     private val bookmarkDataSource: BookmarkDataSource
 ) : BookmarkRepository {
-    override suspend fun bookmarkMovie(movieId: Int) {
+    override suspend fun bookmarkMovie(movieId: Int): Result<Unit, BookmarkError> {
         return bookmarkDataSource.bookmarkMovie(movieId)
+            .mapError { BookmarkError }
     }
 
-    override suspend fun unBookmarkMovie(movieId: Int) {
+    override suspend fun unBookmarkMovie(movieId: Int): Result<Unit, UnbookmarkError> {
         return bookmarkDataSource.unBookmarkMovie(movieId)
+            .mapError { UnbookmarkError }
     }
 }

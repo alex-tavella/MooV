@@ -13,18 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.bookmark.movie.domain
+package br.com.moov.core.image
 
-import br.com.moov.bookmark.movie.UnBookmarkMovieUseCase
-import br.com.moov.core.di.AppScope
-import com.squareup.anvil.annotations.ContributesBinding
-import javax.inject.Inject
-
-@ContributesBinding(AppScope::class)
-class UnBookmarkMovie @Inject constructor(
-    private val bookmarkRepository: BookmarkRepository
-) : UnBookmarkMovieUseCase {
-    override suspend fun invoke(movieId: Int) {
-        bookmarkRepository.unBookmarkMovie(movieId)
-    }
+interface ImageUrlResolver {
+    suspend fun getPosterUrl(posterPath: String): String
+    suspend fun getBackdropUrl(backdropPath: String): String
 }

@@ -16,10 +16,13 @@
 package br.com.bookmark.movie.data.local
 
 import br.com.bookmark.movie.data.BookmarkDataSource
+import br.com.bookmark.movie.data.DatabaseError
 import br.com.bookmark.movie.data.local.dao.MovieBookmarksDao
 import br.com.bookmark.movie.data.local.entity.MovieBookmark
-import br.com.moov.core.AppScope
+import br.com.moov.core.di.AppScope
+import br.com.moov.core.result.Result
 import com.squareup.anvil.annotations.ContributesBinding
+import java.io.IOException
 import javax.inject.Inject
 
 @ContributesBinding(AppScope::class)
@@ -27,11 +30,21 @@ class LocalBookmarkDataSource @Inject constructor(
     private val movieBookmarksDao: MovieBookmarksDao
 ) : BookmarkDataSource {
 
-    override suspend fun bookmarkMovie(movieId: Int) {
-        movieBookmarksDao.insert(MovieBookmark(movieId))
+    override suspend fun bookmarkMovie(movieId: Int): Result<Unit, DatabaseError> {
+        return try {
+            movieBookmarksDao.insert(MovieBookmark(movieId))
+            Result.Ok(Unit)
+        } catch (exception: IOException) {
+            Result.Err(DatabaseError(exception.message ?: "Unknown error"))
+        }
     }
 
-    override suspend fun unBookmarkMovie(movieId: Int) {
-        movieBookmarksDao.delete(movieId)
+    override suspend fun unBookmarkMovie(movieId: Int): Result<Unit, DatabaseError> {
+        return try {
+            movieBookmarksDao.delete(movieId)
+            Result.Ok(Unit)
+        } catch (exception: IOException) {
+            Result.Err(DatabaseError(exception.message ?: "Unknown error"))
+        }
     }
 }

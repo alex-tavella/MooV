@@ -15,8 +15,8 @@
  */
 package br.com.core.tmdb.image
 
-import br.com.moov.core.AppScope
-import br.com.moov.core.ImageUrlResolver
+import br.com.moov.core.di.AppScope
+import br.com.moov.core.image.ImageUrlResolver
 import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
 

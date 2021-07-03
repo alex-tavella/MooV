@@ -18,7 +18,7 @@ package br.com.core.tmdb
 import android.content.Context
 import br.com.core.tmdb.api.TmdbApiKeyStore
 import br.com.core.tmdb.image.ImageConfigurationApi
-import br.com.moov.core.AppScope
+import br.com.moov.core.di.AppScope
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides

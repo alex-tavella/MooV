@@ -16,7 +16,7 @@
 package br.com.bookmark.movie.domain
 
 import br.com.moov.bookmark.movie.BookmarkMovieUseCase
-import br.com.moov.core.AppScope
+import br.com.moov.core.di.AppScope
 import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
 
@@ -25,6 +25,6 @@ class BookmarkMovie @Inject constructor(
     private val bookmarkRepository: BookmarkRepository
 ) : BookmarkMovieUseCase {
     override suspend fun invoke(movieId: Int) {
-        return bookmarkRepository.bookmarkMovie(movieId)
+        bookmarkRepository.bookmarkMovie(movieId)
     }
 }

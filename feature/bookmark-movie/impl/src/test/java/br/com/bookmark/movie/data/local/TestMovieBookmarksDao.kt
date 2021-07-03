@@ -17,6 +17,7 @@ package br.com.bookmark.movie.data.local
 
 import br.com.bookmark.movie.data.local.dao.MovieBookmarksDao
 import br.com.bookmark.movie.data.local.entity.MovieBookmark
+import java.io.IOException
 
 class TestMovieBookmarksDao(
     initialMovies: List<MovieBookmark> = emptyList()
@@ -37,11 +38,13 @@ class TestMovieBookmarksDao(
     }
 
     override suspend fun insert(movie: MovieBookmark): Long {
+        if (movies.contains(movie)) throw IOException("Movie already on database")
         movies.add(movie)
         return movies.size.toLong()
     }
 
     override suspend fun delete(movieId: Int): Int {
+        if (movies.none { it.id == movieId }) throw IOException("Movie not on database")
         movies.removeIf { it.id == movieId }
         return movies.size
     }

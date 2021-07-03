@@ -16,8 +16,8 @@
 package br.com.moov.app
 
 import android.content.Context
-import br.com.moov.core.AppScope
-import br.com.moov.core.SingleIn
+import br.com.moov.core.di.AppScope
+import br.com.moov.core.di.SingleIn
 import br.com.moov.home.HomeDependencies
 import br.com.moov.moviedetails.di.MovieDetailsDependencies
 import br.com.moov.movies.di.MoviesDependencies

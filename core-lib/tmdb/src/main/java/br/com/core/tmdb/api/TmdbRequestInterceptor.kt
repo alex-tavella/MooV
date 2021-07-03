@@ -15,7 +15,7 @@
  */
 package br.com.core.tmdb.api
 
-import br.com.moov.core.AppScope
+import br.com.moov.core.di.AppScope
 import com.squareup.anvil.annotations.ContributesBinding
 import okhttp3.Interceptor
 import okhttp3.Response

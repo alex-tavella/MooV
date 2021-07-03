@@ -18,7 +18,7 @@ package br.com.bookmark.movie
 import android.content.Context
 import br.com.bookmark.movie.data.local.BookmarksDatabase
 import br.com.bookmark.movie.data.local.dao.MovieBookmarksDao
-import br.com.moov.core.AppScope
+import br.com.moov.core.di.AppScope
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Module
 import dagger.Provides

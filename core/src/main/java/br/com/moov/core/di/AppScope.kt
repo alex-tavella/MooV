@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Alex Almeida Tavella
+ * Copyright 2021 Alex Almeida Tavella
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,18 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.bookmark.movie.domain
+package br.com.moov.core.di
 
-import br.com.moov.bookmark.movie.UnBookmarkMovieUseCase
-import br.com.moov.core.di.AppScope
-import com.squareup.anvil.annotations.ContributesBinding
-import javax.inject.Inject
-
-@ContributesBinding(AppScope::class)
-class UnBookmarkMovie @Inject constructor(
-    private val bookmarkRepository: BookmarkRepository
-) : UnBookmarkMovieUseCase {
-    override suspend fun invoke(movieId: Int) {
-        bookmarkRepository.unBookmarkMovie(movieId)
-    }
-}
+abstract class AppScope private constructor()

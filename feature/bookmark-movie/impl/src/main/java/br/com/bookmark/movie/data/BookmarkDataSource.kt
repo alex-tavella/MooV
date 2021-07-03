@@ -15,7 +15,9 @@
  */
 package br.com.bookmark.movie.data
 
+import br.com.moov.core.result.Result
+
 interface BookmarkDataSource {
-    suspend fun bookmarkMovie(movieId: Int)
-    suspend fun unBookmarkMovie(movieId: Int)
+    suspend fun bookmarkMovie(movieId: Int): Result<Unit, DatabaseError>
+    suspend fun unBookmarkMovie(movieId: Int): Result<Unit, DatabaseError>
 }

@@ -15,30 +15,49 @@
  */
 package br.com.bookmark.movie.data.local
 
+import br.com.bookmark.movie.data.DatabaseError
 import br.com.bookmark.movie.data.local.entity.MovieBookmark
+import br.com.moov.core.result.Result
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
 class LocalBookmarkDataSourceTest {
 
+    private val dbMovies = listOf(
+        MovieBookmark(456),
+    )
+    private val movieBookmarksDao = TestMovieBookmarksDao(dbMovies)
+    private val dataSource = LocalBookmarkDataSource(movieBookmarksDao)
+
     @Test
     fun bookmarkMovie_insertsOnDao() = runBlocking {
-        val movieBookmarksDao = TestMovieBookmarksDao()
-        val dataSource = LocalBookmarkDataSource(movieBookmarksDao)
-
         dataSource.bookmarkMovie(movieId = 123)
 
-        assertEquals(listOf(MovieBookmark(123)), movieBookmarksDao.getAll())
+        val expected = listOf(MovieBookmark(456), MovieBookmark(123))
+        assertEquals(expected, movieBookmarksDao.getAll())
+    }
+
+    @Test
+    fun bookmarkMovie_onError_returnsError() = runBlocking {
+        val actual = dataSource.bookmarkMovie(movieId = 456)
+
+        val expected = Result.Err(DatabaseError("Movie already on database"))
+        assertEquals(expected, actual)
     }
 
     @Test
     fun unbookmarkMovie_removesFromDao() = runBlocking {
-        val movieBookmarksDao = TestMovieBookmarksDao(listOf(MovieBookmark(123)))
-        val dataSource = LocalBookmarkDataSource(movieBookmarksDao)
-
-        dataSource.unBookmarkMovie(123)
+        dataSource.unBookmarkMovie(456)
 
         assertEquals(emptyList<MovieBookmark>(), movieBookmarksDao.getAll())
+    }
+
+    @Test
+    fun unbookmarkMovie_onError_returnsError() = runBlocking {
+        val actual = dataSource.unBookmarkMovie(123)
+
+        val expected = Result.Err(DatabaseError("Movie not on database"))
+        assertEquals(expected, actual)
     }
 }

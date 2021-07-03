@@ -15,7 +15,7 @@
  */
 package br.com.moov.movies.data.remote
 
-import br.com.moov.core.ImageUrlResolver
+import br.com.moov.core.image.ImageUrlResolver
 import br.com.moov.movies.domain.Movie
 import javax.inject.Inject
 

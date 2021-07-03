@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Alex Almeida Tavella
+ * Copyright 2021 Alex Almeida Tavella
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,9 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.moov.core
+package br.com.bookmark.movie.domain.error
 
-interface ImageUrlResolver {
-    suspend fun getPosterUrl(posterPath: String): String
-    suspend fun getBackdropUrl(backdropPath: String): String
-}
+object BookmarkError

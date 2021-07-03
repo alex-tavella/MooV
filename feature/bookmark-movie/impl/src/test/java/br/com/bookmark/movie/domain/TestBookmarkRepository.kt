@@ -15,17 +15,31 @@
  */
 package br.com.bookmark.movie.domain
 
+import br.com.bookmark.movie.domain.error.BookmarkError
+import br.com.bookmark.movie.domain.error.UnbookmarkError
+import br.com.moov.core.result.Result
+
 class TestBookmarkRepository(
     initialBookmarks: List<Int> = emptyList()
 ) : BookmarkRepository {
     private val bookmarks: MutableList<Int> = initialBookmarks.toMutableList()
 
-    override suspend fun bookmarkMovie(movieId: Int) {
-        bookmarks.add(movieId)
+    override suspend fun bookmarkMovie(movieId: Int): Result<Unit, BookmarkError> {
+        return if (!bookmarks.contains(movieId)) {
+            bookmarks.add(movieId)
+            Result.Ok(Unit)
+        } else {
+            Result.Err(BookmarkError)
+        }
     }
 
-    override suspend fun unBookmarkMovie(movieId: Int) {
-        bookmarks.removeIf { it == movieId }
+    override suspend fun unBookmarkMovie(movieId: Int): Result<Unit, UnbookmarkError> {
+        return if (bookmarks.contains(movieId)) {
+            bookmarks.removeIf { it == movieId }
+            Result.Ok(Unit)
+        } else {
+            Result.Err(UnbookmarkError)
+        }
     }
 
     fun getBookmarks(): List<Int> = bookmarks.toList()

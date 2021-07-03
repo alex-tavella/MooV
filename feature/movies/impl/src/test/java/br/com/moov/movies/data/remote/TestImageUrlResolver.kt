@@ -15,7 +15,7 @@
  */
 package br.com.moov.movies.data.remote
 
-import br.com.moov.core.ImageUrlResolver
+import br.com.moov.core.image.ImageUrlResolver
 
 class TestImageUrlResolver(
     private val baseUrl: String = "https://cdn.tmdb.com/images"

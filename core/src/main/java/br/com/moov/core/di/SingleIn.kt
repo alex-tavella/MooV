@@ -13,6 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.moov.core
+package br.com.moov.core.di
 
-abstract class AppScope private constructor()
+import javax.inject.Scope
+import kotlin.reflect.KClass
+
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
+annotation class SingleIn(val clazz: KClass<*>)

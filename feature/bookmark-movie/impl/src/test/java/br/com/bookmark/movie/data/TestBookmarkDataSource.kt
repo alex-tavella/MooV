@@ -15,18 +15,30 @@
  */
 package br.com.bookmark.movie.data
 
+import br.com.moov.core.result.Result
+
 class TestBookmarkDataSource(
     initialBookmarks: List<Int> = emptyList()
 ) : BookmarkDataSource {
 
     private val bookmarks: MutableList<Int> = initialBookmarks.toMutableList()
 
-    override suspend fun bookmarkMovie(movieId: Int) {
-        bookmarks.add(movieId)
+    override suspend fun bookmarkMovie(movieId: Int): Result<Unit, DatabaseError> {
+        return if (!bookmarks.contains(movieId)) {
+            bookmarks.add(movieId)
+            Result.Ok(Unit)
+        } else {
+            Result.Err(DatabaseError("Movie already bookmarked"))
+        }
     }
 
-    override suspend fun unBookmarkMovie(movieId: Int) {
-        bookmarks.removeIf { it == movieId }
+    override suspend fun unBookmarkMovie(movieId: Int): Result<Unit, DatabaseError> {
+        return if (bookmarks.contains(movieId)) {
+            bookmarks.removeIf { it == movieId }
+            Result.Ok(Unit)
+        } else {
+            Result.Err(DatabaseError("Movie not bookmarked"))
+        }
     }
 
     fun getBookmarks(): List<Int> = bookmarks.toList()

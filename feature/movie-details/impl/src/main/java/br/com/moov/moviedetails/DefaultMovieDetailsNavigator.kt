@@ -17,7 +17,7 @@ package br.com.moov.moviedetails
 
 import android.view.View
 import androidx.fragment.app.FragmentActivity
-import br.com.moov.core.AppScope
+import br.com.moov.core.di.AppScope
 import br.com.moov.moviedetails.navigation.MovieDetailsNavigator
 import br.com.moov.moviedetails.view.MovieDetailActivity
 import com.squareup.anvil.annotations.ContributesBinding

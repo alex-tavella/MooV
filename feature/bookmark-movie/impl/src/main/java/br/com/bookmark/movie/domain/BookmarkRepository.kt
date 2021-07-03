@@ -15,7 +15,11 @@
  */
 package br.com.bookmark.movie.domain
 
+import br.com.bookmark.movie.domain.error.BookmarkError
+import br.com.bookmark.movie.domain.error.UnbookmarkError
+import br.com.moov.core.result.Result
+
 interface BookmarkRepository {
-    suspend fun bookmarkMovie(movieId: Int)
-    suspend fun unBookmarkMovie(movieId: Int)
+    suspend fun bookmarkMovie(movieId: Int): Result<Unit, BookmarkError>
+    suspend fun unBookmarkMovie(movieId: Int): Result<Unit, UnbookmarkError>
 }

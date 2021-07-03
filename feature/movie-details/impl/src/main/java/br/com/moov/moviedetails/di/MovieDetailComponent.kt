@@ -17,8 +17,8 @@ package br.com.moov.moviedetails.di
 
 import br.com.moov.bookmark.movie.BookmarkMovieUseCase
 import br.com.moov.bookmark.movie.UnBookmarkMovieUseCase
-import br.com.moov.core.ImageUrlResolver
-import br.com.moov.core.SingleIn
+import br.com.moov.core.di.SingleIn
+import br.com.moov.core.image.ImageUrlResolver
 import br.com.moov.moviedetails.navigation.MovieDetailsNavigator
 import br.com.moov.moviedetails.view.MovieDetailActivity
 import com.squareup.anvil.annotations.MergeComponent

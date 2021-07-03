@@ -17,7 +17,7 @@ package br.com.moov.movies
 
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction.TRANSIT_FRAGMENT_OPEN
-import br.com.moov.core.AppScope
+import br.com.moov.core.di.AppScope
 import br.com.moov.movies.navigation.MoviesNavigator
 import br.com.moov.movies.view.MoviesFragment
 import com.squareup.anvil.annotations.ContributesBinding
