@@ -120,6 +120,7 @@ object Deps {
     const val androidxRunner = "androidx.test:runner:${Versions.test_runner}"
     const val androidxEspressocore =
         "androidx.test.espresso:espresso-core:${Versions.androidx_espresso}"
+    const val inject = "javax.inject:javax.inject:1"
 }
 
 object Modules {

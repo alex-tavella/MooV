@@ -18,6 +18,7 @@ package br.com.moov.movies.di
 import br.com.moov.bookmark.movie.BookmarkMovieUseCase
 import br.com.moov.bookmark.movie.UnBookmarkMovieUseCase
 import br.com.moov.core.ImageUrlResolver
+import br.com.moov.core.SingleIn
 import br.com.moov.moviedetails.navigation.MovieDetailsNavigator
 import br.com.moov.movies.view.MoviesFragment
 import com.squareup.anvil.annotations.MergeComponent
@@ -28,6 +29,7 @@ import retrofit2.Retrofit
     scope = MoviesScope::class,
     dependencies = [MoviesDependencies::class]
 )
+@SingleIn(MoviesScope::class)
 internal interface MoviesComponent {
 
     fun inject(moviesFragment: MoviesFragment)

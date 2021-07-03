@@ -17,16 +17,16 @@ package br.com.moov.app
 
 import android.content.Context
 import br.com.moov.core.AppScope
+import br.com.moov.core.SingleIn
 import br.com.moov.home.HomeDependencies
 import br.com.moov.moviedetails.di.MovieDetailsDependencies
 import br.com.moov.movies.di.MoviesDependencies
 import com.squareup.anvil.annotations.MergeComponent
 import dagger.BindsInstance
 import dagger.Component
-import javax.inject.Singleton
 
+@SingleIn(AppScope::class)
 @MergeComponent(scope = AppScope::class)
-@Singleton
 interface AppComponent : MoviesDependencies, MovieDetailsDependencies, HomeDependencies {
 
     @Component.Factory

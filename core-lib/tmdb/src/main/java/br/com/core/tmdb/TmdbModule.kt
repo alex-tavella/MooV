@@ -17,15 +17,9 @@ package br.com.core.tmdb
 
 import android.content.Context
 import br.com.core.tmdb.api.TmdbApiKeyStore
-import br.com.core.tmdb.api.TmdbRequestInterceptor
-import br.com.core.tmdb.image.AverageImageConfigurationProvider
 import br.com.core.tmdb.image.ImageConfigurationApi
-import br.com.core.tmdb.image.ImageConfigurationProvider
-import br.com.core.tmdb.image.TmdbImageUrlResolver
 import br.com.moov.core.AppScope
-import br.com.moov.core.ImageUrlResolver
 import com.squareup.anvil.annotations.ContributesTo
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -36,7 +30,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Qualifier
-import javax.inject.Singleton
 
 @Qualifier
 private annotation class BaseUrl
@@ -52,55 +45,52 @@ interface TmdbModule
 private const val CACHE_SIZE: Long = 10 * 1024 * 1024
 
 @Module
-internal interface TmdbInternalModule {
+internal object TmdbInternalModule {
+    @[Provides BaseUrl]
+    fun providesBaseUrl(): String = "https://api.themoviedb.org"
 
-    companion object {
-        @[Provides Singleton BaseUrl]
-        fun providesBaseUrl(): String = "https://api.themoviedb.org"
+    @Provides
+    fun providesApiKey(apiKeyStore: TmdbApiKeyStore): String = apiKeyStore.getApiKey()
 
-        @[Provides Singleton]
-        fun providesApiKey(apiKeyStore: TmdbApiKeyStore): String = apiKeyStore.getApiKey()
+    @Provides
+    fun providesCacheDuration(): Long = TimeUnit.DAYS.toSeconds(1)
 
-        @[Provides Singleton]
-        fun providesCacheDuration(): Long = TimeUnit.DAYS.toSeconds(1)
+    @Provides
+    fun providesCache(context: Context): Cache = Cache(context.cacheDir, CACHE_SIZE)
 
-        @[Provides Singleton]
-        fun providesCache(context: Context): Cache = Cache(context.cacheDir, CACHE_SIZE)
+    @Provides
+    fun providesOkHttpClient(
+        cache: Cache,
+        interceptor: Interceptor
+    ): OkHttpClient {
+        val builder = OkHttpClient().newBuilder()
 
-        @[Provides Singleton]
-        fun providesOkHttpClient(
-            cache: Cache,
-            interceptor: Interceptor
-        ): OkHttpClient {
-            val builder = OkHttpClient().newBuilder()
-
-            if (BuildConfig.DEBUG) {
-                builder.addInterceptor(
-                    HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
-                        .setLevel(HttpLoggingInterceptor.Level.BODY)
-                )
-            }
-            return builder
-                .cache(cache)
-                .addInterceptor(interceptor)
-                .build()
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(
+                HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT)
+                    .setLevel(HttpLoggingInterceptor.Level.BODY)
+            )
         }
+        return builder
+            .cache(cache)
+            .addInterceptor(interceptor)
+            .build()
+    }
 
-        @[Provides Singleton]
-        fun providesRetrofit(
-            okHttpClient: OkHttpClient,
-            @BaseUrl baseUrl: String
-        ): Retrofit {
-            return Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .client(okHttpClient)
-                .addConverterFactory(MoshiConverterFactory.create())
-                .build()
-        }
+    @Provides
+    fun providesRetrofit(
+        okHttpClient: OkHttpClient,
+        @BaseUrl baseUrl: String
+    ): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .client(okHttpClient)
+            .addConverterFactory(MoshiConverterFactory.create())
+            .build()
+    }
 
-        @[Provides Singleton]
-        fun providesImageConfigurationApi(retrofit: Retrofit): ImageConfigurationApi {
-            return retrofit.create(ImageConfigurationApi::class.java)
-        }
+    @Provides
+    fun providesImageConfigurationApi(retrofit: Retrofit): ImageConfigurationApi {
+        return retrofit.create(ImageConfigurationApi::class.java)
     }
 }

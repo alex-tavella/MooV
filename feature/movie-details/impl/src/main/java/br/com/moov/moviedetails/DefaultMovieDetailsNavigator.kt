@@ -22,7 +22,6 @@ import br.com.moov.moviedetails.navigation.MovieDetailsNavigator
 import br.com.moov.moviedetails.view.MovieDetailActivity
 import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @ContributesBinding(AppScope::class)
 class DefaultMovieDetailsNavigator @Inject constructor() : MovieDetailsNavigator {

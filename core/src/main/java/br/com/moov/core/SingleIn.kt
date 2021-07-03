@@ -15,4 +15,9 @@
  */
 package br.com.moov.core
 
-abstract class AppScope private constructor()
+import javax.inject.Scope
+import kotlin.reflect.KClass
+
+@Scope
+@Retention(AnnotationRetention.RUNTIME)
+annotation class SingleIn(val clazz: KClass<*>)

@@ -21,7 +21,6 @@ import br.com.bookmark.movie.data.local.entity.MovieBookmark
 import br.com.moov.core.AppScope
 import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @ContributesBinding(AppScope::class)
 class LocalBookmarkDataSource @Inject constructor(
