@@ -15,7 +15,6 @@
  */
 package br.com.moov.moviedetails.data
 
-import br.com.moov.moviedetails.data.remote.TmdbMovieMapper
 import br.com.moov.moviedetails.di.MovieDetailScope
 import br.com.moov.moviedetails.domain.MovieDetail
 import br.com.moov.moviedetails.domain.MovieDetailRepository
