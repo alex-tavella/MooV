@@ -17,6 +17,7 @@ package br.com.bookmark.movie.data.local
 
 import br.com.bookmark.movie.data.DatabaseError
 import br.com.bookmark.movie.data.local.entity.MovieBookmark
+import br.com.bookmark.movie.testdoubles.TestMovieBookmarksDao
 import br.com.moov.core.result.Result
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals

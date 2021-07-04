@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Alex Almeida Tavella
+ * Copyright 2021 Alex Almeida Tavella
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,20 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.bookmark.movie.domain
+package br.com.moov.moviedetails.testdoubles
 
-import br.com.moov.bookmark.movie.BookmarkError
-import br.com.moov.bookmark.movie.BookmarkMovieUseCase
-import br.com.moov.core.di.AppScope
 import br.com.moov.core.result.Result
-import com.squareup.anvil.annotations.ContributesBinding
-import javax.inject.Inject
+import br.com.moov.moviedetails.domain.GetMovieDetailError
+import br.com.moov.moviedetails.domain.MovieDetail
+import br.com.moov.moviedetails.domain.MovieDetailRepository
 
-@ContributesBinding(AppScope::class)
-class BookmarkMovie @Inject constructor(
-    private val bookmarkRepository: BookmarkRepository
-) : BookmarkMovieUseCase {
-    override suspend fun invoke(movieId: Int): Result<Unit, BookmarkError> {
-        return bookmarkRepository.bookmarkMovie(movieId)
+class TestMovieDetailRepository(
+    private val moviesDetails: List<MovieDetail> = emptyList()
+) : MovieDetailRepository {
+    override suspend fun getMovieDetail(movieId: Int): Result<MovieDetail, GetMovieDetailError> {
+        return moviesDetails.find { it.id == movieId }?.let {
+            Result.Ok(it)
+        } ?: Result.Err(GetMovieDetailError)
     }
 }

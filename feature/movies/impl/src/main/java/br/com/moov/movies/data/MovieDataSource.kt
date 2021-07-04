@@ -15,8 +15,9 @@
  */
 package br.com.moov.movies.data
 
+import br.com.moov.core.result.Result
 import br.com.moov.movies.domain.Movie
 
 interface MovieDataSource {
-    suspend fun getMovies(page: Int): List<Movie>
+    suspend fun getMovies(page: Int): Result<List<Movie>, MoviesRemoteDataSourceError>
 }

@@ -15,7 +15,9 @@
  */
 package br.com.moov.moviedetails.data
 
+import br.com.moov.core.result.Result
 import br.com.moov.moviedetails.di.MovieDetailScope
+import br.com.moov.moviedetails.domain.GetMovieDetailError
 import br.com.moov.moviedetails.domain.MovieDetail
 import br.com.moov.moviedetails.domain.MovieDetailRepository
 import com.squareup.anvil.annotations.ContributesBinding
@@ -25,7 +27,8 @@ import javax.inject.Inject
 class DefaultMovieDetailRepository @Inject constructor(
     private val movieDetailDataSource: MovieDetailDataSource,
 ) : MovieDetailRepository {
-    override suspend fun getMovieDetail(movieId: Int): MovieDetail? {
+    override suspend fun getMovieDetail(movieId: Int): Result<MovieDetail, GetMovieDetailError> {
         return movieDetailDataSource.getMovieDetail(movieId)
+            .mapError { GetMovieDetailError }
     }
 }

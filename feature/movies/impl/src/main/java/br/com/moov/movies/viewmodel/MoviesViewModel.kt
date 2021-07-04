@@ -25,10 +25,13 @@ import br.com.moov.movies.domain.GetMoviesUseCase
 import br.com.moov.movies.domain.Movie
 import javax.inject.Inject
 
+private const val ERROR_MESSAGE_DEFAULT = "An error has occurred, please try again later"
+private const val LIMIT_MOVIES = 50
+
 internal class MoviesViewModel @Inject constructor(
     private val getMovies: GetMoviesUseCase,
     private val bookmarkMovie: BookmarkMovieUseCase,
-    private val unbookmarkMovie: UnBookmarkMovieUseCase
+    private val unBookmarkMovie: UnBookmarkMovieUseCase
 ) : BaseViewModel<MoviesUiEvent, MoviesUiModel>() {
 
     private val movies = mutableListOf<Movie>()
@@ -54,41 +57,65 @@ internal class MoviesViewModel @Inject constructor(
         if (movies.isEmpty()) {
             currentPage = 1
             emitUiModel(MoviesUiModel(true))
-            val result = runCatching { appendMovies(getMovies(currentPage)) }
-            emitUiModel(MoviesUiModel(movies = movies, error = result.exceptionOrNull()))
+            getMovies(currentPage)
+                .onSuccess {
+                    appendMovies(it)
+                    emitUiModel(MoviesUiModel(movies = movies, error = null))
+                }
+                .onError {
+                    emitUiModel(MoviesUiModel(movies = movies, error = getMoviesError()))
+                }
         }
     }
 
     private suspend fun handleFinishedScrolling() {
         if (movies.size < LIMIT_MOVIES) {
             emitUiModel(MoviesUiModel(true, movies))
-            val result = runCatching {
-                appendMovies(getMovies(++currentPage))
-            }
-            emitUiModel(MoviesUiModel(movies = movies, error = result.exceptionOrNull()))
+            getMovies(++currentPage)
+                .onSuccess {
+                    appendMovies(it)
+                    emitUiModel(MoviesUiModel(movies = movies, error = null))
+                }.onError {
+                    emitUiModel(MoviesUiModel(movies = movies, error = getMoviesError()))
+                }
         }
     }
 
+    private fun getMoviesError(): Throwable {
+        return Exception(ERROR_MESSAGE_DEFAULT)
+    }
+
     private suspend fun handleMovieFavorited(uiEvent: MoviesUiEvent.MovieFavoritedUiEvent) {
-        runCatching {
-            if (uiEvent.favorited) {
-                bookmarkMovie(uiEvent.movie.id)
-                movies.indexOfFirst { it.id == uiEvent.movie.id }
-                    .takeUnless { it == -1 }
-                    ?.let {
-                        val newValue = uiEvent.movie.copy(isBookmarked = true)
-                        movies.set(it, newValue)
-                    }
-            } else {
-                unbookmarkMovie(uiEvent.movie.id)
-                movies.indexOfFirst { it.id == uiEvent.movie.id }
-                    .takeUnless { it == -1 }
-                    ?.let {
-                        movies.set(it, uiEvent.movie.copy(isBookmarked = false))
-                    }
-            }
+        if (uiEvent.favorited) {
+            bookmarkMovie(uiEvent.movie.id)
+                .onSuccess {
+                    onMovieBookmarked(uiEvent.movie)
+                    emitUiModel(MoviesUiModel(movies = movies))
+                }
+        } else {
+            unBookmarkMovie(uiEvent.movie.id)
+                .onSuccess {
+                    onMovieUnBookmarked(uiEvent.movie)
+                    emitUiModel(MoviesUiModel(movies = movies))
+                }
         }
-        emitUiModel(MoviesUiModel(movies = movies))
+    }
+
+    private fun onMovieBookmarked(movie: Movie) {
+        movies.indexOfFirst { it.id == movie.id }
+            .takeUnless { it == -1 }
+            ?.let {
+                val newValue = movie.copy(isBookmarked = true)
+                movies[it] = newValue
+            }
+    }
+
+    private fun onMovieUnBookmarked(movie: Movie) {
+        movies.indexOfFirst { it.id == movie.id }
+            .takeUnless { it == -1 }
+            ?.let {
+                movies[it] = movie.copy(isBookmarked = false)
+            }
     }
 
     private fun appendMovies(incomingMovies: List<Movie>) {
@@ -97,10 +124,6 @@ internal class MoviesViewModel @Inject constructor(
         } else {
             movies.addAll(incomingMovies.take(LIMIT_MOVIES - movies.size))
         }
-    }
-
-    companion object {
-        const val LIMIT_MOVIES = 50
     }
 }
 

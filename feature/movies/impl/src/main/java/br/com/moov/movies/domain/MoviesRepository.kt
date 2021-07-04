@@ -15,6 +15,8 @@
  */
 package br.com.moov.movies.domain
 
+import br.com.moov.core.result.Result
+
 interface MoviesRepository {
-    suspend fun getMovies(page: Int): List<Movie>
+    suspend fun getMovies(page: Int): Result<List<Movie>, GetMoviesError>
 }

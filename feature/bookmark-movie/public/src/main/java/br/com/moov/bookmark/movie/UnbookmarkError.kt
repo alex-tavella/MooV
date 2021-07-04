@@ -13,15 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.moov.movies.data
+package br.com.moov.bookmark.movie
 
-import br.com.moov.movies.domain.Movie
-
-class TestMovieDataSource(
-    private val movies: List<Movie> = emptyList(),
-    private val pageSize: Int = 3
-) : MovieDataSource {
-    override suspend fun getMovies(page: Int): List<Movie> {
-        return movies.take(pageSize)
-    }
-}
+object UnbookmarkError

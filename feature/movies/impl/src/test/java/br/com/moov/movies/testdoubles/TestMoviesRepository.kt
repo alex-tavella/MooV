@@ -13,6 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.bookmark.movie.domain.error
+package br.com.moov.movies.testdoubles
 
-object UnbookmarkError
+import br.com.moov.core.result.Result
+import br.com.moov.movies.domain.GetMoviesError
+import br.com.moov.movies.domain.Movie
+import br.com.moov.movies.domain.MoviesRepository
+
+class TestMoviesRepository(
+    private val movies: List<Movie> = emptyList(),
+    private val pageSize: Int = 3
+) : MoviesRepository {
+    override suspend fun getMovies(page: Int): Result<List<Movie>, GetMoviesError> {
+        return movies.take(pageSize).takeIf { it.isNotEmpty() }
+            ?.let { Result.Ok(it) } ?: Result.Err(GetMoviesError)
+    }
+}

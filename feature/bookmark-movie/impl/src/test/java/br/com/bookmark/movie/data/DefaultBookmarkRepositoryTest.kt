@@ -15,6 +15,10 @@
  */
 package br.com.bookmark.movie.data
 
+import br.com.bookmark.movie.testdoubles.TestBookmarkDataSource
+import br.com.moov.bookmark.movie.BookmarkError
+import br.com.moov.bookmark.movie.UnbookmarkError
+import br.com.moov.core.result.Result
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -32,9 +36,23 @@ class DefaultBookmarkRepositoryTest {
     }
 
     @Test
+    fun bookmarkMovie_fails_returnsError() = runBlocking {
+        val actual = bookmarkRepository.bookmarkMovie(123)
+
+        assertEquals(Result.Err(BookmarkError), actual)
+    }
+
+    @Test
     fun unBookmarkMovie_removesFromDataSource() = runBlocking {
         bookmarkRepository.unBookmarkMovie(123)
 
         assertEquals(listOf(789), bookmarkDataSource.getBookmarks())
+    }
+
+    @Test
+    fun unBookmarkMovie_fails_returnsError() = runBlocking {
+        val actual = bookmarkRepository.unBookmarkMovie(456)
+
+        assertEquals(Result.Err(UnbookmarkError), actual)
     }
 }

@@ -15,6 +15,8 @@
  */
 package br.com.moov.moviedetails.domain
 
+import br.com.moov.core.result.Result
+
 interface GetMovieDetailUseCase {
-    suspend operator fun invoke(movieId: Int): MovieDetail?
+    suspend operator fun invoke(movieId: Int): Result<MovieDetail, GetMovieDetailError>
 }

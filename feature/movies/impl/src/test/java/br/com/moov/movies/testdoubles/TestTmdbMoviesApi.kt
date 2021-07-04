@@ -13,9 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.moov.movies.data.remote
+package br.com.moov.movies.testdoubles
 
-import java.io.IOException
+import br.com.moov.movies.data.remote.MovieDiscoverResponse
+import br.com.moov.movies.data.remote.TmdbMovie
+import br.com.moov.movies.data.remote.TmdbMoviesApi
+import okhttp3.ResponseBody
+import retrofit2.HttpException
+import retrofit2.Response
 
 class TestTmdbMoviesApi(
     private val movies: List<TmdbMovie> = emptyList(),
@@ -41,7 +46,12 @@ class TestTmdbMoviesApi(
                 totalPages = filterResult.size / pageSize
             )
         } else {
-            throw IOException("404: Not found")
+            throw HttpException(
+                Response.error<MovieDiscoverResponse>(
+                    404,
+                    ResponseBody.create(null, "Not found")
+                )
+            )
         }
     }
 }

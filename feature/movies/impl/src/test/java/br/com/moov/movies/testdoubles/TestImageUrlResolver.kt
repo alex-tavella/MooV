@@ -13,6 +13,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.bookmark.movie.domain.error
+package br.com.moov.movies.testdoubles
 
-object BookmarkError
+import br.com.moov.core.image.ImageUrlResolver
+
+class TestImageUrlResolver(
+    private val baseUrl: String = "https://cdn.tmdb.com/images"
+) : ImageUrlResolver {
+    override suspend fun getPosterUrl(posterPath: String): String {
+        return "$baseUrl/poster/$posterPath"
+    }
+
+    override suspend fun getBackdropUrl(backdropPath: String): String {
+        return "$baseUrl/backdrop/$backdropPath"
+    }
+}

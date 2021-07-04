@@ -24,6 +24,8 @@ import br.com.moov.moviedetails.domain.GetMovieDetailUseCase
 import br.com.moov.moviedetails.domain.MovieDetail
 import javax.inject.Inject
 
+private const val ERROR_MESSAGE_DEFAULT = "An error has occurred, please try again later"
+
 internal class MovieDetailViewModel @Inject constructor(
     private val getMovieDetail: GetMovieDetailUseCase,
     private val bookmarkMovie: BookmarkMovieUseCase,
@@ -47,28 +49,40 @@ internal class MovieDetailViewModel @Inject constructor(
         emitUiModel(
             MovieDetailUiModel(
                 loading = false,
-                movie = result,
-                error = null
+                movie = result.getOrNull(),
+                error = getMovieDetailsErrorMessage()
             )
         )
     }
 
+    private fun getMovieDetailsErrorMessage(): Throwable {
+        return Exception(ERROR_MESSAGE_DEFAULT)
+    }
+
     private suspend fun handleMovieFavorited(uiEvent: MovieDetailUiEvent.MovieFavoritedUiEvent) {
-        val result = runCatching {
-            if (uiEvent.favorited) {
-                bookmarkMovie(uiEvent.movie.id)
-                uiEvent.movie.copy(isBookmarked = true)
-            } else {
-                unBookmarkMovie(uiEvent.movie.id)
-                uiEvent.movie.copy(isBookmarked = false)
-            }
+        val result = if (uiEvent.favorited) {
+            bookmarkMovie(uiEvent.movie.id)
+                .map { uiEvent.movie.copy(isBookmarked = true) }
+                .mapError { bookmarkFailErrorMessage() }
+        } else {
+            unBookmarkMovie(uiEvent.movie.id)
+                .map { uiEvent.movie.copy(isBookmarked = false) }
+                .mapError { unBookmarkFailErrorMessage() }
         }
         emitUiModel(
             MovieDetailUiModel(
                 movie = result.getOrNull(),
-                error = result.exceptionOrNull()
+                error = result.errorOrNull()
             )
         )
+    }
+
+    private fun bookmarkFailErrorMessage(): Throwable {
+        return Exception(ERROR_MESSAGE_DEFAULT)
+    }
+
+    private fun unBookmarkFailErrorMessage(): Throwable {
+        return Exception(ERROR_MESSAGE_DEFAULT)
     }
 }
 

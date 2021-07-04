@@ -15,13 +15,17 @@
  */
 package br.com.moov.movies.data.remote
 
+import br.com.moov.core.result.Result
 import br.com.moov.movies.domain.Movie
+import br.com.moov.movies.testdoubles.TestImageUrlResolver
+import br.com.moov.movies.testdoubles.TestTmdbMoviesApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class TMDBMovieDataSourceTest {
-    private val movies: List<TmdbMovie> = listOf(
+    private val movies: MutableList<TmdbMovie> = mutableListOf(
         TmdbMovie(123, voteCount = 1000, originalTitle = "Lord of the Rings", popularity = 10f),
         TmdbMovie(234, voteCount = 1000, originalTitle = "Reservoir Dogs", popularity = 9f),
         TmdbMovie(345, voteCount = 1000, originalTitle = "Batman", popularity = 4.3f),
@@ -38,11 +42,21 @@ class TMDBMovieDataSourceTest {
     fun getMovies_hasMovies_returnsMovies() = runBlocking {
         val actual = dataSource.getMovies(1)
 
-        val expected = listOf(
-            Movie(title = "The Joker", id = 456, thumbnailUrl = null),
-            Movie(title = "Lord of the Rings", id = 123, thumbnailUrl = null),
-            Movie(title = "Reservoir Dogs", id = 234, thumbnailUrl = null),
+        val expected = Result.Ok(
+            listOf(
+                Movie(title = "The Joker", id = 456, thumbnailUrl = null),
+                Movie(title = "Lord of the Rings", id = 123, thumbnailUrl = null),
+                Movie(title = "Reservoir Dogs", id = 234, thumbnailUrl = null),
+            )
         )
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun getMovies_endpointFails_returnsError() = runBlocking {
+        movies.clear()
+        val actual = dataSource.getMovies(1)
+
+        assertTrue(actual.isError())
     }
 }

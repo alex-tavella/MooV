@@ -13,32 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.bookmark.movie.domain
+package br.com.bookmark.movie.testdoubles
 
-import br.com.bookmark.movie.domain.error.BookmarkError
-import br.com.bookmark.movie.domain.error.UnbookmarkError
+import br.com.bookmark.movie.data.BookmarkDataSource
+import br.com.bookmark.movie.data.DatabaseError
 import br.com.moov.core.result.Result
 
-class TestBookmarkRepository(
+class TestBookmarkDataSource(
     initialBookmarks: List<Int> = emptyList()
-) : BookmarkRepository {
+) : BookmarkDataSource {
+
     private val bookmarks: MutableList<Int> = initialBookmarks.toMutableList()
 
-    override suspend fun bookmarkMovie(movieId: Int): Result<Unit, BookmarkError> {
+    override suspend fun bookmarkMovie(movieId: Int): Result<Unit, DatabaseError> {
         return if (!bookmarks.contains(movieId)) {
             bookmarks.add(movieId)
             Result.Ok(Unit)
         } else {
-            Result.Err(BookmarkError)
+            Result.Err(DatabaseError("Movie already bookmarked"))
         }
     }
 
-    override suspend fun unBookmarkMovie(movieId: Int): Result<Unit, UnbookmarkError> {
+    override suspend fun unBookmarkMovie(movieId: Int): Result<Unit, DatabaseError> {
         return if (bookmarks.contains(movieId)) {
             bookmarks.removeIf { it == movieId }
             Result.Ok(Unit)
         } else {
-            Result.Err(UnbookmarkError)
+            Result.Err(DatabaseError("Movie not bookmarked"))
         }
     }
 

@@ -13,14 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.moov.moviedetails.data
+package br.com.moov.moviedetails.testdoubles
 
+import br.com.moov.core.result.Result
+import br.com.moov.moviedetails.data.MovieDetailApiError
+import br.com.moov.moviedetails.data.MovieDetailDataSource
 import br.com.moov.moviedetails.domain.MovieDetail
 
 class TestMovieDetailDataSource(
     private val moviesDetails: List<MovieDetail> = emptyList()
 ) : MovieDetailDataSource {
-    override suspend fun getMovieDetail(movieId: Int): MovieDetail? {
-        return moviesDetails.find { it.id == movieId }
+    override suspend fun getMovieDetail(movieId: Int): Result<MovieDetail, MovieDetailApiError> {
+        return moviesDetails.find { it.id == movieId }?.let {
+            Result.Ok(it)
+        } ?: Result.Err(MovieDetailApiError.Other("Not Found"))
     }
 }

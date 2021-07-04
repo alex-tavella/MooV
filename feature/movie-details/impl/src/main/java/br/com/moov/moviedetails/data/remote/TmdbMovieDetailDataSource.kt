@@ -15,10 +15,14 @@
  */
 package br.com.moov.moviedetails.data.remote
 
+import br.com.moov.core.result.Result
+import br.com.moov.moviedetails.data.MovieDetailApiError
 import br.com.moov.moviedetails.data.MovieDetailDataSource
 import br.com.moov.moviedetails.di.MovieDetailScope
 import br.com.moov.moviedetails.domain.MovieDetail
 import com.squareup.anvil.annotations.ContributesBinding
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 @ContributesBinding(MovieDetailScope::class)
@@ -26,9 +30,13 @@ class TmdbMovieDetailDataSource @Inject constructor(
     private val movieDetailApi: TMDBMovieDetailApi,
     private val mapper: TmdbMovieMapper
 ) : MovieDetailDataSource {
-    override suspend fun getMovieDetail(movieId: Int): MovieDetail? {
-        return kotlin.runCatching {
-            mapper.map(movieDetailApi.getMovie(movieId))
-        }.getOrNull()
+    override suspend fun getMovieDetail(movieId: Int): Result<MovieDetail, MovieDetailApiError> {
+        return try {
+            Result.Ok(mapper.map(movieDetailApi.getMovie(movieId)))
+        } catch (exception: HttpException) {
+            Result.Err(MovieDetailApiError.Http(exception.code()))
+        } catch (exception: IOException) {
+            Result.Err(MovieDetailApiError.Other(exception.javaClass.simpleName))
+        }
     }
 }

@@ -16,11 +16,10 @@
 package br.com.bookmark.movie.data
 
 import br.com.bookmark.movie.domain.BookmarkRepository
-import br.com.bookmark.movie.domain.error.BookmarkError
-import br.com.bookmark.movie.domain.error.UnbookmarkError
+import br.com.moov.bookmark.movie.BookmarkError
+import br.com.moov.bookmark.movie.UnbookmarkError
 import br.com.moov.core.di.AppScope
 import br.com.moov.core.result.Result
-import br.com.moov.core.result.mapError
 import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
 

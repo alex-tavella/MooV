@@ -15,6 +15,7 @@
  */
 package br.com.bookmark.movie.domain
 
+import br.com.bookmark.movie.testdoubles.TestBookmarkRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -30,5 +31,12 @@ class BookmarkMovieTest {
         bookmark(789)
 
         assertEquals(listOf(123, 456, 789), repository.getBookmarks())
+    }
+
+    @Test
+    fun invoke_existing_doesNothing() = runBlocking {
+        bookmark(123)
+
+        assertEquals(listOf(123, 456), repository.getBookmarks())
     }
 }

@@ -18,32 +18,52 @@ package br.com.moov.core.result
 sealed class Result<out Data, out Error> {
     data class Ok<out Data>(val value: Data) : Result<Data, Nothing>()
     data class Err<out Error>(val error: Error) : Result<Nothing, Error>()
-}
 
-inline infix fun <Data, Error, Data2> Result<Data, Error>.map(
-    transform: (Data) -> Data2
-): Result<Data2, Error> {
-    return when (this) {
-        is Result.Ok -> Result.Ok(transform(value))
-        is Result.Err -> this
+    fun isSuccess(): Boolean {
+        return this is Ok
     }
-}
 
-inline infix fun <Data, Error, Error2> Result<Data, Error>.mapError(
-    transform: (Error) -> Error2
-): Result<Data, Error2> {
-    return when (this) {
-        is Result.Ok -> this
-        is Result.Err -> Result.Err(transform(error))
+    fun isError(): Boolean {
+        return !isSuccess()
     }
-}
 
-inline fun <Data, Error, Target> Result<Data, Error>.mapBoth(
-    success: (Data) -> Target,
-    failure: (Error) -> Target
-): Target {
-    return when (this) {
-        is Result.Ok -> success(value)
-        is Result.Err -> failure(error)
+    fun getOrNull(): Data? {
+        return when (this) {
+            is Err -> null
+            is Ok -> value
+        }
+    }
+
+    fun errorOrNull(): Error? {
+        return when (this) {
+            is Err -> error
+            is Ok -> null
+        }
+    }
+
+    fun <Data2> map(transform: (Data) -> Data2): Result<Data2, Error> {
+        return when (this) {
+            is Ok -> Ok(transform(value))
+            is Err -> this
+        }
+    }
+
+    fun <Error2> mapError(transform: (Error) -> Error2): Result<Data, Error2> {
+        return when (this) {
+            is Ok -> this
+            is Err -> Err(transform(error))
+        }
+    }
+
+    fun onSuccess(action: (Data) -> Unit): Result<Data, Error> {
+        if (this is Ok) action(value)
+
+        return this
+    }
+
+    fun onError(action: (Error) -> Unit): Result<Data, Error> {
+        if (this is Err) action(error)
+
+        return this
     }
 }

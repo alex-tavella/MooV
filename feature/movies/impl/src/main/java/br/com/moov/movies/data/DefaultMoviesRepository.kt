@@ -15,7 +15,9 @@
  */
 package br.com.moov.movies.data
 
+import br.com.moov.core.result.Result
 import br.com.moov.movies.di.MoviesScope
+import br.com.moov.movies.domain.GetMoviesError
 import br.com.moov.movies.domain.Movie
 import br.com.moov.movies.domain.MoviesRepository
 import com.squareup.anvil.annotations.ContributesBinding
@@ -26,7 +28,8 @@ class DefaultMoviesRepository @Inject constructor(
     private val movieDataSource: MovieDataSource,
 ) : MoviesRepository {
 
-    override suspend fun getMovies(page: Int): List<Movie> {
+    override suspend fun getMovies(page: Int): Result<List<Movie>, GetMoviesError> {
         return movieDataSource.getMovies(page)
+            .mapError { GetMoviesError }
     }
 }

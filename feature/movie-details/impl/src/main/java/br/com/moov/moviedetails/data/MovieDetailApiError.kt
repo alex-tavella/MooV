@@ -13,18 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.moov.moviedetails.data.remote
+package br.com.moov.moviedetails.data
 
-import br.com.moov.core.image.ImageUrlResolver
-
-class TestImageUrlResolver(
-    private val baseUrl: String = "https://cdn.tmdb.com/images"
-) : ImageUrlResolver {
-    override suspend fun getPosterUrl(posterPath: String): String {
-        return "$baseUrl/poster/$posterPath"
-    }
-
-    override suspend fun getBackdropUrl(backdropPath: String): String {
-        return "$baseUrl/backdrop/$backdropPath"
-    }
+sealed class MovieDetailApiError {
+    data class Http(val code: Int) : MovieDetailApiError()
+    data class Other(val errorDomain: String) : MovieDetailApiError()
 }

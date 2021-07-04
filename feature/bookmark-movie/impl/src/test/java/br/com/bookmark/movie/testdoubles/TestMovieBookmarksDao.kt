@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.bookmark.movie.data.local
+package br.com.bookmark.movie.testdoubles
 
 import br.com.bookmark.movie.data.local.dao.MovieBookmarksDao
 import br.com.bookmark.movie.data.local.entity.MovieBookmark

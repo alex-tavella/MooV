@@ -15,9 +15,10 @@
  */
 package br.com.moov.moviedetails.domain
 
+import br.com.moov.core.result.Result
+import br.com.moov.moviedetails.testdoubles.TestMovieDetailRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
 import org.junit.Test
 
 class GetMovieDetailTest {
@@ -33,13 +34,13 @@ class GetMovieDetailTest {
     fun getMovieDetail_exists_returnsMovieDetail() = runBlocking {
         val actual = getMovieDetail(123)
 
-        assertEquals(MovieDetail(123, "Lord of the Rings"), actual)
+        assertEquals(Result.Ok(MovieDetail(123, "Lord of the Rings")), actual)
     }
 
     @Test
     fun getMovieDetail_notFound_returnsNull() = runBlocking {
         val actual = getMovieDetail(456)
 
-        assertNull(actual)
+        assertEquals(Result.Err(GetMovieDetailError), actual)
     }
 }

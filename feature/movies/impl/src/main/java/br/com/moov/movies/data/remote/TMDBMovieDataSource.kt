@@ -15,10 +15,14 @@
  */
 package br.com.moov.movies.data.remote
 
+import br.com.moov.core.result.Result
 import br.com.moov.movies.data.MovieDataSource
+import br.com.moov.movies.data.MoviesRemoteDataSourceError
 import br.com.moov.movies.di.MoviesScope
 import br.com.moov.movies.domain.Movie
 import com.squareup.anvil.annotations.ContributesBinding
+import retrofit2.HttpException
+import java.io.IOException
 import javax.inject.Inject
 
 private const val SORT_ORDER_POPULARITY = "popularity.desc"
@@ -29,9 +33,15 @@ class TMDBMovieDataSource @Inject constructor(
     private val tmdbdApi: TmdbMoviesApi,
     private val mapper: MoviesResponseMapper
 ) : MovieDataSource {
-    override suspend fun getMovies(page: Int): List<Movie> =
-        runCatching {
-            tmdbdApi.discoverMovies(page, SORT_ORDER_POPULARITY, THRESHOLD_VOTE_COUNT).results
-        }.getOrNull()
-            ?.map { mapper.map(it) } ?: emptyList()
+    override suspend fun getMovies(page: Int): Result<List<Movie>, MoviesRemoteDataSourceError> =
+        try {
+            Result.Ok(
+                tmdbdApi.discoverMovies(page, SORT_ORDER_POPULARITY, THRESHOLD_VOTE_COUNT)
+                    .results.map { mapper.map(it) }
+            )
+        } catch (exception: HttpException) {
+            Result.Err(MoviesRemoteDataSourceError.Http(exception.code()))
+        } catch (exception: IOException) {
+            Result.Err(MoviesRemoteDataSourceError.Other(exception.javaClass.simpleName))
+        }
 }

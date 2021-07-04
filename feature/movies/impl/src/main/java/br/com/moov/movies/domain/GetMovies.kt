@@ -15,6 +15,7 @@
  */
 package br.com.moov.movies.domain
 
+import br.com.moov.core.result.Result
 import br.com.moov.movies.di.MoviesScope
 import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
@@ -23,7 +24,7 @@ import javax.inject.Inject
 class GetMovies @Inject constructor(
     private val moviesRepository: MoviesRepository
 ) : GetMoviesUseCase {
-    override suspend fun invoke(page: Int): List<Movie> {
+    override suspend fun invoke(page: Int): Result<List<Movie>, GetMoviesError> {
         return moviesRepository.getMovies(page)
     }
 }

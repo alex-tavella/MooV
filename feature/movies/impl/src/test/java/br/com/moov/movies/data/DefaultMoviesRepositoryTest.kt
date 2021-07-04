@@ -15,21 +15,37 @@
  */
 package br.com.moov.movies.data
 
+import br.com.moov.core.result.Result
 import br.com.moov.movies.domain.Movie
+import br.com.moov.movies.testdoubles.TestMovieDataSource
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class DefaultMoviesRepositoryTest {
 
-    private val movieDataSource = TestMovieDataSource()
+    private val movies = mutableListOf(
+        Movie(title = "The Joker", id = 123, thumbnailUrl = null),
+        Movie(title = "Lord of the Rings", id = 456, thumbnailUrl = null),
+        Movie(title = "Reservoir Dogs", id = 789, thumbnailUrl = null),
+    )
+    private val movieDataSource = TestMovieDataSource(movies)
     private val repository = DefaultMoviesRepository(movieDataSource)
 
     @Test
-    fun getMovies_returnsMoviesFromDataSource() = runBlocking {
+    fun getMovies_succeeds_returnsMoviesFromDataSource() = runBlocking {
         val actual = repository.getMovies(1)
 
-        val expected = emptyList<Movie>()
+        val expected = Result.Ok(movies)
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun getMovies_fails_returnsError() = runBlocking {
+        movies.clear()
+        val actual = repository.getMovies(1)
+
+        assertTrue(actual.isError())
     }
 }

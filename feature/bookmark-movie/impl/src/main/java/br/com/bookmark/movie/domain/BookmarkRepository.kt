@@ -15,8 +15,8 @@
  */
 package br.com.bookmark.movie.domain
 
-import br.com.bookmark.movie.domain.error.BookmarkError
-import br.com.bookmark.movie.domain.error.UnbookmarkError
+import br.com.moov.bookmark.movie.BookmarkError
+import br.com.moov.bookmark.movie.UnbookmarkError
 import br.com.moov.core.result.Result
 
 interface BookmarkRepository {

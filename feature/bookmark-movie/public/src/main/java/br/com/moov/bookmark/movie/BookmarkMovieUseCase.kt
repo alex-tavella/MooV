@@ -15,6 +15,8 @@
  */
 package br.com.moov.bookmark.movie
 
+import br.com.moov.core.result.Result
+
 interface BookmarkMovieUseCase {
-    suspend operator fun invoke(movieId: Int)
+    suspend operator fun invoke(movieId: Int): Result<Unit, BookmarkError>
 }

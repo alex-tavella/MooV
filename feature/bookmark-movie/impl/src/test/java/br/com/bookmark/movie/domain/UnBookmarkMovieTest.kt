@@ -15,6 +15,7 @@
  */
 package br.com.bookmark.movie.domain
 
+import br.com.bookmark.movie.testdoubles.TestBookmarkRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
 import org.junit.Test
@@ -29,5 +30,12 @@ class UnBookmarkMovieTest {
         unbookmark(456)
 
         assertEquals(listOf(123), repository.getBookmarks())
+    }
+
+    @Test
+    fun invoke_absent_doesNothing() = runBlocking {
+        unbookmark(789)
+
+        assertEquals(listOf(123, 456), repository.getBookmarks())
     }
 }

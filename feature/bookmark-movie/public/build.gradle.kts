@@ -5,4 +5,5 @@ plugins {
 
 dependencies {
     implementation(Deps.kotlinStdlib)
+    implementation(project(Modules.core))
 }

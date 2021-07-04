@@ -13,18 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.moov.movies.data.remote
+package br.com.moov.movies.testdoubles
 
-import br.com.moov.core.image.ImageUrlResolver
+import br.com.moov.core.result.Result
+import br.com.moov.movies.data.MovieDataSource
+import br.com.moov.movies.data.MoviesRemoteDataSourceError
+import br.com.moov.movies.domain.Movie
 
-class TestImageUrlResolver(
-    private val baseUrl: String = "https://cdn.tmdb.com/images"
-) : ImageUrlResolver {
-    override suspend fun getPosterUrl(posterPath: String): String {
-        return "$baseUrl/poster/$posterPath"
-    }
-
-    override suspend fun getBackdropUrl(backdropPath: String): String {
-        return "$baseUrl/backdrop/$backdropPath"
+class TestMovieDataSource(
+    private val movies: List<Movie> = emptyList(),
+    private val pageSize: Int = 3
+) : MovieDataSource {
+    override suspend fun getMovies(page: Int): Result<List<Movie>, MoviesRemoteDataSourceError> {
+        return movies.take(pageSize).takeIf { it.isNotEmpty() }
+            ?.let { Result.Ok(it) } ?: Result.Err(MoviesRemoteDataSourceError.Http(404))
     }
 }

@@ -15,9 +15,13 @@
  */
 package br.com.moov.moviedetails.data.remote
 
+import br.com.moov.core.result.Result
+import br.com.moov.moviedetails.domain.MovieDetail
+import br.com.moov.moviedetails.testdoubles.TestImageUrlResolver
+import br.com.moov.moviedetails.testdoubles.TestTMDBMovieDetailApi
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertNull
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class TmdbMovieDetailDataSourceTest {
@@ -38,13 +42,13 @@ class TmdbMovieDetailDataSourceTest {
     fun getMovieDetail_apiResponds_returnsFromApi() = runBlocking {
         val actual = dataSource.getMovieDetail(123)
 
-        assertEquals(123, actual?.id)
+        assertEquals(Result.Ok(MovieDetail(123, null)), actual)
     }
 
     @Test
     fun getMovieDetail_apiFails_returnsFromApi() = runBlocking {
         val actual = dataSource.getMovieDetail(789)
 
-        assertNull(actual)
+        assertTrue(actual.isError())
     }
 }

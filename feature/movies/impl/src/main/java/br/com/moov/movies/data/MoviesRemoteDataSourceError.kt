@@ -13,15 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package br.com.moov.moviedetails.data.remote
+package br.com.moov.movies.data
 
-import java.io.IOException
-
-class TestTMDBMovieDetailApi(
-    private val movies: List<TmdbMovieDetail> = emptyList()
-) : TMDBMovieDetailApi {
-
-    override suspend fun getMovie(movieId: Int): TmdbMovieDetail {
-        return movies.find { it.id == movieId } ?: throw IOException("404: Not found")
-    }
+sealed class MoviesRemoteDataSourceError {
+    data class Http(val code: Int) : MoviesRemoteDataSourceError()
+    data class Other(val errorDomain: String) : MoviesRemoteDataSourceError()
 }

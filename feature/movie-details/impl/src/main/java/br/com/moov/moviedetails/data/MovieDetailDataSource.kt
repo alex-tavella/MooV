@@ -15,8 +15,9 @@
  */
 package br.com.moov.moviedetails.data
 
+import br.com.moov.core.result.Result
 import br.com.moov.moviedetails.domain.MovieDetail
 
 interface MovieDetailDataSource {
-    suspend fun getMovieDetail(movieId: Int): MovieDetail?
+    suspend fun getMovieDetail(movieId: Int): Result<MovieDetail, MovieDetailApiError>
 }

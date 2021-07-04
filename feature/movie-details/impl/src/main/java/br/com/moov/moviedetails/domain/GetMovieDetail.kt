@@ -15,6 +15,7 @@
  */
 package br.com.moov.moviedetails.domain
 
+import br.com.moov.core.result.Result
 import br.com.moov.moviedetails.di.MovieDetailScope
 import com.squareup.anvil.annotations.ContributesBinding
 import javax.inject.Inject
@@ -23,7 +24,7 @@ import javax.inject.Inject
 class GetMovieDetail @Inject constructor(
     private val movieDetailRepository: MovieDetailRepository
 ) : GetMovieDetailUseCase {
-    override suspend fun invoke(movieId: Int): MovieDetail? {
+    override suspend fun invoke(movieId: Int): Result<MovieDetail, GetMovieDetailError> {
         return movieDetailRepository.getMovieDetail(movieId)
     }
 }

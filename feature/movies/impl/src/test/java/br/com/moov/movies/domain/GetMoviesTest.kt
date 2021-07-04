@@ -15,19 +15,35 @@
  */
 package br.com.moov.movies.domain
 
+import br.com.moov.core.result.Result
+import br.com.moov.movies.testdoubles.TestMoviesRepository
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.assertEquals
+import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class GetMoviesTest {
 
-    private val getMovies = GetMovies(TestMoviesRepository())
+    private val movies = mutableListOf(
+        Movie(title = "The Joker", id = 123, thumbnailUrl = null),
+        Movie(title = "Lord of the Rings", id = 456, thumbnailUrl = null),
+        Movie(title = "Reservoir Dogs", id = 789, thumbnailUrl = null),
+    )
+    private val getMovies = GetMovies(TestMoviesRepository(movies))
 
     @Test
-    fun invoke_returnsMoviesFromRepository() = runBlocking {
+    fun invoke_succeeds_returnsMoviesFromRepository() = runBlocking {
         val actual = getMovies(1)
 
-        val expected = listOf<Movie>()
+        val expected = Result.Ok(movies)
         assertEquals(expected, actual)
+    }
+
+    @Test
+    fun invoke_fails_returnsError() = runBlocking {
+        movies.clear()
+        val actual = getMovies(1)
+
+        assertTrue(actual.isError())
     }
 }
