@@ -15,18 +15,24 @@
  */
 package br.com.moov.moviedetails.viewmodel
 
+import androidx.lifecycle.ViewModel
 import br.com.core.android.BaseViewModel
 import br.com.core.android.UiEvent
 import br.com.core.android.UiModel
+import br.com.core.android.ViewModelKey
 import br.com.moov.bookmark.movie.BookmarkMovieUseCase
 import br.com.moov.bookmark.movie.UnBookmarkMovieUseCase
+import br.com.moov.moviedetails.di.MovieDetailScope
 import br.com.moov.moviedetails.domain.GetMovieDetailUseCase
 import br.com.moov.moviedetails.domain.MovieDetail
+import com.squareup.anvil.annotations.ContributesMultibinding
 import javax.inject.Inject
 
 private const val ERROR_MESSAGE_DEFAULT = "An error has occurred, please try again later"
 
-internal class MovieDetailViewModel @Inject constructor(
+@ContributesMultibinding(MovieDetailScope::class, ViewModel::class)
+@ViewModelKey(MovieDetailViewModel::class)
+class MovieDetailViewModel @Inject constructor(
     private val getMovieDetail: GetMovieDetailUseCase,
     private val bookmarkMovie: BookmarkMovieUseCase,
     private val unBookmarkMovie: UnBookmarkMovieUseCase
@@ -86,13 +92,13 @@ internal class MovieDetailViewModel @Inject constructor(
     }
 }
 
-internal class MovieDetailUiModel(
+class MovieDetailUiModel(
     val loading: Boolean = false,
     val movie: MovieDetail? = null,
     error: Throwable? = null
 ) : UiModel(error)
 
-internal sealed class MovieDetailUiEvent : UiEvent() {
+sealed class MovieDetailUiEvent : UiEvent() {
     class EnterScreen(val movieId: Int) : MovieDetailUiEvent()
     data class MovieFavoritedUiEvent(
         val movie: MovieDetail,

@@ -15,20 +15,26 @@
  */
 package br.com.moov.movies.viewmodel
 
+import androidx.lifecycle.ViewModel
 import br.com.core.android.BaseViewModel
 import br.com.core.android.UiEvent
 import br.com.core.android.UiModel
+import br.com.core.android.ViewModelKey
 import br.com.core.android.logd
 import br.com.moov.bookmark.movie.BookmarkMovieUseCase
 import br.com.moov.bookmark.movie.UnBookmarkMovieUseCase
+import br.com.moov.movies.di.MoviesScope
 import br.com.moov.movies.domain.GetMoviesUseCase
 import br.com.moov.movies.domain.Movie
+import com.squareup.anvil.annotations.ContributesMultibinding
 import javax.inject.Inject
 
 private const val ERROR_MESSAGE_DEFAULT = "An error has occurred, please try again later"
 private const val LIMIT_MOVIES = 50
 
-internal class MoviesViewModel @Inject constructor(
+@ContributesMultibinding(MoviesScope::class, ViewModel::class)
+@ViewModelKey(MoviesViewModel::class)
+class MoviesViewModel @Inject constructor(
     private val getMovies: GetMoviesUseCase,
     private val bookmarkMovie: BookmarkMovieUseCase,
     private val unBookmarkMovie: UnBookmarkMovieUseCase
@@ -127,13 +133,13 @@ internal class MoviesViewModel @Inject constructor(
     }
 }
 
-internal sealed class MoviesUiEvent : UiEvent() {
+sealed class MoviesUiEvent : UiEvent() {
     object EnterScreenUiEvent : MoviesUiEvent()
     object FinishedScrollingUiEvent : MoviesUiEvent()
     data class MovieFavoritedUiEvent(val movie: Movie, val favorited: Boolean) : MoviesUiEvent()
 }
 
-internal class MoviesUiModel(
+class MoviesUiModel(
     val loading: Boolean = false,
     val movies: List<Movie> = emptyList(),
     error: Throwable? = null

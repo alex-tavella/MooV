@@ -15,17 +15,13 @@
  */
 package br.com.moov.moviedetails.di
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import br.com.core.android.DefaultViewModelProviderFactory
-import br.com.core.android.ViewModelKey
 import br.com.moov.moviedetails.data.remote.TMDBMovieDetailApi
-import br.com.moov.moviedetails.viewmodel.MovieDetailViewModel
 import com.squareup.anvil.annotations.ContributesTo
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
-import dagger.multibindings.IntoMap
 import retrofit2.Retrofit
 
 @Module(
@@ -47,10 +43,7 @@ internal object MovieDetailsDataModule {
 
 @Module
 internal interface MovieDetailsViewModelModule {
-    @[Binds IntoMap ViewModelKey(MovieDetailViewModel::class)]
-    fun bindsMoviesViewModel(movieDetailViewModel: MovieDetailViewModel): ViewModel
-
-    @[Binds]
+    @Binds
     fun bindsDefaultViewModelProviderFactory(
         viewModelProviderFactory: DefaultViewModelProviderFactory
     ): ViewModelProvider.Factory
