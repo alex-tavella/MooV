@@ -16,27 +16,18 @@
 package br.com.core.android
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.channels.SendChannel
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
-abstract class BaseViewModel<in I : UiEvent, O : UiModel> : ViewModel(), CoroutineScope {
-
-    private val job: Job = Job()
-
-    override var coroutineContext: CoroutineContext = job + Dispatchers.IO
-        set(value) {
-            field = job + value
-        }
+abstract class BaseViewModel<in I : UiEvent, O : UiModel> : ViewModel() {
 
     private val uiEventChannel: SendChannel<I> = Channel<I>(capacity = Channel.UNLIMITED)
         .also { channel ->
-            launch(coroutineContext) {
+            viewModelScope.launch {
                 for (action in channel) {
                     if (isActive) {
                         processUiEvent(action)
@@ -48,7 +39,7 @@ abstract class BaseViewModel<in I : UiEvent, O : UiModel> : ViewModel(), Corouti
     private val uiModelChannel: Channel<O> = Channel(Channel.CONFLATED)
 
     fun observe(coroutineScope: CoroutineScope, block: (O) -> Unit) {
-        launch(coroutineScope.coroutineContext) {
+        viewModelScope.launch(coroutineScope.coroutineContext) {
             for (result in uiModelChannel) {
                 if (isActive) {
                     block(result)
@@ -65,10 +56,5 @@ abstract class BaseViewModel<in I : UiEvent, O : UiModel> : ViewModel(), Corouti
 
     protected fun emitUiModel(uiModel: O) {
         uiModelChannel.takeUnless { it.isClosedForSend }?.trySend(uiModel)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        job.cancel()
     }
 }

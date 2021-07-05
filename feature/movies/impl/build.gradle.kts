@@ -12,7 +12,6 @@ dependencies {
     implementation(project(Modules.FeatureApis.movies))
     implementation(project(Modules.FeatureApis.movieDetails))
     implementation(project(Modules.FeatureApis.bookmarkMovie))
-    implementation(Deps.androidxActivityKtx)
     implementation(Deps.androidxFragmentKtx)
     implementation(Deps.androidxAppCompat)
     implementation(Deps.androidxMaterial)

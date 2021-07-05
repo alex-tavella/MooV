@@ -21,10 +21,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
-import br.com.core.android.BaseFragment
 import br.com.core.android.dependencies
 import br.com.core.android.logd
 import br.com.core.android.views.DialogFactory
@@ -39,7 +40,7 @@ import br.com.moov.movies.viewmodel.MoviesUiModel
 import br.com.moov.movies.viewmodel.MoviesViewModel
 import javax.inject.Inject
 
-internal class MoviesFragment : BaseFragment() {
+internal class MoviesFragment : Fragment() {
 
     @Inject
     lateinit var viewModelProviderFactory: ViewModelProvider.Factory
@@ -50,7 +51,7 @@ internal class MoviesFragment : BaseFragment() {
     private val viewModel by viewModels<MoviesViewModel> { viewModelProviderFactory }
 
     private val loadingProgressBar: ProgressBar? by lazy {
-        view?.findViewById<ProgressBar>(R.id.progressBar)
+        view?.findViewById(R.id.progressBar)
     }
 
     private val recyclerView by lazy { view?.findViewById<RecyclerView>(R.id.rv_movies) }
@@ -79,7 +80,7 @@ internal class MoviesFragment : BaseFragment() {
             setHasFixedSize(true)
             context?.let { addItemDecoration(MarginDecoration(it)) }
             adapter = this@MoviesFragment.adapter
-            onEndReached(this@MoviesFragment) {
+            onEndReached(viewLifecycleOwner.lifecycleScope) {
                 logd { "Emitting finished scroll ui event" }
                 viewModel.uiEvent(MoviesUiEvent.FinishedScrollingUiEvent)
             }
@@ -88,7 +89,7 @@ internal class MoviesFragment : BaseFragment() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.observe(this, ::renderUiModel)
+        viewModel.observe(viewLifecycleOwner.lifecycleScope, ::renderUiModel)
         logd { "Emitting enter screen ui event" }
         viewModel.uiEvent(MoviesUiEvent.EnterScreenUiEvent)
     }

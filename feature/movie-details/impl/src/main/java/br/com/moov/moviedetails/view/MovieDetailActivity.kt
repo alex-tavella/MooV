@@ -25,10 +25,11 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.ViewModelProvider
-import br.com.core.android.BaseActivity
+import androidx.lifecycle.lifecycleScope
 import br.com.core.android.dependencies
 import br.com.core.android.logd
 import br.com.core.android.views.DialogFactory
@@ -40,7 +41,7 @@ import br.com.moov.moviedetails.viewmodel.MovieDetailViewModel
 import com.bumptech.glide.Glide
 import javax.inject.Inject
 
-class MovieDetailActivity : BaseActivity() {
+class MovieDetailActivity : AppCompatActivity() {
 
     @Inject
     internal lateinit var viewModelProviderFactory: ViewModelProvider.Factory
@@ -73,7 +74,7 @@ class MovieDetailActivity : BaseActivity() {
 
     override fun onStart() {
         super.onStart()
-        viewModel.observe(this, ::renderUiModel)
+        viewModel.observe(lifecycleScope, ::renderUiModel)
 
         intent.getIntExtra(EXTRA_MOVIE_ID, -1)
             .takeUnless { it == -1 }
