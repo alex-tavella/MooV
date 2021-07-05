@@ -1,6 +1,6 @@
 plugins {
-    id(BuildPlugins.androidLibrary)
-    id(BuildPlugins.kotlinAndroid)
+    id(BuildPlugins.android)
+    id(BuildPlugins.quality)
 }
 
 dependencies {

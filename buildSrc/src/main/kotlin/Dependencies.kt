@@ -6,9 +6,7 @@ object GradlePlugins {
     object Versions {
         const val gradleandroid = "7.1.0-alpha02"
         const val gradleversions = "0.39.0"
-        const val spotless = "5.14.0"
         const val gradleDoctorVersion = "0.7.0"
-        const val detekt = "1.17.1"
         const val anvil = "2.3.3"
     }
 
@@ -26,12 +24,12 @@ object BuildPlugins {
         const val ktlint = "0.41.0"
     }
 
-    const val androidApplication = "com.android.application"
-    const val androidLibrary = "com.android.library"
-    const val kotlinAndroid = "kotlin-android"
+    const val androidApplication = "androidApp"
     const val kotlinKapt = "kotlin-kapt"
-    const val kotlin = "kotlin"
     const val coroutinesOptIn = "coroutinesOptIn"
+    const val android = "androidCommon"
+    const val kotlin = "kotlinCommon"
+    const val quality = "quality"
 }
 
 object AndroidSdk {

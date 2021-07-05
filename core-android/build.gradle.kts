@@ -1,9 +1,9 @@
 plugins {
-    id(BuildPlugins.androidLibrary)
-    id(BuildPlugins.kotlinAndroid)
+    id(BuildPlugins.android)
     id(BuildPlugins.kotlinKapt)
     id(BuildPlugins.coroutinesOptIn)
     id(GradlePlugins.anvil) version GradlePlugins.Versions.anvil
+    id(BuildPlugins.quality)
 }
 
 anvil {

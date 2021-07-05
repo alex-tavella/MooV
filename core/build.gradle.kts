@@ -1,9 +1,7 @@
 plugins {
     id(BuildPlugins.kotlin)
+    id(BuildPlugins.quality)
 }
-
-setProperty("targetCompatibility", AndroidSdk.javaVersion)
-setProperty("sourceCompatibility", AndroidSdk.javaVersion)
 
 dependencies {
     implementation(Deps.kotlinStdlib)
